@@ -12,20 +12,12 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { HeroCarousel } from "@/components/hero-carousel";
 import { ProductCard } from "@/components/product-card";
 import { categories, dealsOf, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
 
 export const dynamic = "force-dynamic";
-
-const heroImages = {
-  camera:
-    "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?auto=format&fit=crop&w=1100&q=85",
-  creators:
-    "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80",
-  laptop:
-    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80",
-};
 
 const services = [
   { icon: CreditCard, label: "MoMo, Airtel Money, Visa & Mastercard" },
@@ -41,89 +33,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <section className="bg-black">
-        <div className="mx-auto grid w-full max-w-7xl gap-0 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-          <div className="relative isolate z-0 min-h-[420px] min-w-0 overflow-hidden bg-[#070b10] p-8 text-white sm:p-12">
-            <Image
-              src={heroImages.camera}
-              alt="Camera equipment promotion"
-              fill
-              priority
-              sizes="(min-width: 1024px) 55vw, 100vw"
-              className="object-cover opacity-55"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,#05070b_0%,rgba(5,7,11,0.88)_42%,rgba(5,7,11,0.25)_100%)]" />
-            <div className="relative z-10 max-w-lg pt-10">
-              <span className="inline-block bg-[#ff3f17] px-4 py-1 text-xs font-black uppercase tracking-wider">
-                New arrivals
-              </span>
-              <p className="mt-6 text-lg font-bold text-white/85">
-                Photo Factory Rwanda
-              </p>
-              <h1 className="mt-3 text-4xl font-black leading-tight sm:text-6xl">
-                Creator gear, electronics, and pro photo equipment.
-              </h1>
-              <p className="mt-4 text-lg text-white/80">
-                Shop cameras, lenses, laptops, smartphones, audio, drones,
-                tripods, lights, and accessories in Kigali.
-              </p>
-              <Link
-                href="/deals"
-                className="mt-7 inline-flex min-w-48 justify-center rounded-sm bg-[#ff5a1f] px-8 py-3 text-sm font-black uppercase text-white shadow-lg shadow-black/30 hover:bg-[#ff7440]"
-              >
-                Shop deals
-              </Link>
-              <p className="mt-3 text-xs font-semibold text-white/70">
-                Financing and business supply support available.
-              </p>
-            </div>
-          </div>
-          <div className="relative z-20 grid min-w-0 gap-0 overflow-hidden bg-white p-4 sm:grid-cols-2 lg:grid-cols-1">
-            <Link
-              href="/c/audio"
-              className="relative min-h-48 overflow-hidden rounded-md p-6 text-white"
-            >
-              <Image
-                src={heroImages.creators}
-                alt="Studio equipment"
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black/45" />
-              <div className="relative">
-                <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
-                  Content creators
-                </p>
-                <h2 className="mt-2 max-w-sm text-xl font-black leading-tight sm:text-2xl lg:text-[22px]">
-                  Vlogging, streaming, lighting, and audio kits.
-                </h2>
-              </div>
-            </Link>
-            <Link
-              href="/c/computers"
-              className="relative mt-5 min-h-48 overflow-hidden rounded-md p-6 text-white sm:ml-5 sm:mt-0 lg:ml-0 lg:mt-5"
-            >
-              <Image
-                src={heroImages.laptop}
-                alt="Laptop and electronics"
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-[#002f58]/70" />
-              <div className="relative">
-                <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
-                  Electronics
-                </p>
-                <h2 className="mt-2 max-w-sm text-xl font-black leading-tight sm:text-2xl lg:text-[22px]">
-                  Phones, laptops, storage, chargers, and accessories.
-                </h2>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <section className="bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5">
         <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
