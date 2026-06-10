@@ -17,7 +17,7 @@ import { ProductCard } from "@/components/product-card";
 import { categories, dealsOf, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 const services = [
   { icon: CreditCard, label: "MoMo, Airtel Money, Visa & Mastercard" },
@@ -26,16 +26,97 @@ const services = [
   { icon: BadgeCheck, label: "Genuine products with warranty support" },
 ];
 
+const mobileCategoryItems = [
+  { label: "Cameras", slug: "cameras", imageSlug: "cameras" },
+  { label: "Lenses", slug: "lenses", imageSlug: "lenses" },
+  { label: "Lighting & Studio", slug: "lighting", imageSlug: "lighting" },
+  { label: "Computers", slug: "computers", imageSlug: "computers" },
+  { label: "Video", slug: "video", imageSlug: "video" },
+  { label: "Audio", slug: "audio", imageSlug: "audio" },
+  { label: "Home Electronics", slug: "phones", imageSlug: "phones" },
+  { label: "Optics & Binoculars", slug: "tripods", imageSlug: "tripods" },
+  { label: "Photo Accessories", slug: "accessories", imageSlug: "accessories" },
+  { label: "Drones", slug: "drones", imageSlug: "drones" },
+  { label: "Gaming", slug: "computers", imageSlug: "computers" },
+  { label: "Music", slug: "audio", imageSlug: "audio" },
+];
+
+const campaignImage = (name: string, width = 1400) =>
+  `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
+
+const promoCampaigns = [
+  {
+    title: "Enter to win a RWF 50M studio upgrade",
+    kicker: "Studio upgrade contest",
+    body: "Submit your studio story for a chance to upgrade cameras, lights, audio, backdrops, and editing gear.",
+    cta: "Submit your studio",
+    href: "/support",
+    image: campaignImage("studio-upgrade"),
+    tone: "yellow",
+  },
+  {
+    title: "Celebrate their next adventure!",
+    kicker: "Gifts for grads",
+    body: "Find cameras, audio gear, laptops, tablets, and creator essentials for graduation season.",
+    cta: "Shop now",
+    href: "/deals",
+    image: campaignImage("gifts-for-grads"),
+    tone: "white",
+  },
+  {
+    title: "Capture every special moment",
+    kicker: "Wedding season photography & videography",
+    body: "Enhance your repertoire with the right gear and skills to showcase each couple's unique story.",
+    cta: "Learn more",
+    href: "/c/cameras",
+    image: campaignImage("wedding-season", 1600),
+    tone: "wedding",
+  },
+];
+
 export default async function Home() {
   const allProducts = await getAllProducts();
   const featuredDeals = dealsOf(allProducts).slice(0, 4);
   const usedPicks = usedOf(allProducts).slice(0, 4);
+  const categoryBySlug = new Map(categories.map((category) => [category.slug, category]));
 
   return (
     <main className="min-h-screen overflow-x-hidden">
       <HeroCarousel />
 
-      <section className="bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5">
+      <section className="bg-[#004f94] px-3 pb-4 pt-2 md:hidden">
+        <h2 className="mb-3 text-center text-sm font-black uppercase tracking-wide text-white">
+          Shop by category
+        </h2>
+        <div className="grid grid-cols-3 gap-1">
+          {mobileCategoryItems.map((item) => {
+            const image =
+              categoryBySlug.get(item.imageSlug)?.image ??
+              categoryBySlug.get(item.slug)?.image ??
+              "/logo.svg";
+            return (
+              <Link
+                key={`${item.label}-${item.slug}`}
+                href={`/c/${item.slug}`}
+                className="grid min-h-[122px] place-items-center rounded bg-white p-2 text-center text-[15px] font-medium leading-4 text-black"
+              >
+                <span className="relative block h-16 w-full">
+                  <Image
+                    src={image}
+                    alt={item.label}
+                    fill
+                    sizes="33vw"
+                    className="object-contain"
+                  />
+                </span>
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="hidden bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5 md:block">
         <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
           {categories.map((department) => (
             <Link
@@ -52,6 +133,61 @@ export default async function Home() {
               />
               <div className="absolute inset-x-0 bottom-0 bg-black/70 px-3 py-3">
                 <p className="text-sm font-black text-white">{department.name}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y-[3px] border-[#0074d9] bg-white">
+        <div className="mx-auto grid max-w-[1368px] gap-[3px] bg-[#0074d9] md:grid-cols-2">
+          {promoCampaigns.map((campaign, index) => (
+            <Link
+              key={campaign.title}
+              href={campaign.href}
+              className={`group relative min-h-[260px] overflow-hidden bg-white md:min-h-[294px] ${
+                index === 2 ? "md:col-span-2" : ""
+              }`}
+            >
+              <Image
+                src={campaign.image}
+                alt=""
+                fill
+                sizes={index === 2 ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
+                className="object-cover transition duration-500 group-hover:scale-[1.02]"
+              />
+              <div
+                className={`absolute inset-0 ${
+                  campaign.tone === "yellow"
+                    ? "bg-[linear-gradient(90deg,rgba(255,205,27,0.96)_0%,rgba(255,205,27,0.86)_46%,transparent_72%)]"
+                    : campaign.tone === "wedding"
+                      ? "bg-[linear-gradient(90deg,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.82)_48%,transparent_75%)]"
+                      : "bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.84)_52%,transparent_82%)]"
+                }`}
+              />
+              <div className="absolute inset-y-0 left-0 flex w-[66%] max-w-[560px] flex-col justify-center px-7 py-8 text-black sm:px-10 md:w-[62%]">
+                <p
+                  className={`text-sm font-black uppercase tracking-[0.2em] ${
+                    campaign.tone === "wedding" ? "text-black" : "text-[#0b315f]"
+                  }`}
+                >
+                  {campaign.kicker}
+                </p>
+                <h2
+                  className={`mt-2 font-black leading-[1.02] ${
+                    campaign.tone === "wedding"
+                      ? "text-3xl tracking-[0.08em] sm:text-4xl"
+                      : "text-3xl sm:text-4xl"
+                  }`}
+                >
+                  {campaign.title}
+                </h2>
+                <p className="mt-3 max-w-md text-[15px] font-medium leading-6 text-black/78 sm:text-lg">
+                  {campaign.body}
+                </p>
+                <span className="mt-5 inline-flex w-fit min-w-40 justify-center rounded-sm bg-[#ff4a22] px-6 py-3 text-xs font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.16)]">
+                  {campaign.cta}
+                </span>
               </div>
             </Link>
           ))}
