@@ -13,56 +13,64 @@ import {
   Package,
   Search,
   ShoppingCart,
+  Smartphone,
   Sparkles,
   Tags,
   User,
+  Video,
   Wrench,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
+import { useStore } from "@/components/store-context";
 
 const tabs = ["Products", "Brands", "Used", "Deals"] as const;
 
 const productRows = [
-  { label: "Photography", icon: Camera },
-  { label: "Lighting & Studio", icon: Sparkles },
-  { label: "Computers", icon: Laptop },
-  { label: "Video", icon: Camera },
-  { label: "Audio", icon: Headphones },
-  { label: "Home Electronics", icon: Package },
-  { label: "Musical Instruments", icon: Sparkles },
-  { label: "Drones", icon: Camera },
-  { label: "Optics & Binoculars", icon: Search },
+  { label: "Cameras", href: "/c/cameras", icon: Camera },
+  { label: "Lenses", href: "/c/lenses", icon: Search },
+  { label: "Lighting & Studio", href: "/c/lighting", icon: Sparkles },
+  { label: "Tripods & Support", href: "/c/tripods", icon: Wrench },
+  { label: "Computers", href: "/c/computers", icon: Laptop },
+  { label: "Video & Cinema", href: "/c/video", icon: Video },
+  { label: "Audio", href: "/c/audio", icon: Headphones },
+  { label: "Drones & Gimbals", href: "/c/drones", icon: Camera },
+  { label: "Phones & Tablets", href: "/c/phones", icon: Smartphone },
+  { label: "Storage & Accessories", href: "/c/accessories", icon: Package },
 ];
 
-const brandRows = ["Canon", "Apple", "Nikon", "Sony", "Fujifilm", "Bose"];
+const brandRows = ["Canon", "Apple", "Nikon", "Sony", "Fujifilm", "DJI"];
 
 const usedRows = [
-  { label: "Pre-Owned Gear", icon: Camera },
-  { label: "Sell Yours", icon: Tags },
-  { label: "Open Box", icon: Box },
-  { label: "For Parts", icon: Wrench },
+  { label: "Pre-Owned Gear", href: "/used", icon: Camera },
+  { label: "Sell Yours", href: "/used/sell", icon: Tags },
+  { label: "Open Box", href: "/used?condition=open-box", icon: Box },
+  { label: "Trade-In Upgrade", href: "/used/sell", icon: Wrench },
 ];
 
 const dealRows = [
-  { label: "Deals By Category", icon: Tags },
-  { label: "Bundle & Save", icon: Box },
-  { label: "Featured Deals", icon: BadgePercent },
-  { label: "See All Deals", icon: BadgePercent },
+  { label: "All Deals", href: "/deals", icon: Tags },
+  { label: "Camera Deals", href: "/c/cameras", icon: Camera },
+  { label: "Bundle & Save", href: "/deals", icon: Box },
+  { label: "Featured Deals", href: "/deals", icon: BadgePercent },
 ];
 
 export function MobileShopMenu() {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<(typeof tabs)[number]>("Products");
+  const { cart, hydrated } = useStore();
+  const cartCount = hydrated ? cart.reduce((sum, item) => sum + item.qty, 0) : 0;
+  const close = () => setOpen(false);
 
   return (
     <>
       <div className="fixed inset-x-0 bottom-0 z-[100] border-t border-white/25 bg-[#005098] text-white shadow-[0_-4px_18px_rgba(0,0,0,0.25)] md:hidden">
         <div className="grid grid-cols-6 text-[10px] font-semibold">
-          <a href="#" className="grid place-items-center gap-0.5 py-1.5">
+          <Link href="/" className="grid place-items-center gap-0.5 py-1.5">
             <Home size={22} />
             Home
-          </a>
+          </Link>
           <button
             onClick={() => setOpen(true)}
             className="grid place-items-center gap-0.5 border-t-4 border-[#79bdf6] py-1"
@@ -70,22 +78,29 @@ export function MobileShopMenu() {
             <Menu size={25} />
             Browse
           </button>
-          <a href="#deals" className="grid place-items-center gap-0.5 py-1.5">
+          <Link href="/used" className="grid place-items-center gap-0.5 py-1.5">
             <Clock3 size={22} />
-            Recent
-          </a>
-          <a href="#deals" className="grid place-items-center gap-0.5 py-1.5">
+            Used
+          </Link>
+          <Link href="/deals" className="grid place-items-center gap-0.5 py-1.5">
             <Sparkles size={22} />
-            Discover
-          </a>
-          <a href="#locations" className="grid place-items-center gap-0.5 py-1.5">
+            Deals
+          </Link>
+          <Link href="/account" className="grid place-items-center gap-0.5 py-1.5">
             <User size={22} />
             Account
-          </a>
-          <a href="#deals" className="grid place-items-center gap-0.5 py-1.5">
-            <ShoppingCart size={24} />
+          </Link>
+          <Link href="/cart" className="relative grid place-items-center gap-0.5 py-1.5">
+            <span className="relative">
+              <ShoppingCart size={24} />
+              {cartCount > 0 && (
+                <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[#ff5a1f] px-0.5 text-[9px] font-black">
+                  {cartCount}
+                </span>
+              )}
+            </span>
             Cart
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -118,17 +133,23 @@ export function MobileShopMenu() {
               {activeTab === "Products" && (
                 <>
                   <div className="mb-3 flex flex-wrap gap-2">
-                    {["New Arrivals", "Pre Order", "Gift Cards"].map((pill) => (
-                      <span
-                        key={pill}
+                    {[
+                      { label: "New Arrivals", href: "/c/cameras" },
+                      { label: "Top Deals", href: "/deals" },
+                      { label: "Used Gear", href: "/used" },
+                    ].map((pill) => (
+                      <Link
+                        key={pill.label}
+                        href={pill.href}
+                        onClick={close}
                         className="rounded-full border border-[#9ca3af] bg-white px-3 py-1 text-sm"
                       >
-                        {pill}
-                      </span>
+                        {pill.label}
+                      </Link>
                     ))}
                   </div>
                   {productRows.map((item) => (
-                    <MenuRow key={item.label} label={item.label} icon={item.icon} />
+                    <MenuRow key={item.label} {...item} onNavigate={close} />
                   ))}
                 </>
               )}
@@ -136,27 +157,31 @@ export function MobileShopMenu() {
                 <>
                   <div className="mb-3 flex justify-between py-3 text-sm uppercase">
                     <span>Featured brands:</span>
-                    <span>See all</span>
+                    <Link href="/brands" onClick={close}>
+                      See all
+                    </Link>
                   </div>
                   <div className="grid grid-cols-2 gap-1">
                     {brandRows.map((brand) => (
-                      <div
+                      <Link
                         key={brand}
+                        href={`/brands/${brand.toLowerCase()}`}
+                        onClick={close}
                         className="grid h-28 place-items-center bg-white text-2xl font-black text-[#111827] shadow-sm"
                       >
                         {brand}
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </>
               )}
               {activeTab === "Used" &&
                 usedRows.map((item) => (
-                  <MenuRow key={item.label} label={item.label} icon={item.icon} boxed />
+                  <MenuRow key={item.label} {...item} boxed onNavigate={close} />
                 ))}
               {activeTab === "Deals" &&
                 dealRows.map((item) => (
-                  <MenuRow key={item.label} label={item.label} icon={item.icon} boxed />
+                  <MenuRow key={item.label} {...item} boxed onNavigate={close} />
                 ))}
               <div className="mt-8 space-y-4 bg-white p-4 text-sm">
                 <p className="text-lg font-semibold">Photo Factory Rewards</p>
@@ -172,16 +197,21 @@ export function MobileShopMenu() {
 
 function MenuRow({
   label,
+  href,
   icon: Icon,
   boxed = false,
+  onNavigate,
 }: {
   label: string;
+  href: string;
   icon: typeof Camera;
   boxed?: boolean;
+  onNavigate?: () => void;
 }) {
   return (
-    <a
-      href="#deals"
+    <Link
+      href={href}
+      onClick={onNavigate}
       className="mb-1.5 flex min-h-[72px] items-center gap-4 rounded bg-white px-4 text-lg shadow-sm"
     >
       <span
@@ -193,6 +223,6 @@ function MenuRow({
       </span>
       <span className="flex-1">{label}</span>
       <ChevronRight size={25} />
-    </a>
+    </Link>
   );
 }
