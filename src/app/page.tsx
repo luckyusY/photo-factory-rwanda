@@ -17,6 +17,7 @@ import {
   Video,
 } from "lucide-react";
 import Image from "next/image";
+import { MobileShopMenu } from "@/components/mobile-shop-menu";
 
 const heroImages = {
   camera:
@@ -109,6 +110,41 @@ const services = [
 
 const navItems = ["Products", "Brands", "Used", "Deals"];
 
+const megaMenus = {
+  Products: [
+    "Cameras",
+    "Lenses",
+    "Lighting & Studio",
+    "Tripods & Support",
+    "Computers",
+    "Video",
+    "Audio",
+    "Drones",
+  ],
+  Brands: ["Canon", "Sony", "Nikon", "Fujifilm", "Apple", "Bose", "DJI", "Rode"],
+  Used: ["Pre-Owned Gear", "Sell Yours", "Open Box", "For Parts"],
+  Deals: ["Deals By Category", "Bundle & Save", "Featured Deals", "Clearance"],
+};
+
+const footerColumns = [
+  {
+    title: "Shop",
+    links: ["Cameras", "Lenses", "Lighting", "Audio", "Computers", "Phones"],
+  },
+  {
+    title: "Services",
+    links: ["Delivery", "Store Pickup", "Warranty Support", "Business Supply", "WhatsApp Support"],
+  },
+  {
+    title: "Company",
+    links: ["About Photo Factory", "Kacyiru Branch", "Town Branch", "Careers", "Contact"],
+  },
+  {
+    title: "Payments",
+    links: ["Mobile Money", "Airtel Money", "Visa", "Mastercard", "In-store Payment"],
+  },
+];
+
 export default function Home() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#eef2f7] text-[#111827]">
@@ -184,21 +220,60 @@ export default function Home() {
             </div>
           </form>
         </div>
-        <nav className="bg-[#004f94] text-white">
+        <nav className="hidden bg-[#004f94] text-white md:block">
           <div className="mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-4">
             <button className="flex shrink-0 items-center gap-2 px-3 py-3 text-sm font-bold">
               <Menu aria-hidden size={18} />
               Departments
             </button>
             {navItems.map((item) => (
-              <a
+              <div
                 key={item}
-                href="#deals"
-                className="flex shrink-0 items-center gap-1 px-4 py-3 text-sm font-semibold hover:bg-[#0067bd]"
+                className="group relative shrink-0"
               >
-                {item}
-                <ChevronDown aria-hidden size={15} />
-              </a>
+                <a
+                  href="#deals"
+                  className="flex items-center gap-1 px-4 py-3 text-sm font-semibold hover:bg-[#0067bd]"
+                >
+                  {item}
+                  <ChevronDown aria-hidden size={15} />
+                </a>
+                <div className="invisible fixed left-1/2 top-[146px] z-[90] w-[min(980px,calc(100vw-32px))] -translate-x-1/2 bg-white p-5 text-[#111827] opacity-0 shadow-2xl ring-1 ring-black/10 transition group-hover:visible group-hover:opacity-100">
+                  <div className="grid gap-6 md:grid-cols-[1.2fr_0.8fr]">
+                    <div>
+                      <div className="mb-3 flex items-center justify-between">
+                        <h3 className="text-xl font-black">{item}</h3>
+                        <a href="#deals" className="text-sm font-bold text-[#005aa6]">
+                          See all
+                        </a>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+                        {megaMenus[item as keyof typeof megaMenus].map((menuItem) => (
+                          <a
+                            key={menuItem}
+                            href="#deals"
+                            className="rounded border border-[#d7e2ef] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#005aa6]"
+                          >
+                            {menuItem}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="bg-[#003b70] p-5 text-white">
+                      <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
+                        Photo Factory Advantage
+                      </p>
+                      <h4 className="mt-2 text-2xl font-black">
+                        Same-day Kigali delivery and pickup.
+                      </h4>
+                      <p className="mt-3 text-sm leading-6 text-white/75">
+                        Get product advice, payment flexibility, and warranty support
+                        from Kacyiru and Town branches.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
             <div className="ml-auto hidden items-center gap-5 text-sm font-semibold lg:flex">
               <a href="#deals">Top Deals</a>
@@ -437,14 +512,47 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="bg-[#061525] px-4 py-8 text-white">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <p className="text-xl font-black">Photo Factory Rwanda</p>
-          <p className="text-sm text-white/70">
-            Genuine gear, competitive prices, delivery across Rwanda.
-          </p>
+      <footer className="bg-[#061525] px-4 pb-24 pt-10 text-white md:pb-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 border-b border-white/15 pb-8 lg:grid-cols-[1.2fr_2fr]">
+            <div>
+              <p className="text-3xl font-black">PhotoFactory</p>
+              <p className="mt-3 max-w-md text-sm leading-6 text-white/70">
+                Your one-stop shop for electronics, photography, and content
+                creation equipment in Kigali.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold uppercase">
+                <span className="rounded bg-white/10 px-3 py-2">Kacyiru</span>
+                <span className="rounded bg-white/10 px-3 py-2">Town Branch</span>
+                <span className="rounded bg-white/10 px-3 py-2">Rwanda Delivery</span>
+              </div>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {footerColumns.map((column) => (
+                <div key={column.title}>
+                  <h3 className="text-sm font-black uppercase tracking-wider text-[#ffde59]">
+                    {column.title}
+                  </h3>
+                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                    {column.links.map((link) => (
+                      <li key={link}>
+                        <a href="#deals" className="hover:text-white">
+                          {link}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col justify-between gap-3 py-5 text-xs text-white/55 sm:flex-row">
+            <p>© 2026 Photo Factory Rwanda. All rights reserved.</p>
+            <p>Mobile Money • Airtel Money • Visa • Mastercard • Cash pickup</p>
+          </div>
         </div>
       </footer>
+      <MobileShopMenu />
     </main>
   );
 }
