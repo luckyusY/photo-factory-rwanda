@@ -6,7 +6,7 @@ import { formatRWF, type Product } from "@/lib/catalog";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded bg-white shadow-sm ring-1 ring-black/10">
+    <article className="flex flex-col overflow-hidden border border-[#d7e2ef] bg-white">
       <div className="relative aspect-[4/3] bg-[#f5f7fb]">
         <Link href={`/p/${product.slug}`}>
           <Image
@@ -25,7 +25,7 @@ export function ProductCard({ product }: { product: Product }) {
         <WishlistButton slug={product.slug} className="absolute right-3 top-3" />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <p className="text-xs font-bold uppercase tracking-wide text-[#6b7280]">
+        <p className="text-[12px] font-bold uppercase tracking-wide text-[#6b7280]">
           {product.brand}
           {product.condition !== "New" && (
             <span className="ml-2 rounded bg-[#fef3c7] px-1.5 py-0.5 text-[10px] text-[#92400e]">
@@ -34,7 +34,7 @@ export function ProductCard({ product }: { product: Product }) {
           )}
         </p>
         <Link href={`/p/${product.slug}`} className="mt-2 flex-1">
-          <h3 className="min-h-12 text-base font-black leading-tight hover:text-[#005aa6]">
+          <h3 className="min-h-12 text-[15px] font-medium leading-tight text-[#0066c0] hover:underline">
             {product.name}
           </h3>
         </Link>
@@ -44,7 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
           <span className="font-semibold">({product.reviews})</span>
         </div>
         <div className="mt-3 flex items-baseline gap-2">
-          <p className="text-xl font-black text-[#b91c1c]">
+          <p className="text-[22px] font-bold text-[#b91c1c]">
             {formatRWF(product.price)}
           </p>
           {product.oldPrice && (

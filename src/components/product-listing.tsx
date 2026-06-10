@@ -112,10 +112,10 @@ export function ProductListing({
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+    <div className="mx-auto max-w-7xl px-4 py-6">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b border-[#d7e2ef] bg-white p-4 ring-1 ring-black/5">
         <div>
-          <h1 className="text-3xl font-black">{title}</h1>
+          <h1 className="text-2xl font-semibold text-black">{title}</h1>
           {subtitle && (
             <p className="mt-1 max-w-2xl text-sm text-[#4b5563]">{subtitle}</p>
           )}
@@ -125,8 +125,8 @@ export function ProductListing({
         </div>
         <SortSelect />
       </div>
-      <div className="grid gap-6 lg:grid-cols-[240px_minmax(0,1fr)]">
-        <aside className="space-y-6">
+      <div className="grid gap-5 lg:grid-cols-[230px_minmax(0,1fr)]">
+        <aside className="space-y-4">
           {hasFilters && (
             <Link
               href={buildHref(basePath, {}, {}, extraParams)}
@@ -191,12 +191,12 @@ export function ProductListing({
             <div className="rounded bg-white p-10 text-center ring-1 ring-black/10">
               <p className="text-lg font-black">No products match these filters.</p>
               <p className="mt-2 text-sm text-[#6b7280]">
-                Try removing a filter, or contact us — we can source most gear on
+                Try removing a filter, or contact us - we can source most gear on
                 request.
               </p>
             </div>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {filtered.map((product) => (
                 <ProductCard key={product.slug} product={product} />
               ))}
@@ -216,8 +216,8 @@ function FilterGroup({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded bg-white p-4 ring-1 ring-black/10">
-      <h2 className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+    <div className="border border-[#d7e2ef] bg-white p-4">
+      <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
         {title}
       </h2>
       <div className="mt-3 space-y-1">{children}</div>
@@ -237,7 +237,7 @@ function FilterLink({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 rounded px-2 py-1.5 text-sm font-semibold ${
+      className={`flex items-center gap-2 px-1 py-1.5 text-[14px] font-medium ${
         active ? "bg-[#e8f1fa] text-[#005aa6]" : "hover:bg-[#f3f7fc]"
       }`}
     >

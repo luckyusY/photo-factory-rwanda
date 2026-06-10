@@ -14,7 +14,7 @@ export function ProductGallery({
 
   return (
     <div>
-      <div className="relative aspect-[4/3] overflow-hidden rounded bg-[#f5f7fb] ring-1 ring-black/10">
+      <div className="relative aspect-[4/3] overflow-hidden border border-[#d7e2ef] bg-[#f5f7fb]">
         <Image
           src={images[active] ?? images[0]}
           alt={name}
@@ -31,7 +31,7 @@ export function ProductGallery({
               key={image + index}
               onClick={() => setActive(index)}
               aria-label={`View image ${index + 1}`}
-              className={`relative h-20 w-24 overflow-hidden rounded ring-2 transition ${
+              className={`relative h-20 w-24 overflow-hidden border bg-white ring-2 transition ${
                 index === active ? "ring-[#005aa6]" : "ring-transparent"
               }`}
             >

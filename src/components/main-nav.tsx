@@ -1,15 +1,17 @@
 "use client";
 
 import { ChevronDown, Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { brands, categories } from "@/lib/catalog";
+import { brands } from "@/lib/catalog";
+import { departments } from "@/lib/department-menu";
 
 const navMenus = [
   {
     label: "Products",
     href: "/c/cameras",
-    columns: categories.map((c) => ({ label: c.name, href: `/c/${c.slug}` })),
+    columns: departments.map((c) => ({ label: c.label, href: `/c/${c.slug}` })),
     promo: {
       eyebrow: "Photo Factory Advantage",
       title: "Same-day Kigali delivery and pickup.",
@@ -63,6 +65,7 @@ const navMenus = [
 
 export function MainNav() {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [activeDepartment, setActiveDepartment] = useState(departments[0]);
   const active = navMenus.find((menu) => menu.label === openMenu);
   const close = () => setOpenMenu(null);
 
@@ -104,7 +107,82 @@ export function MainNav() {
           <Link href="/stores">Store Pickup</Link>
         </div>
       </div>
-      {active && (
+      {active?.label === "Products" && (
+        <div className="absolute left-1/2 top-full z-[90] w-[min(1340px,calc(100vw-24px))] -translate-x-1/2 bg-white text-[#111827] shadow-2xl ring-1 ring-black/10">
+          <div className="grid min-h-[560px] grid-cols-[220px_minmax(0,1fr)_240px]">
+            <aside className="border-r border-[#d7e2ef] px-3 py-5">
+              {departments.map((department) => (
+                <Link
+                  key={department.slug}
+                  href={`/c/${department.slug}`}
+                  onMouseEnter={() => setActiveDepartment(department)}
+                  onFocus={() => setActiveDepartment(department)}
+                  onClick={close}
+                  className={`mb-1 flex items-center justify-between rounded px-4 py-2.5 text-[17px] ${
+                    activeDepartment.slug === department.slug
+                      ? "bg-[#004f94] font-black text-white underline"
+                      : "font-medium hover:bg-[#eef2f7]"
+                  }`}
+                >
+                  {department.label}
+                  <ChevronDown className="-rotate-90" size={18} />
+                </Link>
+              ))}
+              <div className="mx-5 my-5 h-px bg-[#d7e2ef]" />
+              {["New Arrivals", "Pre Order", "Gift Cards", "Gift Ideas"].map((item) => (
+                <Link
+                  key={item}
+                  href={item === "Gift Cards" ? "/support" : "/deals"}
+                  onClick={close}
+                  className="block px-4 py-2 text-base hover:text-[#005aa6]"
+                >
+                  {item}
+                </Link>
+              ))}
+            </aside>
+            <div className="grid content-start gap-x-14 gap-y-7 px-6 py-7 md:grid-cols-3">
+              {activeDepartment.groups.map((group) => (
+                <div key={group.title}>
+                  <h3 className="text-[18px] font-medium leading-6 text-black">
+                    {group.title}
+                  </h3>
+                  <ul className="mt-2 space-y-1.5">
+                    {group.links.map((link) => (
+                      <li key={link}>
+                        <Link
+                          href={`/c/${activeDepartment.slug}`}
+                          onClick={close}
+                          className="text-[14px] leading-5 text-[#0066c0] hover:underline"
+                        >
+                          {link}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <Link
+              href={`/c/${activeDepartment.slug}`}
+              onClick={close}
+              className="relative m-5 overflow-hidden bg-black"
+            >
+              <Image
+                src={activeDepartment.image}
+                alt={activeDepartment.label}
+                fill
+                sizes="240px"
+                className="object-cover opacity-85"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+              <span className="absolute bottom-5 right-3 origin-bottom-right rotate-[-90deg] text-4xl font-light tracking-[0.12em] text-white">
+                {activeDepartment.imageLabel}
+              </span>
+            </Link>
+          </div>
+        </div>
+      )}
+      {active && active.label !== "Products" && (
         <div
           onClick={close}
           className="absolute left-1/2 top-full z-[90] w-[min(980px,calc(100vw-32px))] -translate-x-1/2 bg-white p-5 text-[#111827] shadow-2xl ring-1 ring-black/10"

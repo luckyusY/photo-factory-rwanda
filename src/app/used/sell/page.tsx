@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
-import { BadgeCheck, Banknote, PackageSearch, Repeat } from "lucide-react";
+import {
+  BadgeCheck,
+  Banknote,
+  Camera,
+  CheckCircle2,
+  Laptop,
+  PackageSearch,
+  Repeat,
+  ShieldCheck,
+  Truck,
+} from "lucide-react";
+import Link from "next/link";
 import { TradeInForm } from "@/components/trade-in-form";
 
 export const metadata: Metadata = {
@@ -11,73 +22,193 @@ export const metadata: Metadata = {
 const steps = [
   {
     icon: PackageSearch,
-    title: "1. Tell us about your gear",
-    body: "Fill in the form with brand, model, condition, and accessories included.",
+    title: "Tell us what you have",
+    body: "Send the brand, model, condition, accessories, and photos if available.",
   },
   {
     icon: BadgeCheck,
-    title: "2. Get a quote within 24 hours",
-    body: "Our technicians review your item and send a quote by WhatsApp or email.",
+    title: "Get a fast local quote",
+    body: "Our Kigali team reviews the item and replies by WhatsApp or email.",
   },
   {
     icon: Banknote,
-    title: "3. Cash out",
-    body: "Bring the gear to Kacyiru or Town branch and get paid by MoMo or cash.",
+    title: "Get paid or trade up",
+    body: "Visit Kacyiru or Town for final inspection, payment, or store credit.",
+  },
+];
+
+const buyLists = [
+  {
+    title: "Photo & video",
+    icon: Camera,
+    items: [
+      "Mirrorless and DSLR cameras",
+      "Lenses for major mounts",
+      "Flashes, triggers, and lights",
+      "Tripods, gimbals, and drones",
+    ],
   },
   {
-    icon: Repeat,
-    title: "Or trade up",
-    body: "Put the value toward new gear and get an extra 10% in trade-in credit.",
+    title: "Computers & electronics",
+    icon: Laptop,
+    items: [
+      "MacBooks and editing laptops",
+      "Smartphones and tablets",
+      "SSDs, memory cards, and monitors",
+      "Power banks and accessories",
+    ],
+  },
+  {
+    title: "Audio & creator gear",
+    icon: ShieldCheck,
+    items: [
+      "Wireless microphones",
+      "Podcast and studio equipment",
+      "Recorders and headphones",
+      "Streaming and vlogging kits",
+    ],
   },
 ];
 
 export default function SellPage() {
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8">
-      <div className="max-w-3xl">
-        <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
-          Sell yours
-        </p>
-        <h1 className="mt-1 text-3xl font-black sm:text-4xl">
-          Sell or trade your camera gear and electronics.
-        </h1>
-        <p className="mt-3 text-[#4b5563]">
-          Upgrading your kit? We buy used cameras, lenses, drones, laptops, and
-          audio gear in good working condition. Get cash or trade-in credit
-          worth 10% more.
-        </p>
-      </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step) => (
-          <div
-            key={step.title}
-            className="rounded bg-white p-5 ring-1 ring-black/10"
-          >
-            <step.icon className="text-[#005aa6]" size={28} />
-            <h2 className="mt-3 font-black">{step.title}</h2>
-            <p className="mt-2 text-sm leading-6 text-[#4b5563]">{step.body}</p>
+    <main className="bg-[#f3f5f8]">
+      <section className="bg-[#003b70] text-white">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
+          <div>
+            <nav className="text-xs font-semibold text-white/75">
+              <Link href="/" className="hover:text-white">
+                Home
+              </Link>
+              <span className="px-1">/</span>
+              <Link href="/used" className="hover:text-white">
+                Used
+              </Link>
+              <span className="px-1">/</span>
+              <span>Sell Yours</span>
+            </nav>
+            <p className="mt-7 text-sm font-black uppercase tracking-[0.18em] text-[#ffde59]">
+              Sell yours
+            </p>
+            <h1 className="mt-2 max-w-3xl text-4xl font-black leading-tight sm:text-5xl">
+              Sell or trade your camera gear and electronics.
+            </h1>
+            <p className="mt-4 max-w-2xl text-[17px] leading-7 text-white/82">
+              Upgrading your kit? Photo Factory Rwanda buys used cameras,
+              lenses, drones, laptops, phones, audio gear, and creator tools in
+              good working condition.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href="#quote"
+                className="bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+              >
+                Get my quote
+              </a>
+              <Link
+                href="/used"
+                className="border border-white/50 px-6 py-3 text-sm font-black uppercase text-white hover:bg-white hover:text-[#003b70]"
+              >
+                Shop pre-owned
+              </Link>
+            </div>
           </div>
-        ))}
-      </div>
-      <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <TradeInForm />
-        <aside className="h-fit rounded bg-[#003b70] p-6 text-white">
-          <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
-            What we buy
-          </p>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-white/85">
-            <li>• Mirrorless and DSLR cameras (Canon, Sony, Nikon, Fujifilm)</li>
-            <li>• Lenses for all major mounts</li>
-            <li>• DJI drones and gimbals</li>
-            <li>• MacBooks and editing laptops</li>
-            <li>• Microphones, recorders, and studio lighting</li>
-          </ul>
-          <p className="mt-5 text-xs text-white/65">
-            Items must power on and function. Bring original accessories and
-            boxes for the best quote.
-          </p>
-        </aside>
-      </div>
+          <div className="border border-white/20 bg-white/10 p-5">
+            <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
+              Photo Factory trade-in
+            </p>
+            <div className="mt-4 space-y-4 text-sm leading-6 text-white/85">
+              <p className="flex gap-3">
+                <CheckCircle2 className="mt-0.5 shrink-0 text-[#ffde59]" size={18} />
+                Cash, Mobile Money, or store credit after in-person inspection.
+              </p>
+              <p className="flex gap-3">
+                <Repeat className="mt-0.5 shrink-0 text-[#ffde59]" size={18} />
+                Trade-in value can be applied toward cameras, lenses, lighting,
+                laptops, and accessories.
+              </p>
+              <p className="flex gap-3">
+                <Truck className="mt-0.5 shrink-0 text-[#ffde59]" size={18} />
+                Final inspection available at Kacyiru and Kigali City Centre.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-8">
+        <div className="grid gap-4 md:grid-cols-3">
+          {steps.map((step, index) => (
+            <div key={step.title} className="border border-[#d7e2ef] bg-white p-5">
+              <div className="flex items-center gap-3">
+                <span className="grid h-9 w-9 place-items-center bg-[#005aa6] text-sm font-black text-white">
+                  {index + 1}
+                </span>
+                <step.icon className="text-[#005aa6]" size={26} />
+              </div>
+              <h2 className="mt-4 text-xl font-semibold text-black">{step.title}</h2>
+              <p className="mt-2 text-sm leading-6 text-[#4b5563]">{step.body}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
+          <section className="border border-[#d7e2ef] bg-white p-6">
+            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+              What we buy
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold text-black">
+              Popular gear categories
+            </h2>
+            <div className="mt-6 grid gap-6 md:grid-cols-3">
+              {buyLists.map((group) => (
+                <div key={group.title}>
+                  <group.icon className="text-[#005aa6]" size={28} />
+                  <h3 className="mt-3 text-lg font-semibold">{group.title}</h3>
+                  <ul className="mt-3 space-y-2 text-sm leading-5 text-[#374151]">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <CheckCircle2
+                          className="mt-0.5 shrink-0 text-[#15803d]"
+                          size={15}
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div className="mt-7 border-t border-[#d7e2ef] pt-5 text-sm leading-6 text-[#4b5563]">
+              Items must power on and function. Bring original boxes,
+              batteries, chargers, invoices, and accessories for the strongest
+              offer. Condition, market demand, and completeness affect the final
+              value.
+            </div>
+          </section>
+
+          <aside className="h-fit border border-[#d7e2ef] bg-white p-6">
+            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+              Local support
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold">Visit us in Kigali</h2>
+            <div className="mt-4 space-y-3 text-sm leading-6 text-[#374151]">
+              <p>
+                Kacyiru branch and Kigali City Centre branch can inspect gear
+                and complete approved purchases.
+              </p>
+              <p>
+                Same-day quotes are available when our technicians can verify the
+                item in person.
+              </p>
+            </div>
+          </aside>
+        </div>
+
+        <section id="quote" className="mt-8">
+          <TradeInForm />
+        </section>
+      </section>
     </main>
   );
 }
