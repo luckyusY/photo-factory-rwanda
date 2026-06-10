@@ -2,14 +2,15 @@
 
 import { Heart } from "lucide-react";
 import Link from "next/link";
+import { useCatalog } from "@/components/catalog-client";
 import { ProductCard } from "@/components/product-card";
 import { useStore } from "@/components/store-context";
-import { getProduct } from "@/lib/catalog";
 
 export function WishlistView() {
   const { wishlist, hydrated } = useStore();
+  const { products } = useCatalog();
   const saved = wishlist
-    .map((slug) => getProduct(slug))
+    .map((slug) => products.find((p) => p.slug === slug))
     .filter((product): product is NonNullable<typeof product> => Boolean(product));
 
   if (!hydrated) {

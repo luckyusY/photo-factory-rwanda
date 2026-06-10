@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { brands, getProductsByBrand } from "@/lib/catalog";
+import { brandsOf, byBrand } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Shop by Brand",
@@ -8,7 +11,9 @@ export const metadata: Metadata = {
     "Canon, Sony, Nikon, Fujifilm, DJI, Apple, and more — genuine stock with local warranty in Kigali.",
 };
 
-export default function BrandsPage() {
+export default async function BrandsPage() {
+  const allProducts = await getAllProducts();
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="text-3xl font-black">Shop by Brand</h1>
@@ -17,8 +22,8 @@ export default function BrandsPage() {
         covered by Photo Factory warranty support.
       </p>
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {brands.map((brand) => {
-          const count = getProductsByBrand(brand).length;
+        {brandsOf(allProducts).map((brand) => {
+          const count = byBrand(allProducts, brand).length;
           return (
             <Link
               key={brand}

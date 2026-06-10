@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const footerColumns = [
@@ -50,7 +51,13 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 border-b border-white/15 pb-8 lg:grid-cols-[1.2fr_2fr]">
           <div>
-            <p className="text-3xl font-black">PhotoFactory</p>
+            <Image
+              src="/logo.svg"
+              alt="Photo Factory Shop"
+              width={228}
+              height={44}
+              className="h-10 w-auto"
+            />
             <p className="mt-3 max-w-md text-sm leading-6 text-white/70">
               Your one-stop shop for electronics, photography, and content
               creation equipment in Kigali.
@@ -81,7 +88,12 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="flex flex-col justify-between gap-3 py-5 text-xs text-white/55 sm:flex-row">
-          <p>© 2026 Photo Factory Rwanda. All rights reserved.</p>
+          <p>
+            © 2026 Photo Factory Rwanda. All rights reserved. •{" "}
+            <Link href="/admin" className="hover:text-white">
+              Admin
+            </Link>
+          </p>
           <p>Mobile Money • Airtel Money • Visa • Mastercard • Cash pickup</p>
         </div>
       </div>

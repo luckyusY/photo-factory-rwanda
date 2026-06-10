@@ -5,22 +5,15 @@ import { notFound } from "next/navigation";
 import { BuyBox } from "@/components/buy-box";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
-import {
-  formatRWF,
-  getCategory,
-  getProduct,
-  getRelatedProducts,
-  products,
-} from "@/lib/catalog";
+import { formatRWF, getCategory, relatedOf } from "@/lib/catalog";
+import { getAllProducts, getProductBySlug } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = getProduct((await params).slug);
+  const product = await getProductBySlug((await params).slug);
   if (!product) return {};
   return {
     title: product.name,
@@ -29,11 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = getProduct((await params).slug);
+  const product = await getProductBySlug((await params).slug);
   if (!product) notFound();
 
   const category = getCategory(product.category);
-  const related = getRelatedProducts(product);
+  const related = relatedOf(await getAllProducts(), product);
   const discount = product.oldPrice
     ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
     : 0;

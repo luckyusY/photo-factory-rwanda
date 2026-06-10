@@ -4,16 +4,15 @@ import {
   ProductListing,
   type ListingSearchParams,
 } from "@/components/product-listing";
-import { categories, getCategory, getProductsByCategory } from "@/lib/catalog";
+import { brandsOf, byCategory, getCategory } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ category: string }>;
   searchParams: Promise<ListingSearchParams>;
 };
-
-export function generateStaticParams() {
-  return categories.map((category) => ({ category: category.slug }));
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCategory((await params).category);
@@ -28,8 +27,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const category = getCategory((await params).category);
   if (!category) notFound();
 
-  const products = getProductsByCategory(category.slug);
-  const availableBrands = [...new Set(products.map((p) => p.brand))].sort();
+  const products = byCategory(await getAllProducts(), category.slug);
 
   return (
     <main>
@@ -39,7 +37,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         basePath={`/c/${category.slug}`}
         products={products}
         params={await searchParams}
-        availableBrands={availableBrands}
+        availableBrands={brandsOf(products)}
       />
     </main>
   );

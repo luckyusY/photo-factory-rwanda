@@ -13,7 +13,10 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
-import { categories, getDeals, getUsedProducts } from "@/lib/catalog";
+import { categories, dealsOf, usedOf } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 const heroImages = {
   camera:
@@ -31,9 +34,10 @@ const services = [
   { icon: BadgeCheck, label: "Genuine products with warranty support" },
 ];
 
-export default function Home() {
-  const featuredDeals = getDeals().slice(0, 4);
-  const usedPicks = getUsedProducts().slice(0, 4);
+export default async function Home() {
+  const allProducts = await getAllProducts();
+  const featuredDeals = dealsOf(allProducts).slice(0, 4);
+  const usedPicks = usedOf(allProducts).slice(0, 4);
 
   return (
     <main className="min-h-screen overflow-x-hidden">

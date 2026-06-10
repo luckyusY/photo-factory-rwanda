@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
-import { getProduct } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
 
 type OrderPayload = {
   customer?: Record<string, string>;
@@ -25,9 +25,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
   }
 
+  const allProducts = await getAllProducts();
   const items = (payload.items ?? [])
     .map((item) => {
-      const product = getProduct(item.slug);
+      const product = allProducts.find((p) => p.slug === item.slug);
       const qty = Math.max(1, Math.min(99, Math.floor(Number(item.qty) || 1)));
       return product
         ? {

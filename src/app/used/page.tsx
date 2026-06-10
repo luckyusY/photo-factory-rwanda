@@ -4,7 +4,10 @@ import {
   ProductListing,
   type ListingSearchParams,
 } from "@/components/product-listing";
-import { getUsedProducts } from "@/lib/catalog";
+import { brandsOf, usedOf } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Used & Open Box",
@@ -17,8 +20,8 @@ export default async function UsedPage({
 }: {
   searchParams: Promise<ListingSearchParams>;
 }) {
-  const used = getUsedProducts();
-  const availableBrands = [...new Set(used.map((p) => p.brand))].sort();
+  const used = usedOf(await getAllProducts());
+  const availableBrands = brandsOf(used);
 
   return (
     <main>

@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useStore } from "@/components/store-context";
 
 export function HeaderActions() {
-  const { cart, wishlist, hydrated } = useStore();
+  const { cart, wishlist, profile, hydrated } = useStore();
   const cartCount = hydrated ? cart.reduce((sum, item) => sum + item.qty, 0) : 0;
   const wishlistCount = hydrated ? wishlist.length : 0;
+  const firstName = hydrated && profile ? profile.name.split(" ")[0] : null;
 
   return (
     <div className="flex items-center gap-3">
@@ -17,7 +18,7 @@ export function HeaderActions() {
       >
         <User aria-hidden size={32} strokeWidth={1.7} />
         <span>
-          Sign in
+          {firstName ? `Hi, ${firstName}` : "Sign in"}
           <br />
           My Account
         </span>

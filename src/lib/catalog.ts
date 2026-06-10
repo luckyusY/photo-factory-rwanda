@@ -124,7 +124,7 @@ type Seed = Omit<Product, "id" | "slug" | "rating" | "reviews"> & {
   reviews?: number;
 };
 
-const slugify = (name: string) =>
+export const slugify = (name: string) =>
   name
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
@@ -1010,28 +1010,28 @@ export function getCategory(slug: string) {
   return categories.find((c) => c.slug === slug);
 }
 
-export function getProduct(slug: string) {
-  return products.find((p) => p.slug === slug);
+export function brandsOf(list: Product[]) {
+  return [...new Set(list.map((p) => p.brand))].sort();
 }
 
-export function getProductsByCategory(slug: string) {
-  return products.filter((p) => p.category === slug);
+export function byCategory(list: Product[], slug: string) {
+  return list.filter((p) => p.category === slug);
 }
 
-export function getProductsByBrand(brand: string) {
-  return products.filter((p) => p.brand.toLowerCase() === brand.toLowerCase());
+export function byBrand(list: Product[], brand: string) {
+  return list.filter((p) => p.brand.toLowerCase() === brand.toLowerCase());
 }
 
-export function getDeals() {
-  return products.filter((p) => p.oldPrice && p.oldPrice > p.price);
+export function dealsOf(list: Product[]) {
+  return list.filter((p) => p.oldPrice && p.oldPrice > p.price);
 }
 
-export function getUsedProducts() {
-  return products.filter((p) => p.condition !== "New");
+export function usedOf(list: Product[]) {
+  return list.filter((p) => p.condition !== "New");
 }
 
-export function getRelatedProducts(product: Product, count = 4) {
-  return products
+export function relatedOf(list: Product[], product: Product, count = 4) {
+  return list
     .filter((p) => p.slug !== product.slug)
     .sort((a, b) => {
       const score = (p: Product) =>
@@ -1042,10 +1042,10 @@ export function getRelatedProducts(product: Product, count = 4) {
     .slice(0, count);
 }
 
-export function searchProducts(query: string) {
+export function searchIn(list: Product[], query: string) {
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   if (terms.length === 0) return [];
-  return products.filter((p) => {
+  return list.filter((p) => {
     const haystack = [
       p.name,
       p.brand,

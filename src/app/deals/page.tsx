@@ -3,7 +3,10 @@ import {
   ProductListing,
   type ListingSearchParams,
 } from "@/components/product-listing";
-import { getDeals } from "@/lib/catalog";
+import { brandsOf, dealsOf } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Deals",
@@ -16,8 +19,7 @@ export default async function DealsPage({
 }: {
   searchParams: Promise<ListingSearchParams>;
 }) {
-  const deals = getDeals();
-  const availableBrands = [...new Set(deals.map((p) => p.brand))].sort();
+  const deals = dealsOf(await getAllProducts());
 
   return (
     <main>
@@ -27,7 +29,7 @@ export default async function DealsPage({
         basePath="/deals"
         products={deals}
         params={await searchParams}
-        availableBrands={availableBrands}
+        availableBrands={brandsOf(deals)}
       />
     </main>
   );

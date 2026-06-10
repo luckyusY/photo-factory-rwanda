@@ -3,7 +3,10 @@ import {
   ProductListing,
   type ListingSearchParams,
 } from "@/components/product-listing";
-import { products, searchProducts } from "@/lib/catalog";
+import { brandsOf, searchIn } from "@/lib/catalog";
+import { getAllProducts } from "@/lib/products-db";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -16,8 +19,8 @@ type Props = {
 export default async function SearchPage({ searchParams }: Props) {
   const params = await searchParams;
   const query = (params.q ?? "").trim();
-  const results = query ? searchProducts(query) : products;
-  const availableBrands = [...new Set(results.map((p) => p.brand))].sort();
+  const allProducts = await getAllProducts();
+  const results = query ? searchIn(allProducts, query) : allProducts;
 
   return (
     <main>
@@ -31,7 +34,7 @@ export default async function SearchPage({ searchParams }: Props) {
         basePath="/search"
         products={results}
         params={params}
-        availableBrands={availableBrands}
+        availableBrands={brandsOf(results)}
         extraParams={query ? { q: query } : undefined}
       />
     </main>

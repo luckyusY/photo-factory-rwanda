@@ -3,14 +3,16 @@
 import { Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useCatalog } from "@/components/catalog-client";
 import { useStore } from "@/components/store-context";
-import { formatRWF, getProduct } from "@/lib/catalog";
+import { formatRWF } from "@/lib/catalog";
 
 export function useCartLines() {
   const { cart } = useStore();
+  const { products } = useCatalog();
   return cart
     .map((item) => {
-      const product = getProduct(item.slug);
+      const product = products.find((p) => p.slug === item.slug);
       return product ? { product, qty: item.qty } : null;
     })
     .filter((line): line is NonNullable<typeof line> => line !== null);

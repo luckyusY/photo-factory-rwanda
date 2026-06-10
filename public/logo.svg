@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 120" role="img" aria-label="Photo Factory Shop">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd76a"/>
+      <stop offset="0.55" stop-color="#f2b62a"/>
+      <stop offset="1" stop-color="#d99a06"/>
+    </linearGradient>
+  </defs>
+  <!-- Camera body -->
+  <path d="M22 38 q0 -8 8 -8 h18 l9 -13 h26 l9 13 h18 q8 0 8 8 v52 q0 8 -8 8 h-80 q-8 0 -8 -8 z"
+        fill="none" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- Lens outer ring (open crescent) -->
+  <path d="M 88.9 47.9 A 22 22 0 1 0 91.8 79.4" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+  <!-- Lens inner crescent -->
+  <path d="M 84.5 56.5 A 12 12 0 1 0 86.2 73.6" fill="none" stroke="url(#gold)" stroke-width="5" stroke-linecap="round"/>
+  <!-- Wordmark -->
+  <text x="150" y="66" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" letter-spacing="2">
+    <tspan fill="#ffffff">PHOTO </tspan><tspan fill="url(#gold)">FACTORY</tspan>
+  </text>
+  <line x1="152" y1="88" x2="312" y2="88" stroke="url(#gold)" stroke-width="2.5"/>
+  <text x="370" y="96" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="600" letter-spacing="12" fill="url(#gold)" text-anchor="middle">SHOP</text>
+  <line x1="428" y1="88" x2="588" y2="88" stroke="url(#gold)" stroke-width="2.5"/>
+</svg>
