@@ -44,6 +44,22 @@ const mobileCategoryItems = [
 const campaignImage = (name: string, width = 1400) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
 
+const categoryImage = (name: string, width = 320) =>
+  `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width},h_${width}/v1/photo-factory-rwanda/hero/${name}`;
+
+const categoryVisuals: Record<string, string> = {
+  cameras: categoryImage("camera-shipping"),
+  lenses: categoryImage("lens-trade-up"),
+  lighting: categoryImage("studio-upgrade"),
+  computers: categoryImage("gaming-power"),
+  video: categoryImage("creator-gimbal"),
+  audio: categoryImage("vip-rewards"),
+  phones: categoryImage("gifts-for-grads"),
+  tripods: categoryImage("outdoor-gear"),
+  accessories: categoryImage("gifts-for-grads"),
+  drones: categoryImage("drone-preorder"),
+};
+
 const promoCampaigns = [
   {
     title: "Enter to win a RWF 50M studio upgrade",
@@ -52,6 +68,7 @@ const promoCampaigns = [
     cta: "Submit your studio",
     href: "/support",
     image: campaignImage("studio-upgrade"),
+    mobileImage: campaignImage("studio-upgrade-mobile", 720),
     tone: "yellow",
   },
   {
@@ -61,6 +78,7 @@ const promoCampaigns = [
     cta: "Shop now",
     href: "/deals",
     image: campaignImage("gifts-for-grads"),
+    mobileImage: campaignImage("gifts-for-grads-mobile", 720),
     tone: "white",
   },
   {
@@ -70,6 +88,7 @@ const promoCampaigns = [
     cta: "Learn more",
     href: "/c/cameras",
     image: campaignImage("wedding-season", 1600),
+    mobileImage: campaignImage("wedding-season-mobile", 720),
     tone: "wedding",
   },
 ];
@@ -78,7 +97,6 @@ export default async function Home() {
   const allProducts = await getAllProducts();
   const featuredDeals = dealsOf(allProducts).slice(0, 4);
   const usedPicks = usedOf(allProducts).slice(0, 4);
-  const categoryBySlug = new Map(categories.map((category) => [category.slug, category]));
 
   return (
     <main className="min-h-screen overflow-x-hidden">
@@ -90,10 +108,7 @@ export default async function Home() {
         </h2>
         <div className="grid grid-cols-3 gap-1">
           {mobileCategoryItems.map((item) => {
-            const image =
-              categoryBySlug.get(item.imageSlug)?.image ??
-              categoryBySlug.get(item.slug)?.image ??
-              "/logo.svg";
+            const image = categoryVisuals[item.imageSlug] ?? categoryVisuals[item.slug];
             return (
               <Link
                 key={`${item.label}-${item.slug}`}
@@ -125,7 +140,7 @@ export default async function Home() {
               className="group relative h-44 w-48 shrink-0 overflow-hidden bg-black"
             >
               <Image
-                src={department.image}
+                src={categoryVisuals[department.slug] ?? department.image}
                 alt={department.name}
                 fill
                 sizes="192px"
@@ -154,10 +169,17 @@ export default async function Home() {
                 alt=""
                 fill
                 sizes={index === 2 ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
-                className="object-cover transition duration-500 group-hover:scale-[1.02]"
+                className="hidden object-cover transition duration-500 group-hover:scale-[1.02] md:block"
+              />
+              <Image
+                src={campaign.mobileImage}
+                alt={campaign.title}
+                fill
+                sizes="100vw"
+                className="object-cover md:hidden"
               />
               <div
-                className={`absolute inset-0 ${
+                className={`absolute inset-0 hidden md:block ${
                   campaign.tone === "yellow"
                     ? "bg-[linear-gradient(90deg,rgba(255,205,27,0.96)_0%,rgba(255,205,27,0.86)_46%,transparent_72%)]"
                     : campaign.tone === "wedding"
@@ -165,7 +187,7 @@ export default async function Home() {
                       : "bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.84)_52%,transparent_82%)]"
                 }`}
               />
-              <div className="absolute inset-y-0 left-0 flex w-[66%] max-w-[560px] flex-col justify-center px-7 py-8 text-black sm:px-10 md:w-[62%]">
+              <div className="absolute inset-y-0 left-0 hidden w-[66%] max-w-[560px] flex-col justify-center px-7 py-8 text-black sm:px-10 md:flex md:w-[62%]">
                 <p
                   className={`text-sm font-black uppercase tracking-[0.2em] ${
                     campaign.tone === "wedding" ? "text-black" : "text-[#0b315f]"
