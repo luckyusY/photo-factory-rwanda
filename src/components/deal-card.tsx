@@ -12,30 +12,30 @@ export function DealCard({ product }: { product: Product }) {
   );
 
   return (
-    <article className="relative flex w-[225px] shrink-0 flex-col bg-white px-4 pb-4 pt-9 sm:w-[238px]">
+    <article className="relative flex w-[160px] shrink-0 flex-col bg-white px-2 pb-3 pt-7 sm:w-[238px] sm:px-4 sm:pb-4 sm:pt-9">
       {save > 0 && (
-        <span className="absolute left-0 top-3 bg-[#1e7d32] py-1 pl-3 pr-5 text-[11px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-9px)_50%,100%_100%,0_100%)]">
+        <span className="absolute left-0 top-2 bg-[#1e7d32] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
         </span>
       )}
       <Link
         href={`/p/${product.slug}`}
-        className="relative block h-36 w-full overflow-hidden"
+        className="relative block h-[118px] w-full overflow-hidden sm:h-36"
       >
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="238px"
+          sizes="(min-width: 640px) 238px, 160px"
           className="object-contain"
         />
       </Link>
-      <Link href={`/p/${product.slug}`} className="mt-4 block">
-        <h3 className="line-clamp-3 min-h-[60px] text-[15px] leading-5 text-black hover:text-[#0066c0] hover:underline">
+      <Link href={`/p/${product.slug}`} className="mt-2 block sm:mt-4">
+        <h3 className="line-clamp-3 min-h-[54px] text-[14px] font-medium leading-[18px] text-black hover:text-[#0066c0] hover:underline sm:min-h-[60px] sm:text-[15px] sm:leading-5">
           {product.name}
         </h3>
       </Link>
-      <div className="mt-1.5 flex items-center gap-1">
+      <div className="mt-1 hidden items-center gap-1 sm:flex">
         <span className="flex text-[#f5a623]">
           {Array.from({ length: 5 }).map((_, index) => (
             <Star
@@ -47,17 +47,17 @@ export function DealCard({ product }: { product: Product }) {
         </span>
         <span className="text-xs text-[#6b7280]">({product.reviews})</span>
       </div>
-      <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
-        <span className="text-[19px] font-bold leading-none text-black">
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5 sm:mt-1.5 sm:gap-x-2">
+        <span className="text-[16px] font-bold leading-none text-black sm:text-[19px]">
           {formatRWF(product.price)}
         </span>
         {product.oldPrice && (
-          <s className="text-[13px] font-semibold text-[#c0392b]">
+          <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#c0392b]">
             {formatRWF(product.oldPrice)}
           </s>
         )}
       </div>
-      <p className="mt-1.5 text-[11px] leading-4 text-black">
+      <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
         <strong className="text-[#1e7d32]">{formatRWF(monthly)}</strong>
         /mo suggested payments with {months}-month special financing.{" "}
         <Link href="/support" className="text-[#0066c0] hover:underline">

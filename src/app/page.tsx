@@ -267,22 +267,23 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="deals" className="bg-[#eef0f2] py-5">
-        <div className="mx-auto max-w-[1368px] px-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="flex items-center gap-2.5 text-[24px] font-semibold text-black sm:text-[28px]">
-              <Trophy size={27} strokeWidth={1.8} aria-hidden />
+      <section id="deals" className="bg-[#eef0f2] py-3 sm:py-5">
+        <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="flex items-center gap-1.5 text-[24px] font-normal leading-none text-black sm:gap-2.5 sm:text-[28px] sm:font-semibold">
+              <Trophy size={24} strokeWidth={1.8} aria-hidden className="sm:size-[27px]" />
               Today&apos;s Top Deals
             </h2>
             <Link
               href="/deals"
-              className="text-sm font-semibold text-[#0066c0] hover:underline"
+              className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline sm:font-semibold"
             >
-              Browse All Deals &amp; Specials
+              <span className="sm:hidden">See All</span>
+              <span className="hidden sm:inline">Browse All Deals &amp; Specials</span>
             </Link>
           </div>
-          <div className="mt-4 overflow-x-auto pb-2">
-            <div className="grid grid-flow-col grid-rows-2 gap-3">
+          <div className="mt-3 overflow-x-auto pb-1 sm:mt-4 sm:pb-2">
+            <div className="grid grid-flow-col grid-rows-2 gap-1 sm:gap-3">
               {topDeals.map((product) => (
                 <DealCard key={product.slug} product={product} />
               ))}
