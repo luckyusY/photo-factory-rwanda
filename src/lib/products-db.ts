@@ -54,7 +54,10 @@ export const getAllProducts = cache(async (): Promise<Product[]> => {
     return merged;
   } catch (error) {
     skipDbUntil = Date.now() + DB_FAILURE_COOLDOWN_MS;
-    console.error("Failed to load products from MongoDB", error);
+    console.warn(
+      "Failed to load products from MongoDB; using local catalog fallback.",
+      error instanceof Error ? error.message : error,
+    );
     return seedProducts;
   }
 });

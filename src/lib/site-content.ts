@@ -35,7 +35,10 @@ async function readItems<T>(key: ContentKey): Promise<T[] | null> {
     return Array.isArray(items) && items.length > 0 ? (items as T[]) : null;
   } catch (error) {
     skipContentDbUntil = Date.now() + DB_FAILURE_COOLDOWN_MS;
-    console.error(`Failed to load site content "${key}"`, error);
+    console.warn(
+      `Failed to load site content "${key}"; using defaults.`,
+      error instanceof Error ? error.message : error,
+    );
     return null;
   }
 }

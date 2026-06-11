@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 import Link from "next/link";
 import { FilterPanel } from "@/components/filter-panel";
-import { ProductCard } from "@/components/product-card";
+import { ProductResults } from "@/components/product-results";
 import { SortSelect } from "@/components/sort-select";
 import {
   formatRWF,
@@ -14,6 +14,7 @@ export type ListingSearchParams = {
   brand?: string;
   condition?: string;
   price?: string;
+  rating?: string;
   sort?: string;
 };
 
@@ -29,6 +30,8 @@ const conditions = [
   { value: "open-box", label: "Open Box" },
   { value: "pre-owned", label: "Pre-Owned" },
 ];
+
+const ratings = [4, 3, 2, 1];
 
 const conditionMatches = (value: string, product: Product) =>
   product.condition.toLowerCase().replace(" ", "-") === value;
@@ -58,6 +61,10 @@ export function applyListingFilters(
       (p) => p.price >= minValue && p.price <= maxValue,
     );
   }
+  if (params.rating) {
+    const minRating = Number(params.rating) || 0;
+    filtered = filtered.filter((p) => p.rating >= minRating);
+  }
   return sortProducts(filtered, (params.sort as SortOption) ?? "featured");
 }
 
@@ -85,6 +92,7 @@ export function ProductListing({
   availableBrands,
   extraParams,
   hideConditionFilter = false,
+  categoryLinks = [],
 }: {
   title: string;
   subtitle?: string;
@@ -94,10 +102,13 @@ export function ProductListing({
   availableBrands: string[];
   extraParams?: Record<string, string>;
   hideConditionFilter?: boolean;
+  categoryLinks?: { label: string; href: string; count?: number }[];
 }) {
   const filtered = applyListingFilters(products, params);
   const selectedBrands = (params.brand ?? "").split(",").filter(Boolean);
-  const hasFilters = Boolean(params.brand || params.condition || params.price);
+  const hasFilters = Boolean(
+    params.brand || params.condition || params.price || params.rating,
+  );
 
   const toggleBrand = (brand: string) => {
     const key = brand.toLowerCase();
@@ -135,6 +146,27 @@ export function ProductListing({
             >
               Clear all filters
             </Link>
+          )}
+          {categoryLinks.length > 0 && (
+            <div className="border border-[#d7e2ef] bg-white p-4">
+              <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
+                Categories
+              </h2>
+              <div className="mt-3 space-y-1">
+                {categoryLinks.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center justify-between py-1.5 text-[14px] font-medium text-[#0066c0] hover:underline"
+                  >
+                    <span>{item.label}</span>
+                    {typeof item.count === "number" && (
+                      <span className="text-xs text-[#6b7280]">({item.count})</span>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            </div>
           )}
           <FilterGroup title="Brand">
             {availableBrands.map((brand) => {
@@ -186,24 +218,28 @@ export function ProductListing({
               })}
             </FilterGroup>
           )}
+          <FilterGroup title="Ratings & Reviews">
+            {ratings.map((rating) => {
+              const value = String(rating);
+              const active = params.rating === value;
+              return (
+                <FilterLink
+                  key={rating}
+                  href={buildHref(
+                    basePath,
+                    params,
+                    { rating: active ? undefined : value },
+                    extraParams,
+                  )}
+                  active={active}
+                >
+                  {rating}+ stars
+                </FilterLink>
+              );
+            })}
+          </FilterGroup>
         </FilterPanel>
-        <div>
-          {filtered.length === 0 ? (
-            <div className="rounded bg-white p-10 text-center ring-1 ring-black/10">
-              <p className="text-lg font-black">No products match these filters.</p>
-              <p className="mt-2 text-sm text-[#6b7280]">
-                Try removing a filter, or contact us - we can source most gear on
-                request.
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-3">
-              {filtered.map((product) => (
-                <ProductCard key={product.slug} product={product} />
-              ))}
-            </div>
-          )}
-        </div>
+        <ProductResults products={filtered} />
       </div>
     </div>
   );

@@ -28,7 +28,9 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BrandLogoTile } from "@/components/brand-logo-tile";
 import { useStore } from "@/components/store-context";
+import { featuredBrandLogos } from "@/lib/brand-logos";
 
 const tabs = ["Products", "Brands", "Used", "Deals"] as const;
 
@@ -143,23 +145,6 @@ const productRows: MenuItem[] = [
     ],
   },
   { label: "Optics & Binoculars", href: "/c/tripods", icon: Search, image: img.binoculars },
-];
-
-const brandRows = [
-  "Canon",
-  "Apple",
-  "Nikon",
-  "Sony",
-  "Fujifilm",
-  "Bose",
-  "OM System",
-  "Profoto",
-  "Microsoft",
-  "Atomos",
-  "Leica",
-  "DJI",
-  "Blackmagicdesign",
-  "MSI",
 ];
 
 const usedRows = [
@@ -319,15 +304,13 @@ export function MobileShopMenu() {
                     </Link>
                   </div>
                   <div className="grid grid-cols-2 gap-1">
-                    {brandRows.map((brand) => (
-                      <Link
-                        key={brand}
-                        href={`/brands/${brand.toLowerCase()}`}
+                    {featuredBrandLogos.map((brand) => (
+                      <BrandLogoTile
+                        key={brand.name}
+                        brand={brand}
+                        compact
                         onClick={close}
-                        className="grid h-28 place-items-center bg-white px-2 text-center text-2xl font-black text-[#111827] shadow-sm"
-                      >
-                        {brand}
-                      </Link>
+                      />
                     ))}
                   </div>
                 </>
