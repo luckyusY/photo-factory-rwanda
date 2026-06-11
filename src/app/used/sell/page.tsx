@@ -72,8 +72,8 @@ const buyLists = [
 
 export default function SellPage() {
   return (
-    <main className="bg-[#f3f5f8]">
-      <section className="bg-[#003b70] text-white">
+    <main className="bg-[#f6f2ea]">
+      <section className="bg-[#15110a] text-white">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
           <div>
             <nav className="text-xs font-semibold text-white/75">
@@ -101,13 +101,13 @@ export default function SellPage() {
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href="#quote"
-                className="bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+                className="bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
               >
                 Get my quote
               </a>
               <Link
                 href="/used"
-                className="border border-white/50 px-6 py-3 text-sm font-black uppercase text-white hover:bg-white hover:text-[#003b70]"
+                className="border border-white/50 px-6 py-3 text-sm font-black uppercase text-white hover:bg-white hover:text-[#15110a]"
               >
                 Shop pre-owned
               </Link>
@@ -139,12 +139,12 @@ export default function SellPage() {
       <section className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid gap-4 md:grid-cols-3">
           {steps.map((step, index) => (
-            <div key={step.title} className="border border-[#d7e2ef] bg-white p-5">
+            <div key={step.title} className="border border-[#e7ddc7] bg-white p-5">
               <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center bg-[#005aa6] text-sm font-black text-white">
+                <span className="grid h-9 w-9 place-items-center bg-[#8b641e] text-sm font-black text-white">
                   {index + 1}
                 </span>
-                <step.icon className="text-[#005aa6]" size={26} />
+                <step.icon className="text-[#8b641e]" size={26} />
               </div>
               <h2 className="mt-4 text-xl font-semibold text-black">{step.title}</h2>
               <p className="mt-2 text-sm leading-6 text-[#4b5563]">{step.body}</p>
@@ -153,8 +153,8 @@ export default function SellPage() {
         </div>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
-          <section className="border border-[#d7e2ef] bg-white p-6">
-            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+          <section className="border border-[#e7ddc7] bg-white p-6">
+            <p className="text-sm font-black uppercase tracking-wider text-[#8b641e]">
               What we buy
             </p>
             <h2 className="mt-2 text-2xl font-semibold text-black">
@@ -163,13 +163,13 @@ export default function SellPage() {
             <div className="mt-6 grid gap-6 md:grid-cols-3">
               {buyLists.map((group) => (
                 <div key={group.title}>
-                  <group.icon className="text-[#005aa6]" size={28} />
+                  <group.icon className="text-[#8b641e]" size={28} />
                   <h3 className="mt-3 text-lg font-semibold">{group.title}</h3>
                   <ul className="mt-3 space-y-2 text-sm leading-5 text-[#374151]">
                     {group.items.map((item) => (
                       <li key={item} className="flex gap-2">
                         <CheckCircle2
-                          className="mt-0.5 shrink-0 text-[#15803d]"
+                          className="mt-0.5 shrink-0 text-[#8b641e]"
                           size={15}
                         />
                         {item}
@@ -179,7 +179,7 @@ export default function SellPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-7 border-t border-[#d7e2ef] pt-5 text-sm leading-6 text-[#4b5563]">
+            <div className="mt-7 border-t border-[#e7ddc7] pt-5 text-sm leading-6 text-[#4b5563]">
               Items must power on and function. Bring original boxes,
               batteries, chargers, invoices, and accessories for the strongest
               offer. Condition, market demand, and completeness affect the final
@@ -187,8 +187,8 @@ export default function SellPage() {
             </div>
           </section>
 
-          <aside className="h-fit border border-[#d7e2ef] bg-white p-6">
-            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+          <aside className="h-fit border border-[#e7ddc7] bg-white p-6">
+            <p className="text-sm font-black uppercase tracking-wider text-[#8b641e]">
               Local support
             </p>
             <h2 className="mt-2 text-2xl font-semibold">Visit us in Kigali</h2>

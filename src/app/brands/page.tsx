@@ -28,10 +28,10 @@ export default async function BrandsPage() {
             <Link
               key={brand}
               href={`/brands/${brand.toLowerCase()}`}
-              className="group grid min-h-32 place-items-center rounded bg-white p-6 text-center shadow-sm ring-1 ring-black/10 transition hover:ring-[#005aa6]"
+              className="group grid min-h-32 place-items-center rounded bg-white p-6 text-center shadow-sm ring-1 ring-black/10 transition hover:ring-[#8b641e]"
             >
               <span>
-                <span className="block text-2xl font-black group-hover:text-[#005aa6]">
+                <span className="block text-2xl font-black group-hover:text-[#8b641e]">
                   {brand}
                 </span>
                 <span className="mt-1 block text-xs font-bold text-[#6b7280]">

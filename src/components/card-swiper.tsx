@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronRight } from "lucide-react";
 import { Children, useEffect, useMemo, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -62,10 +63,11 @@ export function CardSwiper({
     // Links and images are natively draggable; block the browser's HTML5
     // drag so click-and-drag reaches Swiper instead of ghost-dragging cards.
     <div className="relative" onDragStartCapture={(event) => event.preventDefault()}>
-      <span className="pointer-events-none absolute right-2 top-1 z-20 rounded-full bg-[#d9a441]/95 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-black shadow-sm sm:hidden">
+      <span className="swipe-hint pointer-events-none absolute right-2 top-1 z-20 flex items-center gap-0.5 rounded-full bg-[#15110a]/90 py-0.5 pl-2 pr-1 text-[10px] font-black uppercase tracking-wide text-[#ffcf57] shadow-sm ring-1 ring-[#d9a441]/40 sm:hidden">
         Swipe
+        <ChevronRight aria-hidden size={12} />
       </span>
-      <span className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-9 bg-gradient-to-l from-[#eeeeee] to-transparent sm:hidden" />
+      <span className="rail-fade pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-10 sm:hidden" />
       <Swiper
         modules={[Navigation, FreeMode, A11y]}
         onSwiper={setSwiper}

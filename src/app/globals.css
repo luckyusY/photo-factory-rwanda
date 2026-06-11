@@ -1,22 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand palette — sourced from the Photo Factory logo: black, gold, white */
+  --brand-black: #15110a;
+  --brand-ink: #050505;
+  --brand-gold: #8b641e;
+  --brand-gold-bright: #d9a441;
+  --brand-gold-light: #ffcf57;
+
+  --background: #f6f2ea;
+  --foreground: #15110a;
+  --surface: #ffffff;
+  --rail-fade: #f6f2ea;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-black: var(--brand-black);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-bright: var(--brand-gold-bright);
   --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Class-based dark mode — toggled by the theme switcher (see ThemeToggle). */
+html.dark {
+  --background: #0c0a07;
+  --foreground: #ece3d3;
+  --surface: #15110a;
+  --rail-fade: #0c0a07;
+  color-scheme: dark;
 }
 
 body {
@@ -60,7 +74,7 @@ a:active {
 /* Thin, unobtrusive scrollbars for product rails */
 .rail-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #c3ccd6 transparent;
+  scrollbar-color: #e7ddc7 transparent;
   scroll-snap-type: x proximity;
   scroll-padding-left: 8px;
   -webkit-overflow-scrolling: touch;
@@ -69,7 +83,7 @@ a:active {
   height: 6px;
 }
 .rail-scroll::-webkit-scrollbar-thumb {
-  background: #c3ccd6;
+  background: #e7ddc7;
   border-radius: 9999px;
 }
 .rail-scroll::-webkit-scrollbar-track {
@@ -92,7 +106,7 @@ a:active {
 }
 .hero-swiper .swiper-pagination-bullet-active {
   background: #ffffff;
-  border-color: #005aa6;
+  border-color: #8b641e;
   transform: scale(1.2);
 }
 .hero-swiper .swiper-button-prev,
@@ -133,6 +147,14 @@ a:active {
 .card-swiper {
   width: 100%;
 }
+/* Stretch every slide to the tallest card so titles/prices line up and all
+   product cards in a rail share one height. */
+.card-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+.card-swiper .swiper-slide {
+  height: auto;
+}
 .card-swiper .swiper-slide,
 .card-swiper .swiper-slide a,
 .card-swiper .swiper-slide img {
@@ -146,14 +168,14 @@ a:active {
   margin-top: -20px;
   border-radius: 9999px;
   background: #ffffff;
-  color: #004f94;
+  color: #8b641e;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-  border: 1px solid #d7e2ef;
+  border: 1px solid #e7ddc7;
   transition: background 0.15s ease, transform 0.15s ease, opacity 0.2s ease;
 }
 .card-swiper .swiper-button-prev:hover,
 .card-swiper .swiper-button-next:hover {
-  background: #eef6ff;
+  background: #f6f2ea;
   transform: scale(1.06);
 }
 .card-swiper .swiper-button-prev::after,
@@ -199,7 +221,7 @@ a:active {
   list-style: decimal;
 }
 .product-rich-text a {
-  color: #0066c0;
+  color: #8b641e;
   font-weight: 700;
   text-decoration: underline;
 }
@@ -208,7 +230,7 @@ a:active {
   border-collapse: collapse;
 }
 .product-rich-text :where(th, td) {
-  border: 1px solid #d7e2ef;
+  border: 1px solid #e7ddc7;
   padding: 0.65rem;
   text-align: left;
 }
@@ -218,7 +240,7 @@ a:active {
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: #e4e9ef;
+  background: #e7ddc7;
 }
 .skeleton::after {
   content: "";
@@ -313,6 +335,72 @@ body.no-scroll {
   .footer-acc .footer-acc-chevron {
     display: none;
   }
+}
+
+/* ---------- Dark theme surface remaps ---------- */
+/* The site uses inline brand colors; these rules flip the common light
+   surfaces to brand-black equivalents when the .dark class is active so the
+   whole site responds to the theme switcher without per-component edits. */
+html.dark .bg-white,
+html.dark .bg-\[\#ffffff\] {
+  background-color: #15110a !important;
+}
+html.dark .bg-\[\#f6f2ea\],
+html.dark .bg-\[\#f1f1f1\],
+html.dark .bg-\[\#f2f2f2\],
+html.dark .bg-\[\#f5f5f5\],
+html.dark .bg-\[\#f0f0f0\] {
+  background-color: #0c0a07 !important;
+}
+html.dark .bg-\[\#f8fafc\],
+html.dark .bg-\[\#fafafa\],
+html.dark .bg-\[\#f7f9fb\],
+html.dark .bg-\[\#eeeeee\] {
+  background-color: #1c1710 !important;
+}
+html.dark .text-black,
+html.dark .text-\[\#111827\],
+html.dark .text-\[\#15110a\],
+html.dark .text-\[\#050505\] {
+  color: #ece3d3 !important;
+}
+html.dark .text-\[\#333\],
+html.dark .text-\[\#374151\],
+html.dark .text-\[\#4b5563\] {
+  color: #c4b9a4 !important;
+}
+html.dark .text-\[\#6b7280\],
+html.dark .text-\[\#777\],
+html.dark .text-\[\#9ca3af\] {
+  color: #9a8f7d !important;
+}
+/* Lift the gold links to the brighter brand gold on dark backgrounds. */
+html.dark .text-\[\#8b641e\] {
+  color: #d9a441 !important;
+}
+html.dark .border-\[\#e7ddc7\],
+html.dark .border-\[\#d9d9d9\],
+html.dark .border-\[\#e5e7eb\],
+html.dark .border-\[\#eeeeee\] {
+  border-color: #2a2113 !important;
+}
+
+/* ---------- Horizontal scroll affordance (mobile) ---------- */
+/* Fade on the right edge of rails hints there is more to scroll. */
+.rail-fade {
+  background: linear-gradient(to left, var(--rail-fade), transparent);
+}
+@keyframes swipe-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+.swipe-hint {
+  animation: swipe-nudge 1.5s ease-in-out infinite;
 }
 
 /* ---------- Reduced motion ---------- */

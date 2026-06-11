@@ -164,7 +164,7 @@ export function SiteFooter() {
               </div>
             </div>
             <div className="flex items-center gap-2 rounded border border-white/20 bg-white/5 px-3 py-2">
-              <ShieldCheck size={26} className="text-[#5fd07a]" />
+              <ShieldCheck size={26} className="text-[#8b641e]" />
               <span className="text-xs font-bold leading-4">
                 Trusted in Kigali
                 <br />

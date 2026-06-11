@@ -26,7 +26,7 @@ export function CategoriesEditor({ initial }: { initial: CategoryContent[] }) {
             key={item.slug}
             className="grid gap-3 rounded bg-white p-4 ring-1 ring-black/10 lg:grid-cols-[96px_220px_minmax(0,1fr)]"
           >
-            <div className="relative h-24 w-24 overflow-hidden rounded bg-[#f3f5f8]">
+            <div className="relative h-24 w-24 overflow-hidden rounded bg-[#f6f2ea]">
               {item.image && (
                 <Image
                   src={item.image}
@@ -67,18 +67,18 @@ export function CategoriesEditor({ initial }: { initial: CategoryContent[] }) {
           </div>
         ))}
       </div>
-      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#d7e2ef] bg-[#eef2f7] py-4">
+      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea] py-4">
         <button
           onClick={() => save(items)}
           disabled={saving}
-          className="press rounded-sm bg-[#005aa6] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#004277] disabled:opacity-60"
+          className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save changes"}
         </button>
         <button
           onClick={() => save(null)}
           disabled={saving}
-          className="press rounded-sm border-2 border-[#9ca3af] px-6 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#005aa6] hover:text-[#005aa6] disabled:opacity-60"
+          className="press rounded-sm border-2 border-[#9ca3af] px-6 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#8b641e] hover:text-[#8b641e] disabled:opacity-60"
         >
           Restore defaults
         </button>

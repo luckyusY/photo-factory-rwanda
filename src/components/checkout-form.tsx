@@ -9,7 +9,7 @@ import { useStore } from "@/components/store-context";
 import { formatRWF } from "@/lib/catalog";
 
 const inputClass =
-  "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
+  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 const KIGALI_DELIVERY_FEE = 3000;
 
@@ -41,7 +41,7 @@ export function CheckoutForm() {
         <p className="text-xl font-black">Your cart is empty.</p>
         <Link
           href="/deals"
-          className="mt-5 inline-block rounded-sm bg-[#005aa6] px-6 py-3 text-sm font-black uppercase text-white"
+          className="mt-5 inline-block rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Shop deals
         </Link>
@@ -167,7 +167,7 @@ export function CheckoutForm() {
             ))}
           </div>
           {(payment === "momo" || payment === "airtel") && (
-            <p className="mt-4 rounded bg-[#e8f1fa] p-3 text-sm font-semibold text-[#1e3a5f]">
+            <p className="mt-4 rounded bg-[#f6f2ea] p-3 text-sm font-semibold text-[#15110a]">
               After placing your order, you will receive a payment prompt on
               your phone to confirm the transaction.
             </p>
@@ -180,7 +180,7 @@ export function CheckoutForm() {
         <div className="mt-4 space-y-3">
           {lines.map(({ product, qty }) => (
             <div key={product.slug} className="flex items-center gap-3">
-              <div className="relative h-14 w-16 shrink-0 overflow-hidden rounded bg-[#f5f7fb]">
+              <div className="relative h-14 w-16 shrink-0 overflow-hidden rounded bg-[#f6f2ea]">
                 <Image
                   src={product.images[0]}
                   alt={product.name}
@@ -211,17 +211,17 @@ export function CheckoutForm() {
         </dl>
         <div className="mt-3 flex justify-between border-t border-[#e5e7eb] pt-3 text-lg font-black">
           <span>Total</span>
-          <span className="text-[#b91c1c]">{formatRWF(total)}</span>
+          <span className="text-[#15110a]">{formatRWF(total)}</span>
         </div>
         {status === "error" && (
-          <p className="mt-3 text-sm font-bold text-[#b91c1c]">
+          <p className="mt-3 text-sm font-bold text-[#15110a]">
             We couldn&apos;t place your order. Please try again or call us.
           </p>
         )}
         <button
           type="submit"
           disabled={status === "sending" || !hydrated}
-          className="mt-5 w-full rounded-sm bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440] disabled:opacity-60"
+          className="mt-5 w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
         >
           {status === "sending" ? "Placing order..." : "Place order"}
         </button>
@@ -251,8 +251,8 @@ function OptionCard({
       onClick={onClick}
       className={`rounded border-2 p-3 text-left transition ${
         active
-          ? "border-[#005aa6] bg-[#e8f1fa]"
-          : "border-[#d7e2ef] hover:border-[#9bc1e0]"
+          ? "border-[#8b641e] bg-[#f6f2ea]"
+          : "border-[#e7ddc7] hover:border-[#e7ddc7]"
       }`}
     >
       <p className="text-sm font-black">{title}</p>

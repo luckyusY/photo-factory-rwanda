@@ -66,7 +66,7 @@ export default async function AdminDashboard() {
         ) : (
           <div className="mt-3 overflow-x-auto rounded bg-white ring-1 ring-black/10">
             <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="bg-[#f3f7fc] text-xs font-black uppercase tracking-wide text-[#005aa6]">
+              <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
                 <tr>
                   <th className="px-4 py-3">Order</th>
                   <th className="px-4 py-3">Customer</th>
@@ -77,10 +77,10 @@ export default async function AdminDashboard() {
                   <th className="px-4 py-3 text-right">Total</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eef2f7] font-semibold">
+              <tbody className="divide-y divide-[#f6f2ea] font-semibold">
                 {orders.map((order) => (
                   <tr key={order.orderNumber}>
-                    <td className="px-4 py-3 font-black text-[#005aa6]">
+                    <td className="px-4 py-3 font-black text-[#8b641e]">
                       {order.orderNumber}
                     </td>
                     <td className="px-4 py-3">{order.customerName}</td>
@@ -109,7 +109,7 @@ export default async function AdminDashboard() {
         ) : (
           <div className="mt-3 overflow-x-auto rounded bg-white ring-1 ring-black/10">
             <table className="w-full min-w-[640px] text-left text-sm">
-              <thead className="bg-[#f3f7fc] text-xs font-black uppercase tracking-wide text-[#005aa6]">
+              <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
                 <tr>
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Phone</th>
@@ -118,7 +118,7 @@ export default async function AdminDashboard() {
                   <th className="px-4 py-3">Goal</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eef2f7] font-semibold">
+              <tbody className="divide-y divide-[#f6f2ea] font-semibold">
                 {tradeIns.map((tradeIn, index) => (
                   <tr key={`${tradeIn.phone}-${index}`}>
                     <td className="px-4 py-3">{tradeIn.name}</td>
@@ -150,7 +150,7 @@ function StatCard({
 }) {
   const body = (
     <div className="flex items-center gap-4 rounded bg-white p-5 ring-1 ring-black/10">
-      <Icon size={30} className="text-[#005aa6]" />
+      <Icon size={30} className="text-[#8b641e]" />
       <div>
         <p className="text-2xl font-black">{value}</p>
         <p className="text-xs font-bold uppercase tracking-wide text-[#6b7280]">

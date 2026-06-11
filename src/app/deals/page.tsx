@@ -148,7 +148,7 @@ function DealsHero({ products }: { products: Product[] }) {
   const heroProducts = products.slice(0, 5);
 
   return (
-    <section className="relative overflow-hidden bg-[#003a75] text-white">
+    <section className="relative overflow-hidden bg-[#8b641e] text-white">
       <Image
         src={cld("gaming-power", 1800)}
         alt=""
@@ -157,9 +157,9 @@ function DealsHero({ products }: { products: Product[] }) {
         sizes="100vw"
         className="object-cover opacity-18"
       />
-      <div className="absolute inset-0 bg-[#003a75]/88" />
+      <div className="absolute inset-0 bg-[#8b641e]/88" />
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#001f49] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#15110a] to-transparent" />
       <div className="relative mx-auto grid min-h-[270px] max-w-[1348px] items-center gap-5 px-4 py-8 md:grid-cols-[minmax(0,1fr)_460px]">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
@@ -222,7 +222,7 @@ function DealProductCard({
       }`}
     >
       {save > 0 && (
-        <span className="absolute left-0 top-2 z-10 bg-[#178a22] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+        <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           Save {formatRWF(save)}
         </span>
       )}
@@ -241,7 +241,7 @@ function DealProductCard({
         />
       </Link>
       <Link href={`/p/${product.slug}`} className="mt-2 block">
-        <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-normal leading-[18px] text-black hover:text-[#0066c0] hover:underline">
+        <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-normal leading-[18px] text-black hover:text-[#8b641e] hover:underline">
           {product.name}
         </h3>
       </Link>
@@ -269,9 +269,9 @@ function DealProductCard({
       </div>
       {!compact && (
         <p className="mt-1.5 text-[11px] leading-4 text-black">
-          <strong className="text-[#178a22]">{formatRWF(monthly)}</strong>
+          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>
           /mo suggested payments with {months}-month special financing.{" "}
-          <Link href="/support" className="text-[#0066c0] hover:underline">
+          <Link href="/support" className="text-[#8b641e] hover:underline">
             Learn how.
           </Link>
         </p>
@@ -285,8 +285,8 @@ function TopDealsGrid({ products }: { products: Product[] }) {
     <section className="bg-[#eeeeee] py-2">
       <div className="mx-auto max-w-[1348px] px-1 sm:px-2">
         <div className="mb-1 flex items-center justify-center gap-2 text-center text-white">
-          <Trophy size={20} className="text-[#001f49]" />
-          <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#001f49]">
+          <Trophy size={20} className="text-[#15110a]" />
+          <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#15110a]">
             Your Top Deals
           </h2>
         </div>
@@ -312,7 +312,7 @@ function CategoryStrip({ products }: { products: Product[] }) {
               <Link
                 key={`${category.slug}-${category.label}`}
                 href={`/c/${category.slug}`}
-                className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#0067bd]"
+                className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#8b641e]"
               >
                 <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#8b641e]">
                   <Image
@@ -357,7 +357,7 @@ function DealShelf({
             <Icon size={18} strokeWidth={1.8} className="text-[#444]" />
             {title}
           </h2>
-          <Link href={href} className="text-xs font-medium text-[#0066c0] hover:underline">
+          <Link href={href} className="text-xs font-medium text-[#8b641e] hover:underline">
             See All {title} Deals
           </Link>
         </div>
@@ -375,13 +375,13 @@ function DealShelf({
 
 function SandiskBanner() {
   return (
-    <section className="bg-[#d9edf8]">
+    <section className="bg-[#f6f2ea]">
       <Link
         href="/c/accessories"
-        className="mx-auto grid max-w-[1348px] overflow-hidden bg-[#d6eff8] md:grid-cols-[310px_minmax(0,1fr)_210px]"
+        className="mx-auto grid max-w-[1348px] overflow-hidden bg-[#f6f2ea] md:grid-cols-[310px_minmax(0,1fr)_210px]"
       >
         <div className="flex flex-col justify-center bg-white px-6 py-5">
-          <p className="text-3xl font-black uppercase tracking-wide text-[#e21a2c]">
+          <p className="text-3xl font-black uppercase tracking-wide text-[#8b641e]">
             SanDisk
           </p>
           <p className="mt-2 text-lg font-black text-[#8b641e]">
@@ -400,7 +400,7 @@ function SandiskBanner() {
             className="object-cover"
           />
         </div>
-        <div className="flex items-center justify-center bg-[#ff5a1f] px-5 py-5 text-sm font-black uppercase text-white">
+        <div className="flex items-center justify-center bg-[#8b641e] px-5 py-5 text-sm font-black uppercase text-white">
           Shop Now
         </div>
       </Link>
@@ -422,7 +422,7 @@ function BrowseTiles() {
               <Link
                 key={tile.title}
                 href={tile.href}
-                className="group relative min-h-[110px] overflow-hidden bg-[#003d78] p-5 text-white"
+                className="group relative min-h-[110px] overflow-hidden bg-[#8b641e] p-5 text-white"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,222,89,.22),transparent_30%)]" />
                 <div className="relative flex h-full items-center justify-center gap-3 text-center">

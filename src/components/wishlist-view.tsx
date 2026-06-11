@@ -27,7 +27,7 @@ export function WishlistView() {
         </p>
         <Link
           href="/c/cameras"
-          className="mt-5 inline-block rounded-sm bg-[#005aa6] px-6 py-3 text-sm font-black uppercase text-white"
+          className="mt-5 inline-block rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Start browsing
         </Link>

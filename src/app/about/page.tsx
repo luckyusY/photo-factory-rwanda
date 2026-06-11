@@ -35,7 +35,7 @@ const pillars = [
 export default function AboutPage() {
   return (
     <main>
-      <section className="relative isolate overflow-hidden bg-[#070b10] px-4 py-16 text-white">
+      <section className="relative isolate overflow-hidden bg-[#15110a] px-4 py-16 text-white">
         <Image
           src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1600&q=80"
           alt="Studio equipment"
@@ -66,7 +66,7 @@ export default function AboutPage() {
               key={pillar.title}
               className="rounded bg-white p-6 ring-1 ring-black/10"
             >
-              <pillar.icon size={30} className="text-[#005aa6]" />
+              <pillar.icon size={30} className="text-[#8b641e]" />
               <h2 className="mt-4 text-lg font-black">{pillar.title}</h2>
               <p className="mt-2 text-sm leading-6 text-[#4b5563]">{pillar.body}</p>
             </div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-10">
-        <div className="grid gap-6 rounded bg-[#003b70] p-8 text-white lg:grid-cols-2">
+        <div className="grid gap-6 rounded bg-[#15110a] p-8 text-white lg:grid-cols-2">
           <div>
             <h2 className="text-2xl font-black">Working with businesses</h2>
             <p className="mt-3 text-sm leading-7 text-white/80">
@@ -88,7 +88,7 @@ export default function AboutPage() {
           <div className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-end">
             <Link
               href="/support"
-              className="rounded-sm bg-[#ff5a1f] px-6 py-3 text-center text-sm font-black uppercase hover:bg-[#ff7440]"
+              className="rounded-sm bg-[#8b641e] px-6 py-3 text-center text-sm font-black uppercase hover:bg-[#8b641e]"
             >
               Contact our team
             </Link>

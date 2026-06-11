@@ -227,7 +227,7 @@ export function MobileShopMenu() {
             <span className="relative">
               <ShoppingCart size={24} />
               {cartCount > 0 && (
-                <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[#ff5a1f] px-0.5 text-[9px] font-black">
+                <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[#8b641e] px-0.5 text-[9px] font-black">
                   {cartCount}
                 </span>
               )}
@@ -324,7 +324,7 @@ export function MobileShopMenu() {
                   <MenuRow key={item.label} item={item} boxed onNavigate={close} />
                 ))}
               <div className="mt-8 space-y-4 bg-white p-4 text-sm text-[#111827] shadow-sm">
-                <p className="text-lg font-bold text-[#002d5a]">Photo Factory Rewards</p>
+                <p className="text-lg font-bold text-[#15110a]">Photo Factory Rewards</p>
                 <p className="font-medium">Ask about bulk supply, creator bundles, and same-day Kigali delivery.</p>
               </div>
             </div>

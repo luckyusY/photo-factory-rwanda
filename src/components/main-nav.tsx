@@ -110,7 +110,7 @@ export function MainNav() {
       {active?.label === "Products" && (
         <div className="absolute left-1/2 top-full z-[90] w-[min(1340px,calc(100vw-24px))] -translate-x-1/2 bg-white text-[#111827] shadow-2xl ring-1 ring-black/10">
           <div className="grid min-h-[560px] grid-cols-[220px_minmax(0,1fr)_240px]">
-            <aside className="border-r border-[#d7e2ef] px-3 py-5">
+            <aside className="border-r border-[#e7ddc7] px-3 py-5">
               {departments.map((department) => (
                 <Link
                   key={department.slug}
@@ -121,14 +121,14 @@ export function MainNav() {
                   className={`mb-1 flex items-center justify-between rounded px-4 py-2.5 text-[17px] ${
                     activeDepartment.slug === department.slug
                       ? "bg-[#15110a] font-black text-[#ffcf57] underline"
-                      : "font-medium hover:bg-[#eef2f7]"
+                      : "font-medium hover:bg-[#f6f2ea]"
                   }`}
                 >
                   {department.label}
                   <ChevronDown className="-rotate-90" size={18} />
                 </Link>
               ))}
-              <div className="mx-5 my-5 h-px bg-[#d7e2ef]" />
+              <div className="mx-5 my-5 h-px bg-[#e7ddc7]" />
               {["New Arrivals", "Pre Order", "Gift Cards", "Gift Ideas"].map((item) => (
                 <Link
                   key={item}
@@ -200,7 +200,7 @@ export function MainNav() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="rounded border border-[#d7e2ef] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#d9a441]"
+                    className="rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#d9a441]"
                   >
                     {item.label}
                   </Link>

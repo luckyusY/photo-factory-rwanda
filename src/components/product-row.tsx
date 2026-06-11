@@ -10,14 +10,14 @@ export function ProductRow({ product }: { product: Product }) {
   const monthly = Math.max(1000, Math.round(product.price / months / 1000) * 1000);
 
   return (
-    <article className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e1e6ec] bg-white p-4 transition hover:bg-[#fafcfe] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5">
+    <article className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 transition hover:bg-[#f6f2ea] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5">
       {/* Image */}
       <Link
         href={`/p/${product.slug}`}
         className="relative h-[150px] w-full sm:h-[170px]"
       >
         {product.badge && (
-          <span className="absolute left-0 top-0 z-10 bg-[#e12d16] px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
+          <span className="absolute left-0 top-0 z-10 bg-[#8b641e] px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
             {product.badge}
           </span>
         )}
@@ -33,7 +33,7 @@ export function ProductRow({ product }: { product: Product }) {
       {/* Details */}
       <div className="min-w-0">
         <Link href={`/p/${product.slug}`}>
-          <h3 className="text-[15px] font-medium leading-snug text-[#0066c0] hover:underline sm:text-base">
+          <h3 className="text-[15px] font-medium leading-snug text-[#8b641e] hover:underline sm:text-base">
             {product.name}
           </h3>
         </Link>
@@ -62,7 +62,7 @@ export function ProductRow({ product }: { product: Product }) {
         </ul>
         {/* Mobile price (inline) */}
         <div className="mt-2 flex items-baseline gap-2 sm:hidden">
-          <span className="text-[18px] font-bold text-[#b91c1c]">
+          <span className="text-[18px] font-bold text-[#15110a]">
             {formatRWF(product.price)}
           </span>
           {product.oldPrice && (
@@ -76,7 +76,7 @@ export function ProductRow({ product }: { product: Product }) {
 
       {/* Price + actions (desktop column) */}
       <div className="hidden flex-col items-end text-right sm:flex">
-        <p className="text-[24px] font-bold leading-none text-[#b91c1c]">
+        <p className="text-[24px] font-bold leading-none text-[#15110a]">
           {formatRWF(product.price)}
         </p>
         {product.oldPrice && (
@@ -85,12 +85,12 @@ export function ProductRow({ product }: { product: Product }) {
           </p>
         )}
         {save > 0 && (
-          <p className="mt-0.5 text-xs font-black text-[#1e7d32]">
+          <p className="mt-0.5 text-xs font-black text-[#8b641e]">
             Save {formatRWF(save)}
           </p>
         )}
         <p className="mt-2 text-[11px] leading-4 text-[#374151]">
-          <strong className="text-[#1e7d32]">{formatRWF(monthly)}</strong>/mo with{" "}
+          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>/mo with{" "}
           {months}-mo financing
         </p>
         <AddToCartButton
@@ -99,7 +99,7 @@ export function ProductRow({ product }: { product: Product }) {
           className="mt-3 w-full"
         />
         <div className="mt-2 flex items-center gap-3">
-          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#0066c0]">
+          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#8b641e]">
             <WishlistButton slug={product.slug} className="h-7 w-7 shadow-none ring-0" />
             Wish List
           </span>

@@ -45,13 +45,13 @@ export function CartView() {
         <div className="mt-5 flex justify-center gap-3">
           <Link
             href="/deals"
-            className="rounded-sm bg-[#005aa6] px-6 py-3 text-sm font-black uppercase text-white"
+            className="rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
           >
             Shop deals
           </Link>
           <Link
             href="/c/cameras"
-            className="rounded-sm border-2 border-[#005aa6] px-6 py-3 text-sm font-black uppercase text-[#005aa6]"
+            className="rounded-sm border-2 border-[#8b641e] px-6 py-3 text-sm font-black uppercase text-[#8b641e]"
           >
             Browse cameras
           </Link>
@@ -70,7 +70,7 @@ export function CartView() {
           >
             <Link
               href={`/p/${product.slug}`}
-              className="relative h-24 w-28 shrink-0 overflow-hidden rounded bg-[#f5f7fb]"
+              className="relative h-24 w-28 shrink-0 overflow-hidden rounded bg-[#f6f2ea]"
             >
               <Image
                 src={product.images[0]}
@@ -83,7 +83,7 @@ export function CartView() {
             <div className="flex min-w-0 flex-1 flex-col">
               <Link
                 href={`/p/${product.slug}`}
-                className="font-black leading-tight hover:text-[#005aa6]"
+                className="font-black leading-tight hover:text-[#8b641e]"
               >
                 {product.name}
               </Link>
@@ -91,11 +91,11 @@ export function CartView() {
                 {product.brand} • {product.condition}
               </p>
               <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3">
-                <div className="flex items-center rounded border border-[#d7e2ef]">
+                <div className="flex items-center rounded border border-[#e7ddc7]">
                   <button
                     aria-label="Decrease quantity"
                     onClick={() => setQty(product.slug, qty - 1)}
-                    className="px-2.5 py-1.5 text-[#005aa6]"
+                    className="px-2.5 py-1.5 text-[#8b641e]"
                   >
                     <Minus size={14} />
                   </button>
@@ -105,19 +105,19 @@ export function CartView() {
                   <button
                     aria-label="Increase quantity"
                     onClick={() => setQty(product.slug, Math.min(product.stock, qty + 1))}
-                    className="px-2.5 py-1.5 text-[#005aa6]"
+                    className="px-2.5 py-1.5 text-[#8b641e]"
                   >
                     <Plus size={14} />
                   </button>
                 </div>
                 <div className="flex items-center gap-3">
-                  <p className="font-black text-[#b91c1c]">
+                  <p className="font-black text-[#15110a]">
                     {formatRWF(product.price * qty)}
                   </p>
                   <button
                     aria-label="Remove item"
                     onClick={() => removeFromCart(product.slug)}
-                    className="text-[#9ca3af] hover:text-[#e12d16]"
+                    className="text-[#9ca3af] hover:text-[#8b641e]"
                   >
                     <Trash2 size={18} />
                   </button>
@@ -141,11 +141,11 @@ export function CartView() {
         </dl>
         <div className="mt-4 flex justify-between border-t border-[#e5e7eb] pt-4 text-lg font-black">
           <span>Total</span>
-          <span className="text-[#b91c1c]">{formatRWF(subtotal)}</span>
+          <span className="text-[#15110a]">{formatRWF(subtotal)}</span>
         </div>
         <Link
           href="/checkout"
-          className="mt-5 block rounded-sm bg-[#ff5a1f] px-6 py-3 text-center text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+          className="mt-5 block rounded-sm bg-[#8b641e] px-6 py-3 text-center text-sm font-black uppercase text-white hover:bg-[#8b641e]"
         >
           Proceed to checkout
         </Link>

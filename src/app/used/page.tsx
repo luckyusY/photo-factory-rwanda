@@ -25,7 +25,7 @@ export default async function UsedPage({
 
   return (
     <main>
-      <section className="bg-[#003b70] px-4 py-8 text-white">
+      <section className="bg-[#15110a] px-4 py-8 text-white">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
@@ -37,7 +37,7 @@ export default async function UsedPage({
           </div>
           <Link
             href="/used/sell"
-            className="rounded-sm bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase hover:bg-[#ff7440]"
+            className="rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase hover:bg-[#8b641e]"
           >
             Sell or trade your gear
           </Link>

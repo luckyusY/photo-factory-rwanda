@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const adminInput =
-  "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
+  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function useContentSave(key: "hero" | "categories") {
   const router = useRouter();

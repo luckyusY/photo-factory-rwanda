@@ -45,7 +45,7 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
           setTimeout(() => setAdded(false), 1500);
         }}
         className={`press flex w-full items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-[15px] font-black text-white transition ${
-          added ? "bg-[#15803d]" : "bg-[#5fa624] hover:bg-[#4e8c1c]"
+          added ? "bg-[#8b641e]" : "bg-[#8b641e] hover:bg-[#8b641e]"
         }`}
       >
         {added ? (
@@ -63,17 +63,17 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
           addToCart(slug, qty);
           router.push("/checkout");
         }}
-        className="press w-full rounded-sm bg-[#ff5a1f] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+        className="press w-full rounded-sm bg-[#8b641e] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
       >
         Buy now
       </button>
       <button
         onClick={() => toggleWishlist(slug)}
-        className="flex w-full items-center justify-center gap-2 py-1 text-sm font-bold text-[#0066c0] hover:underline"
+        className="flex w-full items-center justify-center gap-2 py-1 text-sm font-bold text-[#8b641e] hover:underline"
       >
         <Heart
           size={16}
-          className={wished ? "fill-[#e12d16] text-[#e12d16]" : ""}
+          className={wished ? "fill-[#8b641e] text-[#8b641e]" : ""}
         />
         {wished ? "Saved to Wish List" : "Add to Wish List"}
       </button>

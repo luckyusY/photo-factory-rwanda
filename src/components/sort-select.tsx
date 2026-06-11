@@ -30,7 +30,7 @@ export function SortSelect() {
           const query = params.toString();
           router.push(query ? `${pathname}?${query}` : pathname);
         }}
-        className="rounded border border-[#d7e2ef] bg-white px-3 py-2 text-sm font-semibold"
+        className="rounded border border-[#e7ddc7] bg-white px-3 py-2 text-sm font-semibold"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>

@@ -14,11 +14,11 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group relative flex h-full min-w-0 flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:px-4 sm:pb-4 sm:pt-9">
       {save > 0 ? (
-        <span className="absolute left-0 top-2 bg-[#1e7d32] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
         </span>
       ) : product.badge ? (
-        <span className="absolute left-0 top-2 bg-[#0b6fa4] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           {product.badge}
         </span>
       ) : null}
@@ -56,20 +56,20 @@ export function ProductCard({ product }: { product: Product }) {
           {formatRWF(product.price)}
         </span>
         {product.oldPrice && (
-          <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#c0392b]">
+          <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#777777]">
             {formatRWF(product.oldPrice)}
           </s>
         )}
       </div>
       <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
-        <strong className="text-[#1e7d32]">{formatRWF(monthly)}</strong>
+        <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>
         /mo suggested payments with {months}-month special financing.{" "}
         <Link href="/support" className="text-[#8b641e] hover:underline">
           Learn how.
         </Link>
       </p>
       {product.condition !== "New" && (
-        <p className="mt-1.5 text-[11px] font-black uppercase text-[#1e7d32]">
+        <p className="mt-1.5 text-[11px] font-black uppercase text-[#8b641e]">
           Certified {product.condition}
         </p>
       )}

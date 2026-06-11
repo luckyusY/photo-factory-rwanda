@@ -9,7 +9,7 @@ import { categories, type Product } from "@/lib/catalog";
 const TINYMCE_API_KEY = "wp1cro1p0yeuzcvdwyejs4pfm061yj4mzoflk6yak9z6obef";
 
 const inputClass =
-  "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
+  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 const panelClass = "rounded bg-white p-5 ring-1 ring-black/10";
 
@@ -241,7 +241,7 @@ export function ProductForm({ product }: Props) {
               title="Preview"
               description="This is the main product card image customers will see first."
             />
-            <div className="mt-4 overflow-hidden rounded border border-[#d7e2ef] bg-white">
+            <div className="mt-4 overflow-hidden rounded border border-[#e7ddc7] bg-white">
               <ImagePreview
                 url={images.map((image) => image.trim()).filter(Boolean)[0]}
                 label="Main product image"
@@ -259,11 +259,11 @@ export function ProductForm({ product }: Props) {
             </div>
           </section>
 
-          {error && <p className="text-sm font-bold text-[#b91c1c]">{error}</p>}
+          {error && <p className="text-sm font-bold text-[#15110a]">{error}</p>}
           <button
             type="submit"
             disabled={sending}
-            className="w-full rounded-sm bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440] disabled:opacity-60"
+            className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
           >
             {sending ? "Saving..." : product ? "Save changes" : "Add product"}
           </button>
@@ -298,7 +298,7 @@ function RichTextEditor({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="mt-1 overflow-hidden rounded border border-[#d7e2ef] bg-white">
+    <div className="mt-1 overflow-hidden rounded border border-[#e7ddc7] bg-white">
       <Editor
         apiKey={TINYMCE_API_KEY}
         value={value}
@@ -362,7 +362,7 @@ function ImageManager({
       {images.map((image, index) => (
         <div
           key={index}
-          className="grid gap-3 rounded border border-[#d7e2ef] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]"
+          className="grid gap-3 rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]"
         >
           <ImagePreview
             url={image.trim()}
@@ -411,7 +411,7 @@ function ImageManager({
       <button
         type="button"
         onClick={() => setImages((current) => [...current, ""])}
-        className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-[#005aa6] px-4 py-2 text-sm font-black text-[#005aa6] hover:bg-[#eef6ff]"
+        className="inline-flex min-h-11 items-center gap-2 rounded-sm border border-[#8b641e] px-4 py-2 text-sm font-black text-[#8b641e] hover:bg-[#f6f2ea]"
       >
         <Plus size={16} /> Add another image
       </button>
@@ -432,7 +432,7 @@ function ImagePreview({
 
   return (
     <div
-      className={`relative grid place-items-center overflow-hidden rounded border border-[#d7e2ef] bg-white ${
+      className={`relative grid place-items-center overflow-hidden rounded border border-[#e7ddc7] bg-white ${
         large ? "aspect-[4/3]" : "h-[112px] md:h-[118px]"
       }`}
     >
@@ -496,7 +496,7 @@ function DynamicTextList({
       <button
         type="button"
         onClick={() => setValues((current) => [...current, ""])}
-        className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-sm border border-[#005aa6] px-3 py-2 text-xs font-black text-[#005aa6] hover:bg-[#eef6ff]"
+        className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-sm border border-[#8b641e] px-3 py-2 text-xs font-black text-[#8b641e] hover:bg-[#f6f2ea]"
       >
         <Plus size={15} /> Add feature
       </button>
@@ -551,7 +551,7 @@ function SpecEditor({
       <button
         type="button"
         onClick={() => setSpecs((current) => [...current, { label: "", value: "" }])}
-        className="inline-flex min-h-10 items-center gap-2 rounded-sm border border-[#005aa6] px-3 py-2 text-xs font-black text-[#005aa6] hover:bg-[#eef6ff]"
+        className="inline-flex min-h-10 items-center gap-2 rounded-sm border border-[#8b641e] px-3 py-2 text-xs font-black text-[#8b641e] hover:bg-[#f6f2ea]"
       >
         <Plus size={15} /> Add spec row
       </button>
@@ -576,7 +576,7 @@ function IconButton({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-[#cfd8e3] bg-white text-[#005aa6] transition hover:border-[#005aa6] hover:bg-[#eef6ff] disabled:cursor-not-allowed disabled:opacity-40"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-[#e7ddc7] bg-white text-[#8b641e] transition hover:border-[#8b641e] hover:bg-[#f6f2ea] disabled:cursor-not-allowed disabled:opacity-40"
     >
       {children}
     </button>

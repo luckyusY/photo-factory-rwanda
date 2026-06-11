@@ -12,9 +12,9 @@ export function DealCard({ product }: { product: Product }) {
   );
 
   return (
-    <article className="group relative flex w-[160px] shrink-0 snap-start flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:w-[238px] sm:px-4 sm:pb-4 sm:pt-9">
+    <article className="group relative flex h-full w-[160px] shrink-0 snap-start flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:w-[238px] sm:px-4 sm:pb-4 sm:pt-9">
       {save > 0 && (
-        <span className="absolute left-0 top-2 bg-[#1e7d32] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
         </span>
       )}
@@ -31,44 +31,48 @@ export function DealCard({ product }: { product: Product }) {
         />
       </Link>
       <Link href={`/p/${product.slug}`} className="mt-2 block sm:mt-4">
-        <h3 className="line-clamp-3 min-h-[54px] text-[14px] font-medium leading-[18px] text-black hover:text-[#0066c0] hover:underline sm:min-h-[60px] sm:text-[15px] sm:leading-5">
+        <h3 className="line-clamp-3 min-h-[54px] text-[14px] font-medium leading-[18px] text-black hover:text-[#8b641e] hover:underline sm:min-h-[60px] sm:text-[15px] sm:leading-5">
           {product.name}
         </h3>
       </Link>
-      <div className="mt-1 hidden items-center gap-1 sm:flex">
-        <span className="flex text-[#f5a623]">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <Star
-              key={index}
-              size={13}
-              className={index < Math.round(product.rating) ? "fill-current" : ""}
-            />
-          ))}
-        </span>
-        <span className="text-xs text-[#6b7280]">({product.reviews})</span>
-      </div>
-      <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5 sm:mt-1.5 sm:gap-x-2">
-        <span className="text-[16px] font-bold leading-none text-black sm:text-[19px]">
-          {formatRWF(product.price)}
-        </span>
-        {product.oldPrice && (
-          <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#c0392b]">
-            {formatRWF(product.oldPrice)}
-          </s>
+      {/* Price block follows the title directly; cards still share one height
+          via h-full, so any extra space falls to the bottom as padding. */}
+      <div>
+        <div className="mt-1 hidden items-center gap-1 sm:flex">
+          <span className="flex text-[#f5a623]">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Star
+                key={index}
+                size={13}
+                className={index < Math.round(product.rating) ? "fill-current" : ""}
+              />
+            ))}
+          </span>
+          <span className="text-xs text-[#6b7280]">({product.reviews})</span>
+        </div>
+        <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5 sm:mt-1.5 sm:gap-x-2">
+          <span className="text-[16px] font-bold leading-none text-black sm:text-[19px]">
+            {formatRWF(product.price)}
+          </span>
+          {product.oldPrice && (
+            <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#777777]">
+              {formatRWF(product.oldPrice)}
+            </s>
+          )}
+        </div>
+        <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
+          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>
+          /mo suggested payments with {months}-month special financing.{" "}
+          <Link href="/support" className="text-[#8b641e] hover:underline">
+            Learn how.
+          </Link>
+        </p>
+        {product.condition !== "New" && (
+          <p className="mt-1.5 text-[11px] font-black uppercase text-[#8b641e]">
+            Certified {product.condition}
+          </p>
         )}
       </div>
-      <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
-        <strong className="text-[#1e7d32]">{formatRWF(monthly)}</strong>
-        /mo suggested payments with {months}-month special financing.{" "}
-        <Link href="/support" className="text-[#0066c0] hover:underline">
-          Learn how.
-        </Link>
-      </p>
-      {product.condition !== "New" && (
-        <p className="mt-1.5 text-[11px] font-black uppercase text-[#1e7d32]">
-          Certified {product.condition}
-        </p>
-      )}
     </article>
   );
 }

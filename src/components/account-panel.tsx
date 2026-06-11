@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useStore, type Profile } from "@/components/store-context";
 
 const inputClass =
-  "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
+  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function AccountPanel() {
   const [mode, setMode] = useState<"signin" | "register">("signin");
@@ -44,7 +44,7 @@ export function AccountPanel() {
           </div>
           <button
             onClick={signOut}
-            className="flex items-center gap-2 rounded border-2 border-[#005aa6] px-4 py-2 text-sm font-black uppercase text-[#005aa6]"
+            className="flex items-center gap-2 rounded border-2 border-[#8b641e] px-4 py-2 text-sm font-black uppercase text-[#8b641e]"
           >
             <LogOut size={16} />
             Sign out
@@ -80,13 +80,13 @@ export function AccountPanel() {
   return (
     <div className="mx-auto max-w-md">
       <div className="rounded bg-white p-6 ring-1 ring-black/10">
-        <div className="mb-5 flex rounded bg-[#eef2f7] p-1">
+        <div className="mb-5 flex rounded bg-[#f6f2ea] p-1">
           {(["signin", "register"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setMode(tab)}
               className={`flex-1 rounded px-4 py-2 text-sm font-black uppercase ${
-                mode === tab ? "bg-[#005aa6] text-white" : "text-[#4b5563]"
+                mode === tab ? "bg-[#8b641e] text-white" : "text-[#4b5563]"
               }`}
             >
               {tab === "signin" ? "Sign in" : "Create account"}
@@ -94,7 +94,7 @@ export function AccountPanel() {
           ))}
         </div>
         <div className="mb-4 flex items-center gap-3">
-          <User size={28} className="text-[#005aa6]" />
+          <User size={28} className="text-[#8b641e]" />
           <h1 className="text-xl font-black">
             {mode === "signin" ? "Welcome back" : "Join Photo Factory"}
           </h1>
@@ -132,7 +132,7 @@ export function AccountPanel() {
           </label>
           <button
             type="submit"
-            className="w-full rounded-sm bg-[#005aa6] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#004277]"
+            className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a]"
           >
             {mode === "signin" ? "Sign in" : "Create account"}
           </button>
@@ -161,10 +161,10 @@ function AccountCard({
 }) {
   return (
     <div className="flex flex-col rounded bg-white p-5 ring-1 ring-black/10">
-      <Icon size={28} className="text-[#005aa6]" />
+      <Icon size={28} className="text-[#8b641e]" />
       <h2 className="mt-3 text-lg font-black">{title}</h2>
       <p className="mt-2 flex-1 text-sm leading-6 text-[#4b5563]">{body}</p>
-      <Link href={href} className="mt-4 text-sm font-black text-[#005aa6]">
+      <Link href={href} className="mt-4 text-sm font-black text-[#8b641e]">
         {cta} →
       </Link>
     </div>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const inputClass =
-  "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
+  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function TradeInForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -32,7 +32,7 @@ export function TradeInForm() {
   if (status === "sent") {
     return (
       <div className="rounded bg-white p-8 text-center ring-1 ring-black/10">
-        <p className="text-2xl font-black text-[#15803d]">Quote request received!</p>
+        <p className="text-2xl font-black text-[#8b641e]">Quote request received!</p>
         <p className="mt-3 text-sm text-[#4b5563]">
           Our team will review your gear and contact you within 24 hours with a
           quote. You can also visit the Kacyiru or Town branch for an instant
@@ -40,7 +40,7 @@ export function TradeInForm() {
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-5 rounded-sm bg-[#005aa6] px-6 py-3 text-sm font-black uppercase text-white"
+          className="mt-5 rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Submit another item
         </button>
@@ -106,14 +106,14 @@ export function TradeInForm() {
         </select>
       </label>
       {status === "error" && (
-        <p className="text-sm font-bold text-[#b91c1c]">
+        <p className="text-sm font-bold text-[#15110a]">
           Something went wrong. Please try again or WhatsApp us directly.
         </p>
       )}
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full rounded-sm bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440] disabled:opacity-60"
+        className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
       >
         {status === "sending" ? "Sending..." : "Request my quote"}
       </button>

@@ -41,8 +41,8 @@ export function ProductGallery({
                 aria-label={`View image ${index + 1}`}
                 className={`relative h-[58px] w-[58px] shrink-0 overflow-hidden rounded-sm border bg-white transition sm:h-[66px] sm:w-[66px] ${
                   index === active
-                    ? "border-[#005aa6] ring-1 ring-[#005aa6]"
-                    : "border-[#d7e2ef] hover:border-[#9bc1e0]"
+                    ? "border-[#8b641e] ring-1 ring-[#8b641e]"
+                    : "border-[#e7ddc7] hover:border-[#e7ddc7]"
                 }`}
               >
                 <Image

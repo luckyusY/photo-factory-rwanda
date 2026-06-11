@@ -16,7 +16,7 @@ export default async function AdminLoginPage() {
     <main className="mx-auto max-w-md px-4 py-16">
       <div className="rounded bg-white p-6 ring-1 ring-black/10">
         <div className="flex items-center gap-3">
-          <ShieldCheck size={30} className="text-[#005aa6]" />
+          <ShieldCheck size={30} className="text-[#8b641e]" />
           <h1 className="text-2xl font-black">Admin Login</h1>
         </div>
         <p className="mt-2 text-sm text-[#6b7280]">

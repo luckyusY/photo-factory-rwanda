@@ -74,7 +74,7 @@ export function HeroEditor({ initial }: { initial: HeroSlide[] }) {
               </div>
             </div>
             <div className="mt-4 grid gap-3 lg:grid-cols-[140px_minmax(0,1fr)]">
-              <div className="relative h-32 w-full overflow-hidden rounded bg-[#0b1320] lg:h-full lg:min-h-36">
+              <div className="relative h-32 w-full overflow-hidden rounded bg-[#15110a] lg:h-full lg:min-h-36">
                 {slide.image && (
                   <Image
                     src={slide.image}
@@ -171,24 +171,24 @@ export function HeroEditor({ initial }: { initial: HeroSlide[] }) {
 
       <button
         onClick={() => setSlides((prev) => [...prev, { ...emptySlide }])}
-        className="press mt-4 flex items-center gap-2 rounded-sm border-2 border-dashed border-[#9ca3af] px-5 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#005aa6] hover:text-[#005aa6]"
+        className="press mt-4 flex items-center gap-2 rounded-sm border-2 border-dashed border-[#9ca3af] px-5 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#8b641e] hover:text-[#8b641e]"
       >
         <Plus size={16} />
         Add slide
       </button>
 
-      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#d7e2ef] bg-[#eef2f7] py-4">
+      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea] py-4">
         <button
           onClick={() => save(slides)}
           disabled={saving}
-          className="press rounded-sm bg-[#005aa6] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#004277] disabled:opacity-60"
+          className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save changes"}
         </button>
         <button
           onClick={() => save(null)}
           disabled={saving}
-          className="press rounded-sm border-2 border-[#9ca3af] px-6 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#005aa6] hover:text-[#005aa6] disabled:opacity-60"
+          className="press rounded-sm border-2 border-[#9ca3af] px-6 py-3 text-sm font-black uppercase text-[#4b5563] hover:border-[#8b641e] hover:text-[#8b641e] disabled:opacity-60"
         >
           Restore defaults
         </button>
@@ -239,8 +239,8 @@ function IconButton({
       disabled={disabled}
       className={`grid h-8 w-8 place-items-center rounded border disabled:opacity-30 ${
         danger
-          ? "border-[#fca5a5] text-[#b91c1c] hover:bg-[#fef2f2]"
-          : "border-[#d7e2ef] text-[#374151] hover:bg-[#f3f7fc]"
+          ? "border-[#fca5a5] text-[#15110a] hover:bg-[#fef2f2]"
+          : "border-[#e7ddc7] text-[#374151] hover:bg-[#f6f2ea]"
       }`}
     >
       {children}

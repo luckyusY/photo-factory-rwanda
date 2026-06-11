@@ -32,7 +32,7 @@ export function SiteHeader() {
         </div>
       </div>
       <div className="bg-[#050505] text-white">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-2 px-2 py-2 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4 sm:px-4 sm:py-3">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-2 py-2 sm:gap-4 sm:px-4 sm:py-3">
           <Link href="/" className="shrink-0" aria-label="Photo Factory Shop home">
             <Image
               src="/logo-transparent.png"
@@ -58,18 +58,19 @@ export function SiteHeader() {
               <Search aria-hidden size={21} />
             </button>
           </form>
-          <a href={`tel:${CONTACT_PHONE_TEL}`} aria-label="Call support" className="sm:hidden">
-            <Phone aria-hidden size={22} />
-          </a>
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp support"
-            className="sm:hidden"
-          >
-            <MessageCircle aria-hidden size={23} />
-          </a>
+          <div className="flex items-center gap-3 sm:hidden">
+            <a href={`tel:${CONTACT_PHONE_TEL}`} aria-label="Call support">
+              <Phone aria-hidden size={22} />
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp support"
+            >
+              <MessageCircle aria-hidden size={23} />
+            </a>
+          </div>
           <div className="hidden sm:block">
             <HeaderActions />
           </div>

@@ -26,14 +26,14 @@ export function HeaderActions() {
       <Link href="/wishlist" aria-label="Wishlist" className="relative hidden sm:block">
         <Heart aria-hidden size={27} />
         {wishlistCount > 0 && (
-          <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[#ff5a1f] px-1 text-[11px] font-black">
+          <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[#8b641e] px-1 text-[11px] font-black">
             {wishlistCount}
           </span>
         )}
       </Link>
       <Link href="/cart" aria-label="Cart" className="relative">
         <ShoppingCart aria-hidden size={30} />
-        <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[#ff5a1f] px-1 text-[11px] font-black">
+        <span className="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-[#8b641e] px-1 text-[11px] font-black">
           {cartCount}
         </span>
       </Link>

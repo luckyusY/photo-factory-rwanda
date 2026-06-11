@@ -33,7 +33,7 @@ export function AddToCartButton({
         setTimeout(() => setAdded(false), 1500);
       }}
       className={`min-h-11 rounded-sm px-4 py-3 text-sm font-black uppercase text-white transition-colors ${
-        added ? "bg-[#15803d] text-white" : "bg-[#d9a441] text-black hover:bg-[#ffcf57]"
+        added ? "bg-[#8b641e] text-white" : "bg-[#d9a441] text-black hover:bg-[#ffcf57]"
       } ${className}`}
     >
       {added ? (
@@ -71,7 +71,7 @@ export function WishlistButton({
     >
       <Heart
         size={20}
-        className={active ? "fill-[#e12d16] text-[#e12d16]" : ""}
+        className={active ? "fill-[#8b641e] text-[#8b641e]" : ""}
       />
     </motion.button>
   );

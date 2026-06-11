@@ -26,7 +26,7 @@ export default async function AdminProductsPage() {
         <h1 className="text-3xl font-black">Products ({products.length})</h1>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 rounded-sm bg-[#ff5a1f] px-5 py-2.5 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+          className="flex items-center gap-2 rounded-sm bg-[#8b641e] px-5 py-2.5 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
         >
           <Plus size={16} />
           Add product
@@ -34,7 +34,7 @@ export default async function AdminProductsPage() {
       </div>
       <div className="mt-5 overflow-x-auto rounded bg-white ring-1 ring-black/10">
         <table className="w-full min-w-[860px] text-left text-sm">
-          <thead className="bg-[#f3f7fc] text-xs font-black uppercase tracking-wide text-[#005aa6]">
+          <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
             <tr>
               <th className="w-16 px-4 py-3 text-right">#</th>
               <th className="px-4 py-3">Product</th>
@@ -46,7 +46,7 @@ export default async function AdminProductsPage() {
               <th className="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#eef2f7] font-semibold">
+          <tbody className="divide-y divide-[#f6f2ea] font-semibold">
             {products.map((product, index) => (
               <tr key={product.slug}>
                 <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
@@ -54,7 +54,7 @@ export default async function AdminProductsPage() {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#d7e2ef] bg-white">
+                    <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">
                       <Image
                         src={product.images[0]}
                         alt=""
@@ -65,7 +65,7 @@ export default async function AdminProductsPage() {
                     </div>
                     <Link
                       href={`/p/${product.slug}`}
-                      className="max-w-72 truncate font-black hover:text-[#005aa6]"
+                      className="max-w-72 truncate font-black hover:text-[#8b641e]"
                     >
                       {product.name}
                     </Link>
@@ -84,7 +84,7 @@ export default async function AdminProductsPage() {
                   <div className="flex justify-end gap-2">
                     <Link
                       href={`/admin/products/edit?slug=${encodeURIComponent(product.slug)}`}
-                      className="rounded bg-[#005aa6] px-3 py-1.5 text-xs font-black uppercase text-white"
+                      className="rounded bg-[#8b641e] px-3 py-1.5 text-xs font-black uppercase text-white"
                     >
                       Edit
                     </Link>

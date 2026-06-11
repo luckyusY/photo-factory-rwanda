@@ -31,8 +31,8 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
               href={`/p/${product.slug}`}
               className={`relative block h-28 w-28 overflow-hidden rounded-sm border bg-white sm:h-36 sm:w-36 ${
                 checked.includes(product.slug)
-                  ? "border-[#d7e2ef]"
-                  : "border-[#d7e2ef] opacity-40"
+                  ? "border-[#e7ddc7]"
+                  : "border-[#e7ddc7] opacity-40"
               }`}
             >
               <Image
@@ -59,7 +59,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
           }}
           disabled={selected.length === 0}
           className={`mt-3 w-full rounded-sm px-4 py-3 text-sm font-black text-white transition disabled:opacity-50 ${
-            added ? "bg-[#15803d]" : "bg-[#5fa624] hover:bg-[#4e8c1c]"
+            added ? "bg-[#8b641e]" : "bg-[#8b641e] hover:bg-[#8b641e]"
           }`}
         >
           {added
@@ -75,7 +75,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
                 type="checkbox"
                 checked={checked.includes(product.slug)}
                 onChange={() => toggle(product.slug)}
-                className="mt-1 h-4 w-4 accent-[#005aa6]"
+                className="mt-1 h-4 w-4 accent-[#8b641e]"
               />
               <span className="leading-6">
                 {index === 0 && (
@@ -83,7 +83,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
                 )}
                 <Link
                   href={`/p/${product.slug}`}
-                  className="text-[#0066c0] hover:underline"
+                  className="text-[#8b641e] hover:underline"
                 >
                   {product.name}
                 </Link>{" "}

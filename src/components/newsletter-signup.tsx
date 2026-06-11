@@ -51,7 +51,7 @@ export function NewsletterSignup() {
       <button
         type="submit"
         disabled={sending}
-        className="press h-11 shrink-0 rounded-sm bg-[#0066c0] px-6 text-sm font-black uppercase text-white hover:bg-[#0079e6] disabled:opacity-60"
+        className="press h-11 shrink-0 rounded-sm bg-[#8b641e] px-6 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
       >
         {sending ? "..." : "Submit"}
       </button>

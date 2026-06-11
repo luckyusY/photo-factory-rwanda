@@ -50,7 +50,7 @@ const campaignImage = (name: string, width = 1400) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
 
 const promoButton =
-  "mt-5 inline-flex w-fit min-w-44 justify-center rounded-md bg-[#ff4a22] px-7 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_3px_0_rgba(0,0,0,0.16)] transition group-hover:bg-[#ff6a43]";
+  "mt-5 inline-flex w-fit min-w-44 justify-center rounded-md bg-[#8b641e] px-7 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_3px_0_rgba(0,0,0,0.16)] transition group-hover:bg-[#8b641e]";
 
 function PromoBanner({
   href,
@@ -180,7 +180,7 @@ export default async function Home() {
             mobileImage={campaignImage("studio-upgrade-mobile", 720)}
             overlayClass="bg-[linear-gradient(90deg,rgba(255,205,27,0.97)_0%,rgba(255,205,27,0.94)_52%,transparent_78%)]"
           >
-            <div className="absolute inset-y-0 left-0 hidden w-[62%] flex-col items-center justify-center px-6 text-center text-[#14365c] md:flex">
+            <div className="absolute inset-y-0 left-0 hidden w-[62%] flex-col items-center justify-center px-6 text-center text-[#15110a] md:flex">
               <p className="text-lg font-extrabold uppercase italic tracking-[0.14em]">
                 Enter to win a
               </p>
@@ -216,7 +216,7 @@ export default async function Home() {
             overlayClass="bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.9)_52%,transparent_80%)]"
           >
             <div className="absolute inset-y-0 left-0 hidden w-[64%] max-w-[480px] flex-col justify-center px-7 text-black sm:px-10 md:flex">
-              <p className="-mb-3 ml-1 text-[30px] leading-none text-[#ff4a22] [font-family:var(--font-dancing-script),cursive]">
+              <p className="-mb-3 ml-1 text-[30px] leading-none text-[#8b641e] [font-family:var(--font-dancing-script),cursive]">
                 Gifts for
               </p>
               <p className="text-[46px] font-black leading-none tracking-tight">
@@ -266,7 +266,7 @@ export default async function Home() {
         </Reveal>
       </section>
 
-      <section id="deals" className="bg-[#eef0f2] py-3 sm:py-5">
+      <section id="deals" className="bg-[#f6f2ea] py-3 sm:py-5">
         <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
           <div className="flex items-center justify-between gap-2">
             <h2 className="flex items-center gap-1.5 text-[24px] font-normal leading-none text-black sm:gap-2.5 sm:text-[28px] sm:font-semibold">
@@ -296,7 +296,7 @@ export default async function Home() {
           {services.map((service) => (
             <div
               key={service.label}
-              className="flex min-h-24 items-center gap-4 rounded border border-[#d9e2ef] bg-[#f8fafc] p-4"
+              className="flex min-h-24 items-center gap-4 rounded border border-[#f6f2ea] bg-[#f8fafc] p-4"
             >
               <service.icon aria-hidden className="text-[#d9a441]" size={30} />
               <p className="text-sm font-black leading-5">{service.label}</p>
@@ -329,7 +329,7 @@ export default async function Home() {
 
       <section className="mx-auto max-w-7xl px-4 py-8">
         <Reveal className="grid gap-5 lg:grid-cols-3">
-        <Link href="/c/cameras" className="rounded bg-[#07111f] p-7 text-white">
+        <Link href="/c/cameras" className="rounded bg-[#15110a] p-7 text-white">
           <Camera aria-hidden className="text-[#ffde59]" size={34} />
           <h2 className="mt-5 text-2xl font-black">Photography & video</h2>
           <p className="mt-3 text-sm leading-6 text-white/75">
@@ -337,7 +337,7 @@ export default async function Home() {
             camera bags, and complete production kits.
           </p>
         </Link>
-        <Link href="/c/audio" className="rounded bg-[#0f4f75] p-7 text-white">
+        <Link href="/c/audio" className="rounded bg-[#15110a] p-7 text-white">
           <Headphones aria-hidden className="text-[#ffde59]" size={34} />
           <h2 className="mt-5 text-2xl font-black">Audio & creator kits</h2>
           <p className="mt-3 text-sm leading-6 text-white/75">
@@ -347,7 +347,7 @@ export default async function Home() {
         </Link>
         <Link
           href="/c/phones"
-          className="rounded bg-[#f3f7fc] p-7 text-[#111827] ring-1 ring-black/10"
+          className="rounded bg-[#f6f2ea] p-7 text-[#111827] ring-1 ring-black/10"
         >
           <div className="flex gap-3 text-[#d9a441]">
             <Smartphone aria-hidden size={34} />
