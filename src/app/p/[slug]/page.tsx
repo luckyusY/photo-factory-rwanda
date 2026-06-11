@@ -22,6 +22,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { BuyBox } from "@/components/buy-box";
+import { CardSwiper } from "@/components/card-swiper";
 import { FrequentlyBought } from "@/components/frequently-bought";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
@@ -250,12 +251,12 @@ function ProductRail({
             </Link>
           )}
         </div>
-        <div className="flex gap-1 overflow-x-auto pb-1">
+        <CardSwiper gapSm={4} columnGapClassName="gap-1">
           {products.map((item) => (
-            <div key={`${title}-${item.slug}`} className="shrink-0">
+            <div key={`${title}-${item.slug}`} className="flex h-full flex-col">
               <RailCard product={item} compact={accessory} removable={removable} />
               {accessory && (
-                <div className="bg-white px-3 pb-4">
+                <div className="flex-1 bg-white px-3 pb-4">
                   <AddToCartButton
                     slug={item.slug}
                     className="w-full border border-[#ff5a1f] bg-white py-2 text-xs text-[#ff4a22] hover:bg-[#fff2ed]"
@@ -264,7 +265,7 @@ function ProductRail({
               )}
             </div>
           ))}
-        </div>
+        </CardSwiper>
       </div>
     </section>
   );

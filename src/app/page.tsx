@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { CardSwiper } from "@/components/card-swiper";
 import { DealCard } from "@/components/deal-card";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { ProductCard } from "@/components/product-card";
@@ -145,25 +146,27 @@ export default async function Home() {
       </section>
 
       <section className="hidden bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5 md:block">
-        <div className="rail-scroll mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
-          {categoryContent.map((department) => (
-            <Link
-              key={department.slug}
-              href={`/c/${department.slug}`}
-              className="group relative h-44 w-48 shrink-0 snap-start overflow-hidden bg-black"
-            >
-              <Image
-                src={department.image}
-                alt={department.name}
-                fill
-                sizes="192px"
-                className="object-cover opacity-80 transition group-hover:scale-105 group-hover:opacity-100"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-black/70 px-3 py-3">
-                <p className="text-sm font-black text-white">{department.name}</p>
-              </div>
-            </Link>
-          ))}
+        <div className="mx-auto max-w-7xl px-4">
+          <CardSwiper>
+            {categoryContent.map((department) => (
+              <Link
+                key={department.slug}
+                href={`/c/${department.slug}`}
+                className="group relative block h-44 w-48 overflow-hidden bg-black"
+              >
+                <Image
+                  src={department.image}
+                  alt={department.name}
+                  fill
+                  sizes="192px"
+                  className="object-cover opacity-80 transition group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-black/70 px-3 py-3">
+                  <p className="text-sm font-black text-white">{department.name}</p>
+                </div>
+              </Link>
+            ))}
+          </CardSwiper>
         </div>
       </section>
 
@@ -278,12 +281,12 @@ export default async function Home() {
               <span className="hidden sm:inline">Browse All Deals &amp; Specials</span>
             </Link>
           </div>
-          <div className="rail-scroll mt-3 overflow-x-auto pb-1 sm:mt-4 sm:pb-2">
-            <div className="grid grid-flow-col grid-rows-2 gap-1 sm:gap-3">
+          <div className="mt-3 sm:mt-4">
+            <CardSwiper rows={2}>
               {topDeals.map((product) => (
                 <DealCard key={product.slug} product={product} />
               ))}
-            </div>
+            </CardSwiper>
           </div>
         </div>
       </section>

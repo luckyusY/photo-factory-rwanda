@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { CardSwiper } from "@/components/card-swiper";
 import { DealCard } from "@/components/deal-card";
 import {
   categories,
@@ -122,11 +123,11 @@ function ProductShelf({
             <span className="hidden sm:inline">Browse all</span>
           </Link>
         </div>
-        <div className="grid auto-cols-[160px] grid-flow-col grid-rows-2 gap-1 overflow-x-auto pb-1 sm:auto-cols-[238px] sm:pb-2">
+        <CardSwiper rows={2} gapSm={4} columnGapClassName="gap-1">
           {products.map((product) => (
             <DealCard key={product.slug} product={product} />
           ))}
-        </div>
+        </CardSwiper>
       </div>
     </section>
   );
