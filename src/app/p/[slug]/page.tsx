@@ -178,26 +178,33 @@ function RailCard({
   removable?: boolean;
 }) {
   const save = product.oldPrice ? product.oldPrice - product.price : 0;
+  const saveLabel =
+    product.oldPrice && save > 0
+      ? `${Math.max(1, Math.round((save / product.oldPrice) * 100))}% off`
+      : "";
 
   return (
-    <article className="relative flex w-[196px] shrink-0 flex-col bg-white px-3 pb-4 pt-4 sm:w-[204px]">
+    <article className="relative flex h-full w-[196px] shrink-0 flex-col bg-white px-3 pb-4 pt-6 sm:w-[204px]">
       {save > 0 && (
-        <span className="absolute left-0 top-2 bg-[#178a22] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
-          Save {formatRWF(save)}
+        <span className="absolute left-0 top-2 z-10 bg-[#178a22] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+          {saveLabel}
         </span>
       )}
       {removable && (
-        <button className="absolute right-2 top-2 text-[#777]" aria-label="Remove item">
+        <button className="absolute right-2 top-2 z-10 text-[#777]" aria-label="Remove item">
           <X size={18} />
         </button>
       )}
-      <Link href={`/p/${product.slug}`} className="relative mx-auto block h-36 w-full">
+      <Link
+        href={`/p/${product.slug}`}
+        className="relative mx-auto grid h-[150px] w-full place-items-center overflow-hidden bg-white"
+      >
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
           sizes="204px"
-          className="object-contain"
+          className="object-contain p-2"
         />
       </Link>
       <Link href={`/p/${product.slug}`} className="mt-3 block">
@@ -259,7 +266,7 @@ function ProductRail({
                 <div className="flex-1 bg-white px-3 pb-4">
                   <AddToCartButton
                     slug={item.slug}
-                    className="w-full border border-[#ff5a1f] bg-white py-2 text-xs text-[#ff4a22] hover:bg-[#fff2ed]"
+                    className="min-h-9 w-full border border-[#ff5a1f] bg-white py-2 text-xs !text-[#ff4a22] hover:bg-[#fff2ed]"
                   />
                 </div>
               )}
