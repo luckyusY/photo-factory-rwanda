@@ -1,60 +1,78 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { AddToCartButton, WishlistButton } from "@/components/add-to-cart-button";
 import { formatRWF, type Product } from "@/lib/catalog";
 
 export function ProductCard({ product }: { product: Product }) {
+  const save = product.oldPrice ? product.oldPrice - product.price : 0;
+  const months = product.price >= 1500000 ? 12 : 6;
+  const monthly = Math.max(
+    1000,
+    Math.round(product.price / months / 1000) * 1000,
+  );
+
   return (
-    <article className="group flex flex-col overflow-hidden border border-[#d7e2ef] bg-white transition duration-200 hover:-translate-y-0.5 hover:border-[#9bc1e0] hover:shadow-md">
-      <div className="relative aspect-[4/3] bg-[#f5f7fb]">
-        <Link href={`/p/${product.slug}`}>
-          <Image
-            src={product.images[0]}
-            alt={product.name}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-contain p-3 transition duration-300 group-hover:scale-[1.035]"
-          />
-        </Link>
-        {product.badge && (
-          <span className="absolute left-3 top-3 bg-[#e12d16] px-2 py-1 text-xs font-black uppercase text-white">
-            {product.badge}
-          </span>
+    <article className="group relative flex h-full min-w-0 flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:px-4 sm:pb-4 sm:pt-9">
+      {save > 0 ? (
+        <span className="absolute left-0 top-2 bg-[#1e7d32] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+          Save {formatRWF(save)}
+        </span>
+      ) : product.badge ? (
+        <span className="absolute left-0 top-2 bg-[#0b6fa4] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+          {product.badge}
+        </span>
+      ) : null}
+      <Link
+        href={`/p/${product.slug}`}
+        className="relative block h-[118px] w-full overflow-hidden sm:h-36"
+      >
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          fill
+          sizes="(min-width: 1024px) 238px, (min-width: 640px) 33vw, 50vw"
+          className="object-contain transition duration-300 group-hover:scale-[1.035]"
+        />
+      </Link>
+      <Link href={`/p/${product.slug}`} className="mt-2 block sm:mt-4">
+        <h3 className="line-clamp-3 min-h-[54px] text-[14px] font-medium leading-[18px] text-black hover:text-[#8b641e] hover:underline sm:min-h-[60px] sm:text-[15px] sm:leading-5">
+          {product.name}
+        </h3>
+      </Link>
+      <div className="mt-1 hidden items-center gap-1 sm:flex">
+        <span className="flex text-[#f5a623]">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Star
+              key={index}
+              size={13}
+              className={index < Math.round(product.rating) ? "fill-current" : ""}
+            />
+          ))}
+        </span>
+        <span className="text-xs text-[#6b7280]">({product.reviews})</span>
+      </div>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-1.5 sm:mt-1.5 sm:gap-x-2">
+        <span className="text-[16px] font-bold leading-none text-black sm:text-[19px]">
+          {formatRWF(product.price)}
+        </span>
+        {product.oldPrice && (
+          <s className="text-[11px] font-semibold text-[#777] sm:text-[13px] sm:text-[#c0392b]">
+            {formatRWF(product.oldPrice)}
+          </s>
         )}
-        <WishlistButton slug={product.slug} className="absolute right-3 top-3" />
       </div>
-      <div className="flex flex-1 flex-col p-2.5 sm:p-4">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-[#6b7280] sm:text-[12px]">
-          {product.brand}
-          {product.condition !== "New" && (
-            <span className="ml-1.5 rounded bg-[#fef3c7] px-1.5 py-0.5 text-[9px] text-[#92400e] sm:ml-2 sm:text-[10px]">
-              {product.condition}
-            </span>
-          )}
-        </p>
-        <Link href={`/p/${product.slug}`} className="mt-1.5 flex-1 sm:mt-2">
-          <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-medium leading-snug text-[#0066c0] hover:underline sm:min-h-12 sm:text-[15px]">
-            {product.name}
-          </h3>
+      <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
+        <strong className="text-[#1e7d32]">{formatRWF(monthly)}</strong>
+        /mo suggested payments with {months}-month special financing.{" "}
+        <Link href="/support" className="text-[#8b641e] hover:underline">
+          Learn how.
         </Link>
-        <div className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-[#6b7280] sm:mt-2 sm:text-xs">
-          <Star size={13} className="fill-[#f59e0b] text-[#f59e0b]" />
-          {product.rating.toFixed(1)}
-          <span className="font-semibold">({product.reviews})</span>
-        </div>
-        <div className="mt-2 flex flex-wrap items-baseline gap-x-2 sm:mt-3">
-          <p className="text-[17px] font-bold text-[#b91c1c] sm:text-[22px]">
-            {formatRWF(product.price)}
-          </p>
-          {product.oldPrice && (
-            <p className="text-xs font-bold text-[#9ca3af] line-through sm:text-sm">
-              {formatRWF(product.oldPrice)}
-            </p>
-          )}
-        </div>
-        <AddToCartButton slug={product.slug} className="mt-3 w-full sm:mt-4" />
-      </div>
+      </p>
+      {product.condition !== "New" && (
+        <p className="mt-1.5 text-[11px] font-black uppercase text-[#1e7d32]">
+          Certified {product.condition}
+        </p>
+      )}
     </article>
   );
 }

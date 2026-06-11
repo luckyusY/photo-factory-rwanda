@@ -84,33 +84,41 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               </h1>
               <p className="mt-2 max-w-3xl text-[15px] leading-6 text-[#333]">
                 {displayBlurb} Browse trusted gear with local support, Rwanda
-                delivery, and pickup from Kacyiru or Town.
+                delivery, and pickup from our Kigali shop.
               </p>
               {department && (
-                <div className="mt-5 grid gap-x-10 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {department.groups.slice(0, 6).map((group) => (
-                    <div key={group.title}>
-                      <h2 className="text-[17px] font-medium text-black">
-                        {group.title}
-                      </h2>
-                      <ul className="mt-2 space-y-1">
-                        {group.links.slice(0, 5).map((link) => (
-                          <li key={link}>
-                            <Link
-                              href={`/c/${category.slug}`}
-                              className="text-[14px] text-[#0066c0] hover:underline"
-                            >
-                              {link}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+                <details className="mt-4 rounded border border-[#d7e2ef] bg-[#fafafa] p-0">
+                  <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-black uppercase tracking-wide text-[#15110a] marker:hidden">
+                    <span>Shop {displayName} by type</span>
+                    <span className="text-xs font-bold normal-case text-[#8b641e]">
+                      Open category filters
+                    </span>
+                  </summary>
+                  <div className="grid gap-x-8 gap-y-4 border-t border-[#d7e2ef] bg-white px-4 py-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {department.groups.slice(0, 6).map((group) => (
+                      <div key={group.title}>
+                        <h2 className="text-[15px] font-bold text-black">
+                          {group.title}
+                        </h2>
+                        <ul className="mt-2 space-y-1">
+                          {group.links.slice(0, 5).map((link) => (
+                            <li key={link}>
+                              <Link
+                                href={`/c/${category.slug}`}
+                                className="text-[13px] text-[#8b641e] hover:underline"
+                              >
+                                {link}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </details>
               )}
             </div>
-            <div className="relative hidden min-h-72 overflow-hidden bg-black lg:block">
+            <div className="relative hidden min-h-44 overflow-hidden bg-black lg:block">
               <Image
                 src={customImage ?? department?.image ?? category.image}
                 alt={displayName}
