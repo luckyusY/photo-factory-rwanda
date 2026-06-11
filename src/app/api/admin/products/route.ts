@@ -21,6 +21,8 @@ type ProductPayload = {
   badge?: string;
   condition?: string;
   stock?: number;
+  rating?: number;
+  reviews?: number;
   description?: string;
   images?: string[];
   shortSpecs?: string[];
@@ -64,12 +66,14 @@ export async function POST(request: Request) {
 
   const oldPrice = Math.round(Number(payload.oldPrice));
   const stock = Math.round(Number(payload.stock));
+  const rating = Number(payload.rating);
+  const reviews = Math.round(Number(payload.reviews));
   const condition = conditions.includes(payload.condition as ProductCondition)
     ? (payload.condition as ProductCondition)
     : "New";
   const images = (payload.images ?? [])
     .map((url) => url.trim())
-    .filter((url) => /^https?:\/\//.test(url));
+    .filter((url) => /^https?:\/\//.test(url) || url.startsWith("/"));
 
   const product: Product = {
     id: existing?.id ?? `PF-${Date.now().toString(36).toUpperCase()}`,
@@ -79,8 +83,8 @@ export async function POST(request: Request) {
     category,
     price,
     oldPrice: Number.isFinite(oldPrice) && oldPrice > price ? oldPrice : undefined,
-    rating: existing?.rating ?? 4.5,
-    reviews: existing?.reviews ?? 0,
+    rating: Number.isFinite(rating) ? Math.min(5, Math.max(0, rating)) : (existing?.rating ?? 4.5),
+    reviews: Number.isFinite(reviews) && reviews >= 0 ? reviews : (existing?.reviews ?? 0),
     badge: (payload.badge ?? "").trim() || undefined,
     condition,
     stock: Number.isFinite(stock) && stock >= 0 ? stock : 0,
