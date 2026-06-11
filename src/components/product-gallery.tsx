@@ -11,6 +11,7 @@ export function ProductGallery({
   name: string;
 }) {
   const [active, setActive] = useState(0);
+  const [origin, setOrigin] = useState({ x: 50, y: 50 });
 
   return (
     <div>
@@ -41,14 +42,24 @@ export function ProductGallery({
             ))}
           </div>
         )}
-        <div className="relative aspect-square min-w-0 flex-1 overflow-hidden rounded-sm bg-white">
+        <div
+          className="group relative aspect-square min-w-0 flex-1 overflow-hidden rounded-sm bg-white md:cursor-zoom-in"
+          onMouseMove={(event) => {
+            const rect = event.currentTarget.getBoundingClientRect();
+            setOrigin({
+              x: ((event.clientX - rect.left) / rect.width) * 100,
+              y: ((event.clientY - rect.top) / rect.height) * 100,
+            });
+          }}
+        >
           <Image
             src={images[active] ?? images[0]}
             alt={name}
             fill
             priority
             sizes="(min-width: 1024px) 45vw, 100vw"
-            className="object-contain"
+            className="object-contain transition-transform duration-200 md:group-hover:scale-[1.85]"
+            style={{ transformOrigin: `${origin.x}% ${origin.y}%` }}
           />
         </div>
       </div>

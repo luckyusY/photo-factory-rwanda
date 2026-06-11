@@ -14,16 +14,25 @@ import {
   Star,
   Store,
   Truck,
+  X,
 } from "lucide-react";
+import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { BuyBox } from "@/components/buy-box";
 import { FrequentlyBought } from "@/components/frequently-bought";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
 import { ProductStickyBar } from "@/components/product-sticky-bar";
-import { formatRWF, getCategory, relatedOf } from "@/lib/catalog";
+import {
+  formatRWF,
+  getCategory,
+  relatedOf,
+  sortProducts,
+  type Product,
+} from "@/lib/catalog";
 import { getAllProducts, getProductBySlug } from "@/lib/products-db";
 
 export const dynamic = "force-dynamic";
@@ -68,26 +77,26 @@ const serviceBadges = [
 
 const helpCards = [
   {
-    title: "Call Us",
-    body: "Speak with a product expert.",
+    title: "Give Us A Call",
+    body: "Questions? We're happy to help. Call us at +250 Customer Support.",
     icon: Phone,
     href: "/support",
   },
   {
-    title: "Email",
-    body: "Send product questions anytime.",
-    icon: Mail,
-    href: "/support",
-  },
-  {
     title: "Chat Now",
-    body: "Need help? Chat with our team.",
+    body: "Need help or have product questions? Chat with an expert.",
     icon: MessageCircle,
     href: "/support",
   },
   {
+    title: "Help Center",
+    body: "For info on shipping, returns, orders and more, find answers here.",
+    icon: Mail,
+    href: "/support",
+  },
+  {
     title: "Visit Our Stores",
-    body: "Kacyiru and Kigali City Centre.",
+    body: "Visit our Kigali stores for shopping, services, repairs, and more.",
     icon: Building2,
     href: "/stores",
   },
@@ -158,6 +167,109 @@ function OptionGroup({
   );
 }
 
+function RailCard({
+  product,
+  compact = false,
+  removable = false,
+}: {
+  product: Product;
+  compact?: boolean;
+  removable?: boolean;
+}) {
+  const save = product.oldPrice ? product.oldPrice - product.price : 0;
+
+  return (
+    <article className="relative flex w-[196px] shrink-0 flex-col bg-white px-3 pb-4 pt-4 sm:w-[204px]">
+      {save > 0 && (
+        <span className="absolute left-0 top-2 bg-[#178a22] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+          Save {formatRWF(save)}
+        </span>
+      )}
+      {removable && (
+        <button className="absolute right-2 top-2 text-[#777]" aria-label="Remove item">
+          <X size={18} />
+        </button>
+      )}
+      <Link href={`/p/${product.slug}`} className="relative mx-auto block h-36 w-full">
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          fill
+          sizes="204px"
+          className="object-contain"
+        />
+      </Link>
+      <Link href={`/p/${product.slug}`} className="mt-3 block">
+        <h3 className="line-clamp-3 min-h-[58px] text-[14px] leading-[18px] text-black hover:text-[#0066c0] hover:underline">
+          {product.name}
+        </h3>
+      </Link>
+      {!compact && (
+        <div className="mt-2 flex items-center gap-1">
+          <Stars rating={product.rating} size={14} />
+          <span className="text-[11px] text-[#555]">({product.reviews})</span>
+        </div>
+      )}
+      <div className="mt-3 flex flex-wrap items-baseline gap-1.5">
+        <span className="text-[18px] font-medium text-black">
+          {formatRWF(product.price)}
+        </span>
+        {product.oldPrice && (
+          <s className="text-xs text-[#777]">{formatRWF(product.oldPrice)}</s>
+        )}
+      </div>
+    </article>
+  );
+}
+
+function ProductRail({
+  title,
+  href,
+  hrefLabel = "See All",
+  products,
+  accessory = false,
+  removable = false,
+}: {
+  title: string;
+  href?: string;
+  hrefLabel?: string;
+  products: Product[];
+  accessory?: boolean;
+  removable?: boolean;
+}) {
+  if (products.length === 0) return null;
+
+  return (
+    <section className="border-t border-white bg-[#f0f0f0] py-3">
+      <div className="mx-auto max-w-[1340px] px-2 sm:px-4">
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <h2 className="text-[16px] font-normal uppercase text-black">{title}</h2>
+          {href && (
+            <Link href={href} className="text-xs text-[#0066c0] hover:underline">
+              {hrefLabel}
+            </Link>
+          )}
+        </div>
+        <div className="flex gap-1 overflow-x-auto pb-1">
+          {products.map((item) => (
+            <div key={`${title}-${item.slug}`} className="shrink-0">
+              <RailCard product={item} compact={accessory} removable={removable} />
+              {accessory && (
+                <div className="bg-white px-3 pb-4">
+                  <AddToCartButton
+                    slug={item.slug}
+                    className="w-full border border-[#ff5a1f] bg-white py-2 text-xs text-[#ff4a22] hover:bg-[#fff2ed]"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function ProductPage({ params }: Props) {
   const product = await getProductBySlug((await params).slug);
   if (!product) notFound();
@@ -166,7 +278,30 @@ export default async function ProductPage({ params }: Props) {
   const allProducts = await getAllProducts();
   const related = relatedOf(allProducts, product, 8);
   const bundle = [product, ...related.slice(0, 2)];
-  const alsoViewed = related.slice(2, 6);
+  const accessoryPicks = allProducts
+    .filter(
+      (item) =>
+        item.slug !== product.slug &&
+        ["accessories", "tripods", "audio", "lighting"].includes(item.category),
+    )
+    .slice(0, 10);
+  const alsoViewed = [
+    ...related,
+    ...allProducts.filter((item) => item.slug !== product.slug),
+  ]
+    .filter(
+      (item, index, list) =>
+        list.findIndex((candidate) => candidate.slug === item.slug) === index,
+    )
+    .slice(0, 10);
+  const alsoBought = sortProducts(
+    allProducts.filter((item) => item.slug !== product.slug),
+    "rating",
+  ).slice(0, 10);
+  const recentlyViewed = [product, ...sortProducts(
+    allProducts.filter((item) => item.slug !== product.slug),
+    "featured",
+  )].slice(0, 10);
   const discount = product.oldPrice
     ? Math.max(1, Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100))
     : 4;
@@ -378,7 +513,7 @@ export default async function ProductPage({ params }: Props) {
           </aside>
         </div>
 
-        <nav className="sticky top-[106px] z-20 mt-8 hidden border-y border-[#d7e2ef] bg-white md:block">
+        <nav className="sticky top-[106px] z-30 mt-8 hidden border-y border-[#d7e2ef] bg-white md:block">
           <div className="flex overflow-x-auto">
             {tabs.map((tab) => (
               <a
@@ -391,6 +526,31 @@ export default async function ProductPage({ params }: Props) {
             ))}
           </div>
         </nav>
+
+        <div className="-mx-3 mt-0 sm:-mx-4">
+          <ProductRail
+            title="Recommended Accessories"
+            href="/c/accessories"
+            hrefLabel="See All Accessories"
+            products={accessoryPicks}
+            accessory
+          />
+          <ProductRail
+            title="Customers Also Viewed"
+            products={alsoViewed}
+          />
+          <ProductRail
+            title="Customers Also Bought"
+            products={alsoBought}
+          />
+          <ProductRail
+            title="Recently Viewed"
+            href="/account"
+            hrefLabel="Clear All"
+            products={recentlyViewed}
+            removable
+          />
+        </div>
 
         {bundle.length > 1 && (
           <section className="mt-8 border border-[#d7e2ef] p-5">
@@ -538,36 +698,75 @@ export default async function ProductPage({ params }: Props) {
         </section>
 
         <section id="qa" className="mt-10 scroll-mt-44">
-          <h2 className="text-[26px] font-semibold">How Can We Help?</h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {helpCards.map(({ title, body, icon: Icon, href }) => {
-              return (
-                <Link
-                  key={title}
-                  href={href}
-                  className="border border-[#d7e2ef] bg-[#f8fafc] p-5 hover:border-[#005aa6]"
-                >
-                  <Icon size={28} className="text-[#005aa6]" />
-                  <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-                  <p className="mt-2 text-sm leading-5 text-[#374151]">{body}</p>
-                </Link>
-              );
-            })}
+          <h2 className="text-[26px] font-semibold">Questions &amp; Answers</h2>
+          <div className="mt-4 grid gap-6 text-sm leading-6 text-[#333] lg:grid-cols-2">
+            <div>
+              <h3 className="font-bold text-black">
+                Q: Can I pick this up in store?
+              </h3>
+              <p>
+                A: Yes. Choose pickup at checkout and our team will prepare it
+                at the Kacyiru or Town branch during opening hours.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-black">Q: Is warranty included?</h3>
+              <p>
+                A: Yes. New items include local Photo Factory warranty support;
+                certified used gear includes a shorter used-gear warranty.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-black">
+                Q: Can I pay with Mobile Money?
+              </h3>
+              <p>
+                A: Yes. MTN MoMo, Airtel Money, Visa, Mastercard, and cash on
+                pickup are supported.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-bold text-black">
+                Q: Can I ask about compatibility?
+              </h3>
+              <p>
+                A: Yes. Contact support for lens mounts, batteries, chargers,
+                memory cards, and kit recommendations before ordering.
+              </p>
+            </div>
           </div>
         </section>
 
-        {alsoViewed.length > 0 && (
+        {alsoViewed.slice(0, 4).length > 0 && (
           <section className="mt-12 border-t border-[#e5e7eb] pb-12 pt-8">
             <h2 className="text-2xl font-semibold text-black">
-              Customers Also Viewed
+              More Products To Compare
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {alsoViewed.map((item) => (
+              {alsoViewed.slice(0, 4).map((item) => (
                 <ProductCard key={item.slug} product={item} />
               ))}
             </div>
           </section>
         )}
+
+        <section className="-mx-3 mt-10 bg-[#f5f5f5] px-4 py-12 sm:-mx-4">
+          <div className="mx-auto grid max-w-[1260px] gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
+            {helpCards.map(({ title, body, icon: Icon, href }) => (
+              <Link key={title} href={href} className="group block">
+                <span className="mx-auto grid h-24 w-24 place-items-center rounded-full border-2 border-[#c4d7ec] bg-white text-[#005aa6] transition group-hover:border-[#005aa6]">
+                  <Icon size={40} strokeWidth={1.7} />
+                </span>
+                <span className="mt-4 block text-[26px] font-normal leading-tight text-[#002d5a]">
+                  {title}
+                </span>
+                <span className="mx-auto mt-2 block max-w-[260px] text-[16px] leading-5 text-black">
+                  {body}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );
