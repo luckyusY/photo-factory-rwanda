@@ -133,6 +133,12 @@ a:active {
 .card-swiper {
   width: 100%;
 }
+.card-swiper .swiper-slide,
+.card-swiper .swiper-slide a,
+.card-swiper .swiper-slide img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
 .card-swiper .swiper-button-prev,
 .card-swiper .swiper-button-next {
   width: 40px;

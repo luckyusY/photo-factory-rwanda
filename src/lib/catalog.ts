@@ -1,3 +1,5 @@
+import { localProductSeeds } from "@/lib/local-products";
+
 export type Category = {
   slug: string;
   name: string;
@@ -988,12 +990,25 @@ const seeds: Seed[] = [
   },
 ];
 
+const allSeeds: Seed[] = [...localProductSeeds, ...seeds];
+
 let counter = 100;
-export const products: Product[] = seeds.map((seed) => {
+const usedSlugs = new Set<string>();
+
+export const products: Product[] = allSeeds.map((seed) => {
   counter += 1;
+  const baseSlug = slugify(seed.name) || `product-${counter}`;
+  let slug = baseSlug;
+  let suffix = 2;
+  while (usedSlugs.has(slug)) {
+    slug = `${baseSlug}-${suffix}`;
+    suffix += 1;
+  }
+  usedSlugs.add(slug);
+
   return {
     id: `PF-${counter}`,
-    slug: slugify(seed.name),
+    slug,
     rating: seed.rating ?? 4 + ((counter * 7) % 10) / 10,
     reviews: seed.reviews ?? 6 + ((counter * 13) % 140),
     ...seed,

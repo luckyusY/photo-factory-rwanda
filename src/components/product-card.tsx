@@ -6,7 +6,7 @@ import { formatRWF, type Product } from "@/lib/catalog";
 
 export function ProductCard({ product }: { product: Product }) {
   return (
-    <article className="flex flex-col overflow-hidden border border-[#d7e2ef] bg-white">
+    <article className="group flex flex-col overflow-hidden border border-[#d7e2ef] bg-white transition duration-200 hover:-translate-y-0.5 hover:border-[#9bc1e0] hover:shadow-md">
       <div className="relative aspect-[4/3] bg-[#f5f7fb]">
         <Link href={`/p/${product.slug}`}>
           <Image
@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
+            className="object-contain p-3 transition duration-300 group-hover:scale-[1.035]"
           />
         </Link>
         {product.badge && (

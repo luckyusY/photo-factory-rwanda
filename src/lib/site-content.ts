@@ -9,6 +9,9 @@ import {
 } from "@/lib/site-content-types";
 
 const COLLECTION = "site_content";
+const DB_FAILURE_COOLDOWN_MS = 60_000;
+
+let skipContentDbUntil = 0;
 
 export type ContentKey = "hero" | "categories";
 
@@ -23,12 +26,15 @@ export function defaultCategoryContent(): CategoryContent[] {
 
 async function readItems<T>(key: ContentKey): Promise<T[] | null> {
   if (!process.env.MONGODB_URI) return null;
+  if (Date.now() < skipContentDbUntil) return null;
+
   try {
     const db = await getDb();
     const doc = await db.collection(COLLECTION).findOne({ key });
     const items = doc?.items;
     return Array.isArray(items) && items.length > 0 ? (items as T[]) : null;
   } catch (error) {
+    skipContentDbUntil = Date.now() + DB_FAILURE_COOLDOWN_MS;
     console.error(`Failed to load site content "${key}"`, error);
     return null;
   }
