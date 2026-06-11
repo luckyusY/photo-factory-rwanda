@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Dancing_Script,
+  Geist,
+  Geist_Mono,
+  Great_Vibes,
+} from "next/font/google";
 import "./globals.css";
 import { MobileShopMenu } from "@/components/mobile-shop-menu";
 import { SiteFooter } from "@/components/site-footer";
@@ -13,6 +18,17 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const greatVibes = Great_Vibes({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-great-vibes",
+});
+
+const dancingScript = Dancing_Script({
+  subsets: ["latin"],
+  variable: "--font-dancing-script",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +48,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full`}
+      className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${dancingScript.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-[#eef2f7] text-[#111827] antialiased">
         <SiteHeader />

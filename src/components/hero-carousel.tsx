@@ -202,45 +202,51 @@ function SlideContent({
       />
 
       <div
-        className={`absolute z-10 max-w-[320px] px-5 sm:top-1/2 sm:max-w-[430px] sm:-translate-y-1/2 sm:px-0 ${
-          slide.copyPosition === "center"
-            ? "bottom-8 left-1/2 -translate-x-1/2 text-center sm:left-[49%]"
-            : "bottom-7 left-0 sm:left-[10.5%]"
-        } ${dark ? "text-white" : "text-black"}`}
+        className={`absolute inset-0 z-10 flex items-end pb-10 sm:items-center sm:pb-0 ${
+          slide.copyPosition === "center" ? "justify-center sm:pl-[14%]" : ""
+        }`}
       >
-        {slide.label && (
-          <span className="inline-block bg-[#ff4a22] px-4 py-1 text-[11px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,84%_50%,100%_100%,0_100%)] sm:px-5 sm:py-1.5">
-            {slide.label}
-          </span>
-        )}
-        <p className="mt-2 text-lg font-black uppercase tracking-wide sm:mt-5 sm:text-2xl">
-          {slide.brand}
-        </p>
-        <h1 className="mt-1 text-[22px] font-black leading-[1.05] sm:mt-3 sm:text-[34px]">
-          {slide.title}
-        </h1>
-        <p
-          className={`mt-2 hidden text-base leading-6 sm:block ${
-            dark ? "text-white/84" : "text-black/78"
-          }`}
+        <div
+          className={`max-w-[320px] sm:max-w-[430px] ${
+            slide.copyPosition === "center"
+              ? "flex flex-col items-center px-5 text-center"
+              : "px-5 sm:px-0 sm:pl-[10.5%]"
+          } ${dark ? "text-white" : "text-black"}`}
         >
-          {slide.body}
-        </p>
-        {slide.priceLine && (
+          {slide.label && (
+            <span className="inline-block w-fit bg-[#ff4a22] px-4 py-1 text-[11px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,84%_50%,100%_100%,0_100%)] sm:px-5 sm:py-1.5">
+              {slide.label}
+            </span>
+          )}
+          <p className="mt-2 text-lg font-black uppercase tracking-wide sm:mt-4 sm:text-2xl">
+            {slide.brand}
+          </p>
+          <h1 className="mt-1 text-[22px] font-black leading-[1.05] sm:mt-2 sm:text-[34px]">
+            {slide.title}
+          </h1>
           <p
-            className={`mt-1 text-[11px] font-bold sm:mt-2 sm:text-sm ${
+            className={`mt-2 hidden text-base leading-6 sm:block ${
               dark ? "text-white/84" : "text-black/78"
             }`}
           >
-            {slide.priceLine}
+            {slide.body}
           </p>
-        )}
-        <Link
-          href={slide.href}
-          className="mt-3 inline-flex min-w-28 justify-center rounded-sm bg-[#ff4a22] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#ff6a43] sm:mt-6 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
-        >
-          {slide.cta}
-        </Link>
+          {slide.priceLine && (
+            <p
+              className={`mt-1 text-[11px] font-bold sm:mt-2 sm:text-sm ${
+                dark ? "text-white/84" : "text-black/78"
+              }`}
+            >
+              {slide.priceLine}
+            </p>
+          )}
+          <Link
+            href={slide.href}
+            className="mt-3 inline-flex w-fit min-w-28 justify-center rounded-sm bg-[#ff4a22] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#ff6a43] sm:mt-5 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
+          >
+            {slide.cta}
+          </Link>
+        </div>
       </div>
     </div>
   );
