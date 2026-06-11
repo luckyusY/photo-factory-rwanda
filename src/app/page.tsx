@@ -7,14 +7,16 @@ import {
   MapPin,
   PackageCheck,
   Smartphone,
+  Trophy,
   Truck,
   Video,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { DealCard } from "@/components/deal-card";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { ProductCard } from "@/components/product-card";
-import { categories, dealsOf, usedOf } from "@/lib/catalog";
+import { categories, dealsOf, sortProducts, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
 
 export const revalidate = 300;
@@ -107,7 +109,12 @@ function PromoBanner({
 
 export default async function Home() {
   const allProducts = await getAllProducts();
-  const featuredDeals = dealsOf(allProducts).slice(0, 4);
+  const deals = dealsOf(allProducts);
+  const dealFillers = sortProducts(
+    allProducts.filter((p) => !p.oldPrice),
+    "rating",
+  ).slice(0, Math.max(0, 14 - deals.length));
+  const topDeals = [...deals, ...dealFillers];
   const usedPicks = usedOf(allProducts).slice(0, 4);
 
   return (
@@ -260,25 +267,27 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="deals" className="mx-auto max-w-7xl px-4 py-8">
-        <div className="mb-4 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
-              Featured deals
-            </p>
-            <h2 className="text-3xl font-black">Popular gear in stock</h2>
+      <section id="deals" className="bg-[#eef0f2] py-5">
+        <div className="mx-auto max-w-[1368px] px-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="flex items-center gap-2.5 text-[24px] font-semibold text-black sm:text-[28px]">
+              <Trophy size={27} strokeWidth={1.8} aria-hidden />
+              Today&apos;s Top Deals
+            </h2>
+            <Link
+              href="/deals"
+              className="text-sm font-semibold text-[#0066c0] hover:underline"
+            >
+              Browse All Deals &amp; Specials
+            </Link>
           </div>
-          <Link
-            href="/deals"
-            className="hidden text-sm font-black text-[#005aa6] sm:block"
-          >
-            View all deals
-          </Link>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredDeals.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
+          <div className="mt-4 overflow-x-auto pb-2">
+            <div className="grid grid-flow-col grid-rows-2 gap-3">
+              {topDeals.map((product) => (
+                <DealCard key={product.slug} product={product} />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
