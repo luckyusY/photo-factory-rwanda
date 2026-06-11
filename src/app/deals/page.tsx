@@ -1,26 +1,31 @@
 import type { Metadata } from "next";
 import {
   BadgePercent,
+  Binoculars,
   Box,
+  BriefcaseBusiness,
   Camera,
-  ChevronRight,
+  CircleHelp,
+  Headphones,
+  Laptop,
+  MapPin,
+  MessageCircle,
   Monitor,
   Music,
+  Package,
+  Phone,
+  Search,
   Sparkles,
-  Tag,
+  Star,
+  Tags,
+  Telescope,
   Trophy,
   Video,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CardSwiper } from "@/components/card-swiper";
-import { DealCard } from "@/components/deal-card";
-import {
-  categories,
-  dealsOf,
-  sortProducts,
-  type Product,
-} from "@/lib/catalog";
+import { formatRWF, dealsOf, sortProducts, type Product } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
 
 export const revalidate = 300;
@@ -31,103 +36,347 @@ export const metadata: Metadata = {
     "Daily deals on cameras, lenses, lighting, computers, audio, video gear, and creator equipment in Rwanda.",
 };
 
-const cld = (name: string, width = 900) =>
+const cld = (name: string, width = 1400) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
 
-const categoryArt: Record<string, string> = {
-  cameras: cld("camera-shipping", 520),
-  lenses: cld("lens-trade-up", 520),
-  lighting: cld("studio-upgrade", 520),
-  tripods: cld("outdoor-gear", 520),
-  computers: cld("gaming-power", 520),
-  video: cld("creator-gimbal", 520),
-  audio: cld("vip-rewards", 520),
-  drones: cld("drone-preorder", 520),
-  phones: cld("gifts-for-grads", 520),
-  accessories: cld("gifts-for-grads", 520),
-};
-
-const dealTypes = [
-  {
-    title: "Bundle & Save",
-    body: "Complete creator kits with cameras, memory, bags, tripods, and microphones.",
-    href: "/search?q=bundle",
-    icon: Box,
-  },
-  {
-    title: "Open Box Deals",
-    body: "Inspected returns and display units with warranty support.",
-    href: "/used",
-    icon: Tag,
-  },
-  {
-    title: "Pre-Owned Gear",
-    body: "Tested used equipment for photographers, studios, and videographers.",
-    href: "/used",
-    icon: Camera,
-  },
-  {
-    title: "Creator Specials",
-    body: "Lighting, audio, storage, and mobile filmmaking essentials.",
-    href: "/c/video",
-    icon: Sparkles,
-  },
+const categories = [
+  { label: "Cameras", slug: "cameras", icon: Camera },
+  { label: "Lenses", slug: "lenses", icon: Search },
+  { label: "Lighting", slug: "lighting", icon: Sparkles },
+  { label: "Tripods & Supports", slug: "tripods", icon: Telescope },
+  { label: "Camera Accessories", slug: "accessories", icon: BriefcaseBusiness },
+  { label: "Computers", slug: "computers", icon: Laptop },
+  { label: "Video", slug: "video", icon: Video },
+  { label: "Audio", slug: "audio", icon: Headphones },
+  { label: "Home Theater", slug: "phones", icon: Monitor },
+  { label: "Drones", slug: "drones", icon: Camera },
+  { label: "Gaming", slug: "computers", icon: Sparkles },
+  { label: "Music", slug: "accessories", icon: Music },
 ];
 
-const quickCategories = [
-  { label: "Camera Deals", slug: "cameras", icon: Camera },
-  { label: "Lens Deals", slug: "lenses", icon: Camera },
-  { label: "Computer Deals", slug: "computers", icon: Monitor },
-  { label: "Video Deals", slug: "video", icon: Video },
-  { label: "Audio Deals", slug: "audio", icon: Music },
-  { label: "Drone Deals", slug: "drones", icon: Sparkles },
+const shelfConfig = [
+  { title: "Cameras", href: "/c/cameras", category: "cameras", icon: Camera },
+  { title: "Lenses", href: "/c/lenses", category: "lenses", icon: Camera },
+  { title: "Lighting & Studio", href: "/c/lighting", category: "lighting", icon: Sparkles },
+  { title: "Video", href: "/c/video", category: "video", icon: Video },
+  { title: "Audio", href: "/c/audio", category: "audio", icon: Headphones },
+  { title: "Computers & Gaming", href: "/c/computers", category: "computers", icon: Laptop },
+  { title: "Home Electronics", href: "/c/phones", category: "phones", icon: Monitor },
+  { title: "Home Theater", href: "/c/phones", category: "phones", icon: Package },
+  { title: "Drones & Accessories", href: "/c/drones", category: "drones", icon: Camera },
+  { title: "Optics & Binoculars", href: "/c/tripods", category: "tripods", icon: Binoculars },
+  { title: "Camera Accessories", href: "/c/accessories", category: "accessories", icon: BriefcaseBusiness },
+  { title: "Musical Instruments", href: "/c/accessories", category: "accessories", icon: Music },
+];
+
+const browseTiles = [
+  { title: "All Deals & Specials", body: "Shop all sale items", href: "/deals", icon: BadgePercent },
+  { title: "Bundle & Save", body: "Build complete creator kits", href: "/search?q=bundle", icon: Box },
+  { title: "Clearance", body: "Final markdowns", href: "/used", icon: Tags },
+];
+
+const supportCards = [
+  {
+    title: "Give Us A Call",
+    body: "Questions? We are happy to help.",
+    href: "tel:+250788000000",
+    icon: Phone,
+  },
+  {
+    title: "Chat Now",
+    body: "Need help or have product questions?",
+    href: "/support",
+    icon: MessageCircle,
+  },
+  {
+    title: "Help Center",
+    body: "For shipping, returns, orders and more.",
+    href: "/support",
+    icon: CircleHelp,
+  },
+  {
+    title: "Visit Our Stores",
+    body: "Kacyiru and Kigali City Centre.",
+    href: "/stores",
+    icon: MapPin,
+  },
 ];
 
 function savings(product: Product) {
   return product.oldPrice ? product.oldPrice - product.price : 0;
 }
 
-function dealShelf(products: Product[], category: string, fallback: Product[]) {
-  const byCategory = products.filter((product) => product.category === category);
-  return [...byCategory, ...fallback.filter((product) => product.category === category)]
-    .filter(
-      (product, index, list) =>
-        list.findIndex((item) => item.slug === product.slug) === index,
-    )
-    .slice(0, 8);
+function uniqueProducts(products: Product[]) {
+  return products.filter(
+    (product, index, list) =>
+      list.findIndex((item) => item.slug === product.slug) === index,
+  );
 }
 
-function ProductShelf({
+function shelfProducts(
+  allProducts: Product[],
+  dealProducts: Product[],
+  category: string,
+) {
+  const categoryProducts = allProducts.filter((product) => product.category === category);
+  return uniqueProducts([
+    ...dealProducts.filter((product) => product.category === category),
+    ...sortProducts(categoryProducts, "rating"),
+    ...sortProducts(allProducts, "featured").filter(
+      (product) => product.category === category,
+    ),
+  ]).slice(0, 8);
+}
+
+function DealProductCard({
+  product,
+  compact = false,
+}: {
+  product: Product;
+  compact?: boolean;
+}) {
+  const save = savings(product);
+  const months = product.price >= 1500000 ? 12 : 6;
+  const monthly = Math.max(1000, Math.round(product.price / months / 1000) * 1000);
+
+  return (
+    <article
+      className={`group relative flex min-w-0 flex-col border-r border-[#e4e4e4] bg-white px-3 pb-3 pt-7 ${
+        compact ? "min-h-[292px]" : "min-h-[330px]"
+      }`}
+    >
+      {save > 0 && (
+        <span className="absolute left-0 top-2 z-10 bg-[#178a22] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+          Save {formatRWF(save)}
+        </span>
+      )}
+      <Link
+        href={`/p/${product.slug}`}
+        className={`relative mx-auto block w-full overflow-hidden bg-white ${
+          compact ? "h-[126px]" : "h-[150px]"
+        }`}
+      >
+        <Image
+          src={product.images[0]}
+          alt={product.name}
+          fill
+          sizes="(min-width: 1024px) 25vw, 50vw"
+          className="object-contain p-2 transition duration-300 group-hover:scale-[1.035]"
+        />
+      </Link>
+      <Link href={`/p/${product.slug}`} className="mt-2 block">
+        <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-normal leading-[18px] text-black hover:text-[#0066c0] hover:underline">
+          {product.name}
+        </h3>
+      </Link>
+      <div className="mt-1 flex items-center gap-1">
+        <span className="flex text-[#f5a623]">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Star
+              key={index}
+              size={12}
+              className={index < Math.round(product.rating) ? "fill-current" : ""}
+            />
+          ))}
+        </span>
+        <span className="text-[11px] text-[#555]">({product.reviews})</span>
+      </div>
+      <div className="mt-1.5 flex flex-wrap items-baseline gap-x-1.5">
+        <span className="text-[18px] font-medium leading-none text-black">
+          {formatRWF(product.price)}
+        </span>
+        {product.oldPrice && (
+          <s className="text-xs font-semibold text-[#777]">
+            {formatRWF(product.oldPrice)}
+          </s>
+        )}
+      </div>
+      {!compact && (
+        <p className="mt-1.5 text-[11px] leading-4 text-black">
+          <strong className="text-[#178a22]">{formatRWF(monthly)}</strong>
+          /mo suggested payments with {months}-month special financing.{" "}
+          <Link href="/support" className="text-[#0066c0] hover:underline">
+            Learn how.
+          </Link>
+        </p>
+      )}
+    </article>
+  );
+}
+
+function TopDealsGrid({ products }: { products: Product[] }) {
+  return (
+    <section className="bg-[#eeeeee] py-2">
+      <div className="mx-auto max-w-[1348px] px-1 sm:px-2">
+        <div className="mb-1 flex items-center justify-center gap-2 text-center text-white">
+          <Trophy size={20} className="text-[#001f49]" />
+          <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#001f49]">
+            Your Top Deals
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 border-l border-t border-[#e4e4e4] sm:grid-cols-3 lg:grid-cols-6">
+          {products.slice(0, 12).map((product) => (
+            <DealProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CategoryStrip() {
+  return (
+    <section className="bg-[#004f94]">
+      <div className="mx-auto max-w-[1348px] overflow-x-auto px-1 py-2">
+        <div className="flex min-w-max">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <Link
+                key={`${category.slug}-${category.label}`}
+                href={`/c/${category.slug}`}
+                className="grid w-[86px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#0067bd]"
+              >
+                <span className="grid h-9 w-9 place-items-center rounded-sm bg-white text-[#004f94]">
+                  <Icon size={24} strokeWidth={1.8} />
+                </span>
+                {category.label}
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DealShelf({
   title,
   href,
+  icon: Icon,
   products,
 }: {
   title: string;
   href: string;
+  icon: typeof Camera;
   products: Product[];
 }) {
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t border-[#d7d7d7] bg-[#f1f2f3] py-3 sm:py-5">
-      <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
-        <div className="mb-2 flex items-center justify-between gap-3 sm:mb-3 sm:gap-4">
-          <h2 className="text-[23px] font-normal leading-tight text-black sm:text-[32px]">
+    <section className="border-t border-[#dedede] bg-[#f1f1f1] py-3">
+      <div className="mx-auto max-w-[1348px] px-1 sm:px-2">
+        <div className="mb-2 flex items-center justify-between gap-2 px-1">
+          <h2 className="flex items-center gap-2 text-[17px] font-normal text-black">
+            <Icon size={18} strokeWidth={1.8} className="text-[#444]" />
             {title}
           </h2>
-          <Link
-            href={href}
-            className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline"
-          >
-            <span className="sm:hidden">See All</span>
-            <span className="hidden sm:inline">Browse all</span>
+          <Link href={href} className="text-xs font-medium text-[#0066c0] hover:underline">
+            See All {title} Deals
           </Link>
         </div>
-        <CardSwiper rows={2} gapSm={4} columnGapClassName="gap-1">
+        <CardSwiper gap={2} gapSm={4}>
           {products.map((product) => (
-            <DealCard key={product.slug} product={product} />
+            <div key={`${title}-${product.slug}`} className="w-[190px] sm:w-[252px]">
+              <DealProductCard product={product} compact />
+            </div>
           ))}
         </CardSwiper>
+      </div>
+    </section>
+  );
+}
+
+function SandiskBanner() {
+  return (
+    <section className="bg-[#d9edf8]">
+      <Link
+        href="/c/accessories"
+        className="mx-auto grid max-w-[1348px] overflow-hidden bg-[#d6eff8] md:grid-cols-[310px_minmax(0,1fr)_210px]"
+      >
+        <div className="flex flex-col justify-center bg-white px-6 py-5">
+          <p className="text-3xl font-black uppercase tracking-wide text-[#e21a2c]">
+            SanDisk
+          </p>
+          <p className="mt-2 text-lg font-black text-[#004f94]">
+            More Space to Create
+          </p>
+          <p className="text-sm font-semibold text-[#333]">
+            Get more out of your devices with memory upgrades
+          </p>
+        </div>
+        <div className="relative min-h-[118px]">
+          <Image
+            src={cld("gifts-for-grads", 1000)}
+            alt="Storage and creator essentials"
+            fill
+            sizes="(min-width: 768px) 60vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="flex items-center justify-center bg-[#ff5a1f] px-5 py-5 text-sm font-black uppercase text-white">
+          Shop Now
+        </div>
+      </Link>
+    </section>
+  );
+}
+
+function BrowseTiles() {
+  return (
+    <section className="bg-[#eeeeee] py-5">
+      <div className="mx-auto max-w-[1348px] px-2">
+        <h2 className="mb-2 text-[14px] font-bold uppercase text-[#333]">
+          Browse Deals By Type
+        </h2>
+        <div className="grid gap-2 md:grid-cols-3">
+          {browseTiles.map((tile) => {
+            const Icon = tile.icon;
+            return (
+              <Link
+                key={tile.title}
+                href={tile.href}
+                className="group relative min-h-[110px] overflow-hidden bg-[#003d78] p-5 text-white"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,222,89,.22),transparent_30%)]" />
+                <div className="relative flex h-full items-center justify-center gap-3 text-center">
+                  <Icon size={36} strokeWidth={1.8} />
+                  <span>
+                    <span className="block text-xl font-semibold">{tile.title}</span>
+                    <span className="text-xs font-bold uppercase tracking-wide text-white/80">
+                      {tile.body}
+                    </span>
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SupportStrip() {
+  return (
+    <section className="bg-white py-9">
+      <div className="mx-auto grid max-w-[1120px] gap-7 px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
+        {supportCards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <Link key={card.title} href={card.href} className="group">
+              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#c7d9ec] text-[#005aa6] transition group-hover:border-[#005aa6]">
+                <Icon size={28} strokeWidth={1.7} />
+              </span>
+              <span className="mt-3 block text-xl font-normal text-[#002d5a]">
+                {card.title}
+              </span>
+              <span className="mt-1 block text-sm leading-5 text-black">
+                {card.body}
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </section>
   );
@@ -136,187 +385,53 @@ function ProductShelf({
 export default async function DealsPage() {
   const allProducts = await getAllProducts();
   const actualDeals = dealsOf(allProducts).sort((a, b) => savings(b) - savings(a));
-  const highRated = sortProducts(allProducts, "rating");
-  const topDeals = [...actualDeals, ...highRated]
-    .filter(
-      (product, index, list) =>
-        list.findIndex((item) => item.slug === product.slug) === index,
-    )
-    .slice(0, 16);
+  const topDeals = uniqueProducts([...actualDeals, ...sortProducts(allProducts, "rating")]);
 
   return (
-    <main className="min-h-screen bg-white text-black">
-      <section className="border-b border-[#d6d6d6] bg-[#eeeeee]">
-        <div className="mx-auto grid max-w-[1368px] gap-4 px-3 py-4 md:grid-cols-[1fr_410px] md:items-center md:px-4 md:py-8">
-          <div>
-            <div className="mb-1.5 flex items-center gap-2 text-[#004f94] sm:mb-2">
-              <BadgePercent size={20} className="sm:size-6" />
-              <span className="text-xs font-black uppercase tracking-wide sm:text-sm">
-                Deals & Specials
-              </span>
-            </div>
-            <h1 className="text-[30px] font-normal leading-tight sm:text-[44px]">
-              Today&apos;s Top Deals
-            </h1>
-            <p className="mt-1.5 max-w-3xl text-[14px] leading-5 text-[#333] sm:mt-2 sm:text-[17px] sm:leading-7">
-              Save on genuine photography equipment, electronics, lighting,
-              audio, computers, drones, and creator gear with pickup in Kigali
-              or nationwide delivery across Rwanda.
-            </p>
-            <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 sm:mt-5 sm:flex-wrap sm:gap-2 sm:overflow-visible sm:pb-0">
-              {quickCategories.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.label}
-                    href={`/c/${item.slug}`}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-[#b9c7d6] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#004f94] hover:border-[#004f94] sm:gap-2 sm:px-3 sm:py-2 sm:text-sm sm:font-normal"
-                  >
-                    <Icon size={14} className="sm:size-4" />
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-          <Link
-            href="/c/cameras"
-            className="group relative hidden min-h-[235px] overflow-hidden bg-black md:block"
-          >
-            <Image
-              src={cld("camera-shipping", 800)}
-              alt="Camera deal"
-              fill
-              sizes="410px"
-              className="object-cover opacity-85 transition duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
-            <div className="absolute bottom-5 left-5 text-white">
-              <p className="text-sm font-black uppercase">Limited time</p>
-              <p className="mt-1 text-2xl font-black">Camera deals</p>
-            </div>
-          </Link>
+    <main className="min-h-screen bg-[#eeeeee] text-black">
+      <section className="relative overflow-hidden bg-[#003a75] text-white">
+        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#001f49] to-transparent" />
+        <div className="relative mx-auto flex min-h-[245px] max-w-[1348px] flex-col items-center justify-center px-4 py-9 text-center">
+          <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
+            Photo Factory Rwanda
+          </p>
+          <h1 className="mt-3 text-[42px] font-normal leading-none sm:text-[64px]">
+            Deals &amp; Specials
+          </h1>
+          <p className="mt-3 max-w-3xl text-xs font-bold uppercase tracking-[0.22em] text-white/85">
+            Score exclusive savings with our amazing deals
+          </p>
         </div>
       </section>
 
-      <ProductShelf
-        title="Our Top Deals"
-        href="/deals"
-        products={topDeals}
-      />
+      <TopDealsGrid products={topDeals} />
+      <CategoryStrip />
 
-      <section className="bg-white py-4 sm:py-6">
-        <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
-          <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4 sm:gap-4">
-            <h2 className="text-[23px] font-normal leading-tight sm:text-[28px]">
-              Shop Deals by Category
-            </h2>
-            <Link href="/c/cameras" className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline">
-              <span className="sm:hidden">See All</span>
-              <span className="hidden sm:inline">See all categories</span>
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-2 lg:grid-cols-5">
-            {categories.map((category) => (
-              <Link
-                key={category.slug}
-                href={`/c/${category.slug}`}
-                className="group border border-[#d7d7d7] bg-white p-2 hover:border-[#004f94] sm:p-3"
-              >
-                <span className="relative mb-2 block aspect-[4/3] overflow-hidden bg-[#f5f5f5] sm:mb-3">
-                  <Image
-                    src={categoryArt[category.slug] ?? category.image}
-                    alt={category.name}
-                    fill
-                    sizes="(min-width: 1024px) 20vw, 50vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                </span>
-                <span className="flex items-center justify-between gap-1.5 text-[13px] font-semibold leading-4 text-black sm:gap-2 sm:text-[16px] sm:leading-normal">
-                  {category.name}
-                  <ChevronRight size={15} className="shrink-0 text-[#004f94] sm:size-[17px]" />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      {shelfConfig.slice(0, 5).map((shelf) => (
+        <DealShelf
+          key={shelf.title}
+          title={shelf.title}
+          href={shelf.href}
+          icon={shelf.icon}
+          products={shelfProducts(allProducts, actualDeals, shelf.category)}
+        />
+      ))}
 
-      <section className="border-y border-[#d7d7d7] bg-[#eeeeee] py-4 sm:py-6">
-        <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
-          <h2 className="mb-3 text-[23px] font-normal leading-tight sm:mb-4 sm:text-[28px]">
-            Browse Deals by Type
-          </h2>
-          <div className="grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2">
-            {dealTypes.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.title}
-                  href={item.href}
-                  className="group flex min-h-28 flex-col justify-between border border-[#d7d7d7] bg-white p-3 hover:border-[#004f94] sm:min-h-36 sm:p-5"
-                >
-                  <span>
-                    <Icon size={24} className="text-[#004f94] sm:size-[30px]" />
-                    <span className="mt-2 block text-[15px] font-semibold leading-5 sm:mt-4 sm:text-xl">
-                      {item.title}
-                    </span>
-                    <span className="mt-1 block text-xs leading-4 text-[#333] sm:mt-2 sm:text-sm sm:leading-5">
-                      {item.body}
-                    </span>
-                  </span>
-                  <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#0066c0] group-hover:underline sm:mt-4 sm:text-sm">
-                    Shop now <ChevronRight size={15} />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <SandiskBanner />
 
-      <ProductShelf
-        title="Camera & Lens Deals"
-        href="/c/cameras"
-        products={[
-          ...dealShelf(actualDeals, "cameras", highRated),
-          ...dealShelf(actualDeals, "lenses", highRated),
-        ].slice(0, 12)}
-      />
-      <ProductShelf
-        title="Computer & Creator Tech Deals"
-        href="/c/computers"
-        products={[
-          ...dealShelf(actualDeals, "computers", highRated),
-          ...dealShelf(actualDeals, "phones", highRated),
-          ...dealShelf(actualDeals, "accessories", highRated),
-        ].slice(0, 12)}
-      />
-      <ProductShelf
-        title="Video, Audio & Drone Deals"
-        href="/c/video"
-        products={[
-          ...dealShelf(actualDeals, "video", highRated),
-          ...dealShelf(actualDeals, "audio", highRated),
-          ...dealShelf(actualDeals, "drones", highRated),
-        ].slice(0, 12)}
-      />
+      {shelfConfig.slice(5).map((shelf) => (
+        <DealShelf
+          key={shelf.title}
+          title={shelf.title}
+          href={shelf.href}
+          icon={shelf.icon}
+          products={shelfProducts(allProducts, actualDeals, shelf.category)}
+        />
+      ))}
 
-      <section className="bg-white py-5 sm:py-8">
-        <div className="mx-auto grid max-w-[1368px] gap-2 px-2 sm:gap-3 sm:px-4 md:grid-cols-3">
-          {[
-            ["Same-Day Kigali Delivery", "Order eligible deals for fast delivery around Kigali."],
-            ["Warranty Support", "All genuine new products include Photo Factory warranty support."],
-            ["Pickup In Store", "Reserve online and pick up in Kacyiru or Kigali City Centre."],
-          ].map(([title, body]) => (
-            <div key={title} className="border border-[#d7d7d7] bg-[#f7f7f7] p-4 sm:p-5">
-              <Trophy size={24} className="text-[#004f94] sm:size-7" />
-              <h3 className="mt-3 text-lg font-semibold sm:mt-4 sm:text-xl">{title}</h3>
-              <p className="mt-1.5 text-sm leading-5 text-[#333] sm:mt-2 sm:leading-6">{body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <BrowseTiles />
+      <SupportStrip />
     </main>
   );
 }
