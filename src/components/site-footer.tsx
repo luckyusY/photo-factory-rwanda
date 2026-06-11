@@ -138,11 +138,11 @@ export function SiteFooter() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-7 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-4">
             <Image
-              src="/logo.svg"
+              src="/logo-transparent.png"
               alt="Photo Factory Shop"
-              width={200}
-              height={40}
-              className="h-9 w-auto"
+              width={991}
+              height={573}
+              className="h-14 w-auto"
             />
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">

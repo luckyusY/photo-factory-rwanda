@@ -33,12 +33,12 @@ export function SiteHeader() {
         <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto_auto] items-center gap-2 px-2 py-2 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4 sm:px-4 sm:py-3">
           <Link href="/" className="shrink-0" aria-label="Photo Factory Shop home">
             <Image
-              src="/logo.svg"
+              src="/logo-transparent.png"
               alt="Photo Factory Shop"
-              width={228}
-              height={44}
+              width={991}
+              height={573}
               priority
-              className="h-8 w-auto sm:h-11"
+              className="h-10 w-auto sm:h-14"
             />
           </Link>
           <form action="/search" className="relative min-w-0">
