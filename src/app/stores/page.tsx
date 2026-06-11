@@ -1,18 +1,19 @@
 import { Clock3, MapPin, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, MAPS_URL, WHATSAPP_URL } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Store Locations",
   description:
-    "Visit Photo Factory Rwanda at Kacyiru or Kigali City Centre for product advice, pickup, and warranty support.",
+    "Visit Photo Factory Rwanda in Kigali for product advice, pickup, and warranty support.",
 };
 
 const stores = [
   {
-    name: "Kacyiru Branch",
-    address: "KG 7 Avenue, Kacyiru, Kigali",
-    phone: "+250 788 000 000",
+    name: "Photo Factory Shop",
+    address: "Kigali, Rwanda",
+    phone: CONTACT_PHONE_DISPLAY,
     hours: [
       "Monday - Friday: 8:00 AM - 7:00 PM",
       "Saturday: 9:00 AM - 6:00 PM",
@@ -23,22 +24,6 @@ const stores = [
       "Order pickup (ready in 2 hours)",
       "Used gear evaluation and trade-in",
       "Warranty and technical support",
-    ],
-  },
-  {
-    name: "Kigali City Centre (Town) Branch",
-    address: "City Centre, Kigali",
-    phone: "+250 788 000 001",
-    hours: [
-      "Monday - Friday: 8:00 AM - 7:00 PM",
-      "Saturday: 9:00 AM - 6:00 PM",
-      "Sunday: Closed",
-    ],
-    services: [
-      "Electronics and accessories showroom",
-      "Order pickup (ready in 2 hours)",
-      "Phone and laptop sales",
-      "Business and bulk orders",
     ],
   },
 ];
@@ -60,15 +45,17 @@ export default function StoresPage() {
             <h2 className="text-2xl font-black">{store.name}</h2>
             <div className="mt-4 space-y-3 text-sm font-semibold">
               <p className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-[#005aa6]" />
+                <MapPin size={18} className="mt-0.5 shrink-0 text-[#d9a441]" />
                 {store.address}
               </p>
               <p className="flex items-start gap-3">
-                <Phone size={18} className="mt-0.5 shrink-0 text-[#005aa6]" />
-                {store.phone}
+                <Phone size={18} className="mt-0.5 shrink-0 text-[#d9a441]" />
+                <a href={`tel:${CONTACT_PHONE_TEL}`} className="hover:underline">
+                  {store.phone}
+                </a>
               </p>
               <div className="flex items-start gap-3">
-                <Clock3 size={18} className="mt-0.5 shrink-0 text-[#005aa6]" />
+                <Clock3 size={18} className="mt-0.5 shrink-0 text-[#d9a441]" />
                 <span>
                   {store.hours.map((line) => (
                     <span key={line} className="block">
@@ -78,7 +65,7 @@ export default function StoresPage() {
                 </span>
               </div>
             </div>
-            <h3 className="mt-5 text-xs font-black uppercase tracking-wider text-[#005aa6]">
+            <h3 className="mt-5 text-xs font-black uppercase tracking-wider text-[#8b641e]">
               In-store services
             </h3>
             <ul className="mt-2 space-y-1.5 text-sm text-[#374151]">
@@ -89,7 +76,7 @@ export default function StoresPage() {
           </article>
         ))}
       </div>
-      <div className="mt-8 rounded bg-[#003b70] p-6 text-white">
+      <div className="mt-8 rounded bg-[#15110a] p-6 text-white">
         <h2 className="text-xl font-black">Ordering for pickup?</h2>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-white/80">
           Choose &quot;Pickup in store&quot; at checkout and your order will be
@@ -97,11 +84,21 @@ export default function StoresPage() {
           ID.
         </p>
         <Link
-          href="/c/cameras"
-          className="mt-4 inline-block rounded-sm bg-[#ff5a1f] px-6 py-3 text-sm font-black uppercase"
+          href={MAPS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-block rounded-sm bg-[#d9a441] px-6 py-3 text-sm font-black uppercase text-black"
         >
-          Start shopping
+          Open location
         </Link>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-3 mt-4 inline-block rounded-sm border border-[#d9a441] px-6 py-3 text-sm font-black uppercase text-[#ffcf57]"
+        >
+          WhatsApp us
+        </a>
       </div>
     </main>
   );

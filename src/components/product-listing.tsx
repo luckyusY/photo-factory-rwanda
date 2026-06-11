@@ -275,12 +275,12 @@ function FilterLink({
     <Link
       href={href}
       className={`flex items-center gap-2 px-1 py-1.5 text-[14px] font-medium ${
-        active ? "bg-[#e8f1fa] text-[#005aa6]" : "hover:bg-[#f3f7fc]"
+        active ? "bg-[#fff5da] text-[#8b641e]" : "hover:bg-[#fbf7ef]"
       }`}
     >
       <span
         className={`grid h-4 w-4 place-items-center rounded-sm border ${
-          active ? "border-[#005aa6] bg-[#005aa6] text-white" : "border-[#9ca3af]"
+          active ? "border-[#8b641e] bg-[#d9a441] text-black" : "border-[#9ca3af]"
         }`}
       >
         {active && <Check size={12} strokeWidth={3} />}

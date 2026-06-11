@@ -2,6 +2,7 @@ import { ChevronDown, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { NewsletterSignup } from "@/components/newsletter-signup";
+import { INSTAGRAM_URL, MAPS_URL, TIKTOK_URL, WHATSAPP_URL } from "@/lib/contact";
 
 const footerColumns = [
   {
@@ -59,37 +60,32 @@ const footerColumns = [
 
 const socials = [
   {
-    label: "Facebook",
-    href: "https://facebook.com",
-    path: "M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z",
-  },
-  {
     label: "Instagram",
-    href: "https://instagram.com",
+    href: INSTAGRAM_URL,
     path: "M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5zm0 5.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM16.5 6.8a.9.9 0 1 0 0 1.8.9.9 0 0 0 0-1.8zM7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H7z",
   },
   {
-    label: "X",
-    href: "https://x.com",
-    path: "M17.5 5h2.4l-5.3 6 6.2 8h-4.8l-3.8-4.9L7.9 19H5.5l5.6-6.4L5.1 5h4.9l3.4 4.5L17.5 5zm-.8 12.5h1.3L8 6.4H6.6l10.1 11.1z",
-  },
-  {
-    label: "YouTube",
-    href: "https://youtube.com",
-    path: "M21.6 8.2a2.5 2.5 0 0 0-1.7-1.8C18.3 6 12 6 12 6s-6.3 0-7.9.4A2.5 2.5 0 0 0 2.4 8.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 3.8 2.5 2.5 0 0 0 1.7 1.8C5.7 18 12 18 12 18s6.3 0 7.9-.4a2.5 2.5 0 0 0 1.7-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-3.8zM10 14.7V9.3l4.7 2.7-4.7 2.7z",
+    label: "WhatsApp",
+    href: WHATSAPP_URL,
+    path: "M12 2a9.8 9.8 0 0 0-8.5 14.7L2.2 22l5.4-1.3A9.9 9.9 0 1 0 12 2zm0 2a7.9 7.9 0 0 1 6.7 12.1A7.9 7.9 0 0 1 8 18.6l-.4-.2-2.5.6.6-2.4-.3-.4A7.9 7.9 0 0 1 12 4zm-3.3 3.9c-.2 0-.5.1-.7.3-.5.5-.8 1.1-.8 1.8 0 1.1.8 2.6 2 3.8 1.2 1.3 3.1 2.3 4.7 2.4.7 0 1.5-.2 2-.7.2-.3.5-1.2.5-1.4 0-.2-.1-.3-.3-.4l-1.8-.8c-.2-.1-.4-.1-.6.1l-.7.8c-.1.1-.3.2-.5.1-.6-.2-1.2-.6-1.8-1.1-.5-.5-.9-1-1.1-1.6-.1-.2 0-.4.1-.5l.6-.7c.2-.2.2-.4.1-.6L9.6 8c-.1-.2-.2-.2-.4-.2h-.5z",
   },
   {
     label: "TikTok",
-    href: "https://tiktok.com",
+    href: TIKTOK_URL,
     path: "M16 4c.3 2 1.6 3.6 3.5 3.9v2.5c-1.3 0-2.5-.4-3.5-1.1v5.3a5.3 5.3 0 1 1-5.3-5.3c.3 0 .5 0 .8.1v2.6a2.7 2.7 0 1 0 1.9 2.6V4H16z",
+  },
+  {
+    label: "Location",
+    href: MAPS_URL,
+    path: "M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z",
   },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="bg-[#062a52] pb-24 text-white md:pb-0">
+    <footer className="bg-[#050505] pb-24 text-white md:pb-0">
       {/* Newsletter band */}
-      <div className="border-b border-white/10 bg-[#04203f]">
+      <div className="border-b border-[#d9a441]/25 bg-[#15110a]">
         <div className="mx-auto grid max-w-7xl gap-5 px-4 py-7 md:grid-cols-[1fr_minmax(0,480px)] md:items-center md:py-8">
           <div>
             <p className="text-lg font-black sm:text-xl">Unlock Free Delivery</p>
@@ -111,7 +107,7 @@ export function SiteFooter() {
               className="footer-acc border-b border-white/10 py-1 md:border-0 md:py-0"
             >
               <summary className="flex items-center justify-between py-3 md:py-0 md:pb-4">
-                <span className="text-[15px] font-black md:text-sm md:uppercase md:tracking-wide md:text-[#ffde59]">
+                <span className="text-[15px] font-black md:text-sm md:uppercase md:tracking-wide md:text-[#ffcf57]">
                   {column.title}
                 </span>
                 <ChevronDown
@@ -158,7 +154,7 @@ export function SiteFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="grid h-9 w-9 place-items-center rounded-full border border-white/30 text-white transition hover:border-white hover:bg-white/10"
+                    className="grid h-9 w-9 place-items-center rounded-full border border-[#d9a441]/50 text-[#ffcf57] transition hover:border-[#ffcf57] hover:bg-[#d9a441]/10"
                   >
                     <svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor">
                       <path d={social.path} />
@@ -180,7 +176,7 @@ export function SiteFooter() {
       </div>
 
       {/* Legal bar */}
-      <div className="bg-[#04203f]">
+      <div className="bg-[#15110a]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
           <p>© 2026 Photo Factory Rwanda. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">

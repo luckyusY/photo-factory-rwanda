@@ -15,7 +15,7 @@ const navMenus = [
     promo: {
       eyebrow: "Photo Factory Advantage",
       title: "Same-day Kigali delivery and pickup.",
-      body: "Get product advice, payment flexibility, and warranty support from Kacyiru and Town branches.",
+      body: "Get product advice, payment flexibility, and warranty support from our Kigali shop.",
     },
   },
   {
@@ -72,7 +72,7 @@ export function MainNav() {
   return (
     <nav
       onMouseLeave={close}
-      className="relative hidden bg-[#004f94] text-white md:block"
+      className="relative hidden border-y border-[#d9a441]/30 bg-[#15110a] text-white md:block"
     >
       <div className="mx-auto flex max-w-7xl items-center gap-2 px-4">
         <Link
@@ -91,7 +91,7 @@ export function MainNav() {
             onFocus={() => setOpenMenu(menu.label)}
             onClick={close}
             className={`flex shrink-0 items-center gap-1 px-4 py-3 text-sm font-semibold ${
-              openMenu === menu.label ? "bg-[#0067bd]" : "hover:bg-[#0067bd]"
+              openMenu === menu.label ? "bg-[#d9a441] text-black" : "hover:bg-[#2a2113]"
             }`}
           >
             {menu.label}
@@ -120,7 +120,7 @@ export function MainNav() {
                   onClick={close}
                   className={`mb-1 flex items-center justify-between rounded px-4 py-2.5 text-[17px] ${
                     activeDepartment.slug === department.slug
-                      ? "bg-[#004f94] font-black text-white underline"
+                      ? "bg-[#15110a] font-black text-[#ffcf57] underline"
                       : "font-medium hover:bg-[#eef2f7]"
                   }`}
                 >
@@ -134,7 +134,7 @@ export function MainNav() {
                   key={item}
                   href={item === "Gift Cards" ? "/support" : "/deals"}
                   onClick={close}
-                  className="block px-4 py-2 text-base hover:text-[#005aa6]"
+                  className="block px-4 py-2 text-base hover:text-[#8b641e]"
                 >
                   {item}
                 </Link>
@@ -152,7 +152,7 @@ export function MainNav() {
                         <Link
                           href={`/c/${activeDepartment.slug}`}
                           onClick={close}
-                          className="text-[14px] leading-5 text-[#0066c0] hover:underline"
+                          className="text-[14px] leading-5 text-[#8b641e] hover:underline"
                         >
                           {link}
                         </Link>
@@ -191,7 +191,7 @@ export function MainNav() {
             <div>
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-xl font-black">{active.label}</h3>
-                <Link href={active.href} className="text-sm font-bold text-[#005aa6]">
+                <Link href={active.href} className="text-sm font-bold text-[#8b641e]">
                   See all
                 </Link>
               </div>
@@ -200,15 +200,15 @@ export function MainNav() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="rounded border border-[#d7e2ef] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#005aa6]"
+                    className="rounded border border-[#d7e2ef] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#d9a441]"
                   >
                     {item.label}
                   </Link>
                 ))}
               </div>
             </div>
-            <div className="bg-[#003b70] p-5 text-white">
-              <p className="text-xs font-black uppercase tracking-wider text-[#ffde59]">
+            <div className="bg-[#15110a] p-5 text-white">
+              <p className="text-xs font-black uppercase tracking-wider text-[#ffcf57]">
                 {active.promo.eyebrow}
               </p>
               <h4 className="mt-2 text-2xl font-black">{active.promo.title}</h4>

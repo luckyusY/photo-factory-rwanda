@@ -34,6 +34,7 @@ import {
   sortProducts,
   type Product,
 } from "@/lib/catalog";
+import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, MAPS_URL, WHATSAPP_URL } from "@/lib/contact";
 import { getAllProducts, getProductBySlug } from "@/lib/products-db";
 
 export const dynamic = "force-dynamic";
@@ -79,15 +80,15 @@ const serviceBadges = [
 const helpCards = [
   {
     title: "Give Us A Call",
-    body: "Questions? We're happy to help. Call us at +250 Customer Support.",
+    body: `Questions? We are happy to help. Call us at ${CONTACT_PHONE_DISPLAY}.`,
     icon: Phone,
-    href: "/support",
+    href: `tel:${CONTACT_PHONE_TEL}`,
   },
   {
-    title: "Chat Now",
+    title: "WhatsApp",
     body: "Need help or have product questions? Chat with an expert.",
     icon: MessageCircle,
-    href: "/support",
+    href: WHATSAPP_URL,
   },
   {
     title: "Help Center",
@@ -97,9 +98,9 @@ const helpCards = [
   },
   {
     title: "Visit Our Stores",
-    body: "Visit our Kigali stores for shopping, services, repairs, and more.",
+    body: "Visit Photo Factory Shop in Kigali for shopping, services, repairs, and more.",
     icon: Building2,
-    href: "/stores",
+    href: MAPS_URL,
   },
 ];
 
@@ -758,19 +759,37 @@ export default async function ProductPage({ params }: Props) {
 
         <section className="-mx-3 mt-10 bg-[#f5f5f5] px-4 py-12 sm:-mx-4">
           <div className="mx-auto grid max-w-[1260px] gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
-            {helpCards.map(({ title, body, icon: Icon, href }) => (
-              <Link key={title} href={href} className="group block">
-                <span className="mx-auto grid h-24 w-24 place-items-center rounded-full border-2 border-[#c4d7ec] bg-white text-[#005aa6] transition group-hover:border-[#005aa6]">
+            {helpCards.map(({ title, body, icon: Icon, href }) => {
+              const external = href.startsWith("http") || href.startsWith("tel:");
+              const content = (
+                <>
+                <span className="mx-auto grid h-24 w-24 place-items-center rounded-full border-2 border-[#dec083] bg-white text-[#8b641e] transition group-hover:border-[#d9a441]">
                   <Icon size={40} strokeWidth={1.7} />
                 </span>
-                <span className="mt-4 block text-[26px] font-normal leading-tight text-[#002d5a]">
+                <span className="mt-4 block text-[26px] font-normal leading-tight text-[#15110a]">
                   {title}
                 </span>
                 <span className="mx-auto mt-2 block max-w-[260px] text-[16px] leading-5 text-black">
                   {body}
                 </span>
-              </Link>
-            ))}
+                </>
+              );
+              return external ? (
+                <a
+                  key={title}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="group block"
+                >
+                  {content}
+                </a>
+              ) : (
+                <Link key={title} href={href} className="group block">
+                  {content}
+                </Link>
+              );
+            })}
           </div>
         </section>
       </div>

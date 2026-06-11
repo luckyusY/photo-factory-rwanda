@@ -26,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CardSwiper } from "@/components/card-swiper";
 import { formatRWF, dealsOf, sortProducts, type Product } from "@/lib/catalog";
+import { CONTACT_PHONE_TEL, MAPS_URL, WHATSAPP_URL } from "@/lib/contact";
 import { getAllProducts } from "@/lib/products-db";
 
 export const revalidate = 300;
@@ -79,13 +80,13 @@ const supportCards = [
   {
     title: "Give Us A Call",
     body: "Questions? We are happy to help.",
-    href: "tel:+250788000000",
+    href: `tel:${CONTACT_PHONE_TEL}`,
     icon: Phone,
   },
   {
     title: "Chat Now",
     body: "Need help or have product questions?",
-    href: "/support",
+    href: WHATSAPP_URL,
     icon: MessageCircle,
   },
   {
@@ -96,8 +97,8 @@ const supportCards = [
   },
   {
     title: "Visit Our Stores",
-    body: "Kacyiru and Kigali City Centre.",
-    href: "/stores",
+    body: "Photo Factory Shop, Kigali.",
+    href: MAPS_URL,
     icon: MapPin,
   },
 ];
@@ -301,7 +302,7 @@ function TopDealsGrid({ products }: { products: Product[] }) {
 
 function CategoryStrip({ products }: { products: Product[] }) {
   return (
-    <section className="bg-[#004f94]">
+    <section className="bg-[#050505]">
       <div className="mx-auto max-w-[1348px] overflow-x-auto px-1 py-2">
         <div className="flex min-w-max">
           {categories.map((category) => {
@@ -313,7 +314,7 @@ function CategoryStrip({ products }: { products: Product[] }) {
                 href={`/c/${category.slug}`}
                 className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#0067bd]"
               >
-                <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#004f94]">
+                <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#8b641e]">
                   <Image
                     src={image}
                     alt=""
@@ -321,7 +322,7 @@ function CategoryStrip({ products }: { products: Product[] }) {
                     sizes="56px"
                     className="object-contain p-1"
                   />
-                  <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#004f94]">
+                  <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#8b641e]">
                     <Icon size={13} strokeWidth={2} />
                   </span>
                 </span>
@@ -383,7 +384,7 @@ function SandiskBanner() {
           <p className="text-3xl font-black uppercase tracking-wide text-[#e21a2c]">
             SanDisk
           </p>
-          <p className="mt-2 text-lg font-black text-[#004f94]">
+          <p className="mt-2 text-lg font-black text-[#8b641e]">
             More Space to Create
           </p>
           <p className="text-sm font-semibold text-[#333]">
@@ -448,17 +449,36 @@ function SupportStrip() {
       <div className="mx-auto grid max-w-[1120px] gap-7 px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
         {supportCards.map((card) => {
           const Icon = card.icon;
-          return (
-            <Link key={card.title} href={card.href} className="group">
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#c7d9ec] text-[#005aa6] transition group-hover:border-[#005aa6]">
+          const external = card.href.startsWith("http");
+          const content = (
+            <>
+              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#dec083] text-[#8b641e] transition group-hover:border-[#d9a441]">
                 <Icon size={28} strokeWidth={1.7} />
               </span>
-              <span className="mt-3 block text-xl font-normal text-[#002d5a]">
+              <span className="mt-3 block text-xl font-normal text-[#15110a]">
                 {card.title}
               </span>
               <span className="mt-1 block text-sm leading-5 text-black">
                 {card.body}
               </span>
+            </>
+          );
+          if (external) {
+            return (
+              <a
+                key={card.title}
+                href={card.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group"
+              >
+                {content}
+              </a>
+            );
+          }
+          return (
+            <Link key={card.title} href={card.href} className="group">
+              {content}
             </Link>
           );
         })}

@@ -195,7 +195,7 @@ export function MobileShopMenu() {
 
   return (
     <>
-      <div className="fixed inset-x-0 bottom-0 z-[100] border-t border-white/25 bg-[#005098] text-white shadow-[0_-4px_18px_rgba(0,0,0,0.25)] md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-[100] border-t border-[#d9a441]/40 bg-[#050505] text-white shadow-[0_-4px_18px_rgba(0,0,0,0.35)] md:hidden">
         <div className="grid grid-cols-6 text-[10px] font-semibold">
           <Link href="/" className="grid place-items-center gap-0.5 py-1.5">
             <Home size={22} />
@@ -206,7 +206,7 @@ export function MobileShopMenu() {
               setOpen(true);
               setActiveDepartment(null);
             }}
-            className="grid place-items-center gap-0.5 border-t-4 border-[#79bdf6] py-1"
+            className="grid place-items-center gap-0.5 border-t-4 border-[#ffcf57] py-1"
           >
             <Menu size={25} />
             Browse
@@ -250,19 +250,19 @@ export function MobileShopMenu() {
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}
-              className="absolute right-2 top-2 z-20 grid h-8 w-8 place-items-center rounded-full bg-[#005098] text-white"
+              className="absolute right-2 top-2 z-20 grid h-8 w-8 place-items-center rounded-full bg-[#15110a] text-[#ffcf57] ring-1 ring-[#d9a441]/40"
             >
               <X size={20} />
             </button>
-            <div className="flex overflow-x-auto bg-[#005098] px-2 pt-3">
+            <div className="flex overflow-x-auto bg-[#050505] px-2 pt-3">
               {tabs.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => selectTab(tab)}
                   className={`shrink-0 rounded-t px-4 py-3 text-lg font-bold ${
                     activeTab === tab
-                      ? "bg-white text-[#005098]"
-                      : "bg-[#06447c] text-white"
+                      ? "bg-white text-[#15110a]"
+                      : "bg-[#15110a] text-white"
                   }`}
                 >
                   {tab}
@@ -299,7 +299,7 @@ export function MobileShopMenu() {
                 <>
                   <div className="mb-3 flex justify-between py-3 text-sm font-bold uppercase text-[#111827]">
                     <span>Featured brands:</span>
-                    <Link href="/brands" onClick={close} className="text-[#005098]">
+                    <Link href="/brands" onClick={close} className="text-[#8b641e]">
                       See all
                     </Link>
                   </div>
@@ -408,7 +408,7 @@ function MenuRow({
     <>
       <span
         className={`relative grid h-14 w-16 shrink-0 place-items-center overflow-hidden ${
-          boxed ? "rounded border border-[#9fc1e3] bg-white text-[#005098]" : "text-[#111827]"
+          boxed ? "rounded border border-[#d9a441]/50 bg-white text-[#8b641e]" : "text-[#111827]"
         }`}
       >
         <Image
@@ -419,7 +419,7 @@ function MenuRow({
           className="object-contain p-1"
         />
         {boxed && (
-          <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#005098]">
+          <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#8b641e]">
             <Icon size={13} strokeWidth={2} />
           </span>
         )}

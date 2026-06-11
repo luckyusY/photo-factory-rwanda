@@ -33,7 +33,7 @@ export function AddToCartButton({
         setTimeout(() => setAdded(false), 1500);
       }}
       className={`min-h-11 rounded-sm px-4 py-3 text-sm font-black uppercase text-white transition-colors ${
-        added ? "bg-[#15803d]" : "bg-[#005aa6] hover:bg-[#004277]"
+        added ? "bg-[#15803d] text-white" : "bg-[#d9a441] text-black hover:bg-[#ffcf57]"
       } ${className}`}
     >
       {added ? (
@@ -67,7 +67,7 @@ export function WishlistButton({
           duration: 1800,
         });
       }}
-      className={`grid h-11 w-11 place-items-center rounded-full bg-white/95 text-[#005aa6] shadow ring-1 ring-black/10 transition hover:scale-105 ${className}`}
+      className={`grid h-11 w-11 place-items-center rounded-full bg-white/95 text-[#8b641e] shadow ring-1 ring-black/10 transition hover:scale-105 ${className}`}
     >
       <Heart
         size={20}

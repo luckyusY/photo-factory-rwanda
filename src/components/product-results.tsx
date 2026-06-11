@@ -39,8 +39,8 @@ export function ProductResults({ products }: { products: Product[] }) {
             onClick={() => setView("list")}
             className={`grid h-8 w-8 place-items-center rounded border ${
               view === "list"
-                ? "border-[#005aa6] bg-[#eef6ff] text-[#005aa6]"
-                : "border-[#cfd8e3] text-[#6b7280] hover:border-[#9bc1e0]"
+                ? "border-[#8b641e] bg-[#fff5da] text-[#8b641e]"
+                : "border-[#cfd8e3] text-[#6b7280] hover:border-[#d9a441]"
             }`}
           >
             <List size={16} />
@@ -50,8 +50,8 @@ export function ProductResults({ products }: { products: Product[] }) {
             onClick={() => setView("grid")}
             className={`grid h-8 w-8 place-items-center rounded border ${
               view === "grid"
-                ? "border-[#005aa6] bg-[#eef6ff] text-[#005aa6]"
-                : "border-[#cfd8e3] text-[#6b7280] hover:border-[#9bc1e0]"
+                ? "border-[#8b641e] bg-[#fff5da] text-[#8b641e]"
+                : "border-[#cfd8e3] text-[#6b7280] hover:border-[#d9a441]"
             }`}
           >
             <LayoutGrid size={16} />

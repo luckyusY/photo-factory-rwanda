@@ -27,7 +27,7 @@ export const revalidate = 300;
 const services = [
   { icon: CreditCard, label: "MoMo, Airtel Money, Visa & Mastercard" },
   { icon: Truck, label: "Nationwide delivery, same-day in Kigali" },
-  { icon: PackageCheck, label: "Pickup in Kacyiru and Kigali City Centre" },
+  { icon: PackageCheck, label: "Pickup from our Kigali shop" },
   { icon: BadgeCheck, label: "Genuine products with warranty support" },
 ];
 
@@ -115,7 +115,7 @@ export default async function Home() {
     <main className="min-h-screen overflow-x-hidden">
       <HeroCarousel slides={heroSlides} />
 
-      <section className="bg-[#004f94] px-3 pb-4 pt-2 md:hidden">
+      <section className="bg-[#050505] px-3 pb-4 pt-2 md:hidden">
         <h2 className="mb-3 text-center text-sm font-black uppercase tracking-wide text-white">
           Shop by category
         </h2>
@@ -145,7 +145,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="hidden bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5 md:block">
+      <section className="hidden bg-[linear-gradient(90deg,#050505,#15110a,#050505)] py-5 md:block">
         <div className="mx-auto max-w-7xl px-4">
           <CardSwiper>
             {categoryContent.map((department) => (
@@ -170,9 +170,9 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="border-y-[3px] border-[#0074d9] bg-white">
+      <section className="border-y-[3px] border-[#d9a441] bg-white">
         <Reveal>
-        <div className="mx-auto grid max-w-[1368px] gap-[3px] bg-[#0074d9] md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1368px] gap-[3px] bg-[#d9a441] md:grid-cols-2">
           {/* Studio upgrade contest — yellow, centered stacked lockup */}
           <PromoBanner
             href="/support"
@@ -275,7 +275,7 @@ export default async function Home() {
             </h2>
             <Link
               href="/deals"
-              className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline sm:font-semibold"
+              className="shrink-0 text-sm font-medium text-[#8b641e] hover:underline sm:font-semibold"
             >
               <span className="sm:hidden">See All</span>
               <span className="hidden sm:inline">Browse All Deals &amp; Specials</span>
@@ -298,7 +298,7 @@ export default async function Home() {
               key={service.label}
               className="flex min-h-24 items-center gap-4 rounded border border-[#d9e2ef] bg-[#f8fafc] p-4"
             >
-              <service.icon aria-hidden className="text-[#005aa6]" size={30} />
+              <service.icon aria-hidden className="text-[#d9a441]" size={30} />
               <p className="text-sm font-black leading-5">{service.label}</p>
             </div>
           ))}
@@ -308,14 +308,14 @@ export default async function Home() {
       <section className="mx-auto max-w-7xl px-4 py-8">
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <p className="text-sm font-black uppercase tracking-wider text-[#005aa6]">
+            <p className="text-sm font-black uppercase tracking-wider text-[#8b641e]">
               Certified used & open box
             </p>
             <h2 className="text-3xl font-black">Pro gear, smarter prices</h2>
           </div>
           <Link
             href="/used"
-            className="hidden text-sm font-black text-[#005aa6] sm:block"
+            className="hidden text-sm font-black text-[#8b641e] sm:block"
           >
             Shop all used gear
           </Link>
@@ -349,7 +349,7 @@ export default async function Home() {
           href="/c/phones"
           className="rounded bg-[#f3f7fc] p-7 text-[#111827] ring-1 ring-black/10"
         >
-          <div className="flex gap-3 text-[#005aa6]">
+          <div className="flex gap-3 text-[#d9a441]">
             <Smartphone aria-hidden size={34} />
             <Laptop aria-hidden size={34} />
             <Video aria-hidden size={34} />
@@ -363,10 +363,10 @@ export default async function Home() {
         </Reveal>
       </section>
 
-      <section id="locations" className="bg-[#003b70] px-4 py-10 text-white">
+      <section id="locations" className="bg-[#15110a] px-4 py-10 text-white">
         <Reveal className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_1.3fr]">
           <div>
-            <p className="text-sm font-black uppercase tracking-wider text-[#ffde59]">
+            <p className="text-sm font-black uppercase tracking-wider text-[#ffcf57]">
               Visit us in Kigali
             </p>
             <h2 className="mt-2 text-3xl font-black">
@@ -375,14 +375,14 @@ export default async function Home() {
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {["Kacyiru, Kigali, Rwanda", "Kigali City Centre (Town), Rwanda"].map(
+            {["Photo Factory Shop, Kigali, Rwanda"].map(
               (location) => (
                 <Link
                   key={location}
                   href="/stores"
                   className="flex gap-3 rounded bg-white/10 p-5 ring-1 ring-white/20 transition hover:bg-white/15"
                 >
-                  <MapPin aria-hidden className="shrink-0 text-[#ffde59]" />
+                  <MapPin aria-hidden className="shrink-0 text-[#ffcf57]" />
                   <div>
                     <h3 className="font-black">{location}</h3>
                     <p className="mt-2 text-sm leading-6 text-white/75">

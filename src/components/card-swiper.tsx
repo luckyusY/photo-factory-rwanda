@@ -62,7 +62,7 @@ export function CardSwiper({
     // Links and images are natively draggable; block the browser's HTML5
     // drag so click-and-drag reaches Swiper instead of ghost-dragging cards.
     <div className="relative" onDragStartCapture={(event) => event.preventDefault()}>
-      <span className="pointer-events-none absolute right-2 top-1 z-20 rounded-full bg-[#005aa6]/90 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-white shadow-sm sm:hidden">
+      <span className="pointer-events-none absolute right-2 top-1 z-20 rounded-full bg-[#d9a441]/95 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide text-black shadow-sm sm:hidden">
         Swipe
       </span>
       <span className="pointer-events-none absolute bottom-0 right-0 top-0 z-10 w-9 bg-gradient-to-l from-[#eeeeee] to-transparent sm:hidden" />
