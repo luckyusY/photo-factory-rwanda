@@ -172,6 +172,47 @@ a:active {
   }
 }
 
+/* ---------- Product rich text ---------- */
+
+.product-rich-text :where(h2, h3, h4) {
+  margin: 1.1em 0 0.45em;
+  color: #111827;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.product-rich-text h2 {
+  font-size: 1.35rem;
+}
+.product-rich-text h3 {
+  font-size: 1.15rem;
+}
+.product-rich-text :where(p, ul, ol, table) {
+  margin-top: 0.85rem;
+}
+.product-rich-text :where(ul, ol) {
+  padding-left: 1.35rem;
+}
+.product-rich-text ul {
+  list-style: disc;
+}
+.product-rich-text ol {
+  list-style: decimal;
+}
+.product-rich-text a {
+  color: #0066c0;
+  font-weight: 700;
+  text-decoration: underline;
+}
+.product-rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.product-rich-text :where(th, td) {
+  border: 1px solid #d7e2ef;
+  padding: 0.65rem;
+  text-align: left;
+}
+
 /* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {

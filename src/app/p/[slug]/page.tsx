@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) return {};
   return {
     title: product.name,
-    description: product.description,
+    description: stripHtml(product.description),
   };
 }
 
@@ -575,9 +575,7 @@ export default async function ProductPage({ params }: Props) {
           <h2 className="text-[26px] font-semibold leading-tight">
             About {product.name}
           </h2>
-          <p className="mt-4 max-w-5xl text-[15px] leading-7 text-[#333]">
-            {product.description}
-          </p>
+          <ProductDescription value={product.description} />
           <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div className="space-y-5 text-[15px] leading-7 text-[#333]">
               <div>
@@ -778,4 +776,25 @@ export default async function ProductPage({ params }: Props) {
       </div>
     </main>
   );
+}
+
+function ProductDescription({ value }: { value: string }) {
+  if (/<[a-z][\s\S]*>/i.test(value)) {
+    return (
+      <div
+        className="product-rich-text mt-4 max-w-5xl text-[15px] leading-7 text-[#333]"
+        dangerouslySetInnerHTML={{ __html: value }}
+      />
+    );
+  }
+
+  return (
+    <p className="mt-4 max-w-5xl text-[15px] leading-7 text-[#333]">
+      {value}
+    </p>
+  );
+}
+
+function stripHtml(value: string) {
+  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }

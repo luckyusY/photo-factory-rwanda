@@ -1,11 +1,12 @@
 "use client";
 
 import { ArrowDown, ArrowUp, ImageIcon, Plus, Trash2 } from "lucide-react";
+import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { categories, type Product } from "@/lib/catalog";
 
-const CLOUDINARY_CLOUD_NAME = "dvkifxvj6";
+const TINYMCE_API_KEY = "wp1cro1p0yeuzcvdwyejs4pfm061yj4mzoflk6yak9z6obef";
 
 const inputClass =
   "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
@@ -25,16 +26,12 @@ export function ProductForm({ product }: Props) {
   const [images, setImages] = useState<string[]>(
     product?.images.length ? product.images : [""],
   );
+  const [description, setDescription] = useState(product?.description ?? "");
   const [shortSpecs, setShortSpecs] = useState<string[]>(
     product?.shortSpecs.length ? product.shortSpecs : [""],
   );
   const [specs, setSpecs] = useState<SpecRow[]>(
     product?.specs.length ? product.specs : [{ label: "", value: "" }],
-  );
-
-  const cleanImages = useMemo(
-    () => images.map(normalizeImageInput).filter(Boolean),
-    [images],
   );
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -55,8 +52,8 @@ export function ProductForm({ product }: Props) {
       stock: Number(form.get("stock") ?? 0),
       rating: Number(form.get("rating") ?? product?.rating ?? 4.5),
       reviews: Number(form.get("reviews") ?? product?.reviews ?? 0),
-      description: String(form.get("description") ?? ""),
-      images: cleanImages,
+      description,
+      images: images.map((image) => image.trim()).filter(Boolean),
       shortSpecs: shortSpecs.map((spec) => spec.trim()).filter(Boolean),
       specs: specs
         .map((spec) => ({
@@ -136,7 +133,7 @@ export function ProductForm({ product }: Props) {
           <section className={panelClass}>
             <SectionTitle
               title="Product Images"
-              description="The first image is the main product image. Add Cloudinary URLs, public IDs, remote image URLs, or local paths like /products/item/1.jpg."
+              description="The first image is the main product image. Add full image URLs or local paths like /products/item/1.jpg."
             />
             <ImageManager images={images} setImages={setImages} />
           </section>
@@ -148,12 +145,9 @@ export function ProductForm({ product }: Props) {
             />
             <label className="mt-4 block text-sm font-bold">
               Description
-              <textarea
-                name="description"
-                rows={7}
-                defaultValue={product?.description}
-                className={`mt-1 ${inputClass}`}
-                placeholder="Write the full product description customers should see on the product page."
+              <RichTextEditor
+                value={description}
+                onChange={setDescription}
               />
             </label>
             <DynamicTextList
@@ -248,13 +242,18 @@ export function ProductForm({ product }: Props) {
               description="This is the main product card image customers will see first."
             />
             <div className="mt-4 overflow-hidden rounded border border-[#d7e2ef] bg-white">
-              <ImagePreview url={cleanImages[0]} label="Main product image" large />
+              <ImagePreview
+                url={images.map((image) => image.trim()).filter(Boolean)[0]}
+                label="Main product image"
+                large
+              />
               <div className="border-t border-[#e5e7eb] p-3">
                 <p className="line-clamp-2 text-sm font-bold">
                   {String(product?.name ?? "Product name")}
                 </p>
                 <p className="mt-1 text-xs font-semibold text-[#6b7280]">
-                  {cleanImages.length} image{cleanImages.length === 1 ? "" : "s"} ready
+                  {images.map((image) => image.trim()).filter(Boolean).length} image
+                  {images.map((image) => image.trim()).filter(Boolean).length === 1 ? "" : "s"} ready
                 </p>
               </div>
             </div>
@@ -287,6 +286,51 @@ function SectionTitle({
       <p className="mt-1 text-sm font-semibold leading-5 text-[#6b7280]">
         {description}
       </p>
+    </div>
+  );
+}
+
+function RichTextEditor({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="mt-1 overflow-hidden rounded border border-[#d7e2ef] bg-white">
+      <Editor
+        apiKey={TINYMCE_API_KEY}
+        value={value}
+        onEditorChange={onChange}
+        init={{
+          height: 320,
+          menubar: false,
+          branding: false,
+          plugins: [
+            "advlist",
+            "autolink",
+            "lists",
+            "link",
+            "charmap",
+            "preview",
+            "anchor",
+            "searchreplace",
+            "visualblocks",
+            "code",
+            "fullscreen",
+            "insertdatetime",
+            "table",
+            "help",
+            "wordcount",
+          ],
+          toolbar:
+            "undo redo | blocks | bold italic underline | bullist numlist | link table | removeformat | code preview",
+          block_formats: "Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4",
+          content_style:
+            "body{font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.65;color:#222} h2,h3,h4{margin:1em 0 .45em;font-weight:700} ul,ol{padding-left:1.4rem}",
+        }}
+      />
     </div>
   );
 }
@@ -358,14 +402,9 @@ function ImageManager({
             <input
               value={image}
               onChange={(event) => update(index, event.target.value)}
-              placeholder="Cloudinary public ID, https://res.cloudinary.com/..., or /products/product-name/1.jpg"
+              placeholder="https://res.cloudinary.com/... or /products/product-name/1.jpg"
               className={inputClass}
             />
-            {image.trim() && image.trim() !== normalizeImageInput(image) && (
-              <p className="mt-1 text-xs font-semibold text-[#6b7280]">
-                Previewing as Cloudinary image: {normalizeImageInput(image)}
-              </p>
-            )}
           </div>
         </div>
       ))}
@@ -389,7 +428,7 @@ function ImagePreview({
   label: string;
   large?: boolean;
 }) {
-  const previewUrl = normalizeImageInput(url ?? "");
+  const previewUrl = (url ?? "").trim();
 
   return (
     <div
@@ -582,17 +621,4 @@ function Field({
 
 function cssUrl(url: string) {
   return url.replace(/["\\]/g, "\\$&");
-}
-
-function normalizeImageInput(value: string) {
-  const image = value.trim();
-  if (!image) return "";
-  if (
-    image.startsWith("/") ||
-    /^https?:\/\//.test(image) ||
-    image.startsWith("data:image/")
-  ) {
-    return image;
-  }
-  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto/${image}`;
 }
