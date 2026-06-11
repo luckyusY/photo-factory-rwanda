@@ -108,20 +108,21 @@ function ProductShelf({
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t border-[#d7d7d7] bg-[#f1f2f3] py-5">
-      <div className="mx-auto max-w-[1368px] px-4">
-        <div className="mb-3 flex items-center justify-between gap-4">
-          <h2 className="text-[26px] font-normal leading-tight text-black sm:text-[32px]">
+    <section className="border-t border-[#d7d7d7] bg-[#f1f2f3] py-3 sm:py-5">
+      <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
+        <div className="mb-2 flex items-center justify-between gap-3 sm:mb-3 sm:gap-4">
+          <h2 className="text-[23px] font-normal leading-tight text-black sm:text-[32px]">
             {title}
           </h2>
           <Link
             href={href}
-            className="shrink-0 text-sm text-[#0066c0] hover:underline"
+            className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline"
           >
-            Browse all
+            <span className="sm:hidden">See All</span>
+            <span className="hidden sm:inline">Browse all</span>
           </Link>
         </div>
-        <div className="grid auto-cols-[225px] grid-flow-col grid-rows-2 gap-1 overflow-x-auto pb-2 sm:auto-cols-[238px]">
+        <div className="grid auto-cols-[160px] grid-flow-col grid-rows-2 gap-1 overflow-x-auto pb-1 sm:auto-cols-[238px] sm:pb-2">
           {products.map((product) => (
             <DealCard key={product.slug} product={product} />
           ))}
@@ -145,32 +146,32 @@ export default async function DealsPage() {
   return (
     <main className="min-h-screen bg-white text-black">
       <section className="border-b border-[#d6d6d6] bg-[#eeeeee]">
-        <div className="mx-auto grid max-w-[1368px] gap-6 px-4 py-6 md:grid-cols-[1fr_410px] md:items-center md:py-8">
+        <div className="mx-auto grid max-w-[1368px] gap-4 px-3 py-4 md:grid-cols-[1fr_410px] md:items-center md:px-4 md:py-8">
           <div>
-            <div className="mb-2 flex items-center gap-2 text-[#004f94]">
-              <BadgePercent size={24} />
-              <span className="text-sm font-black uppercase tracking-wide">
+            <div className="mb-1.5 flex items-center gap-2 text-[#004f94] sm:mb-2">
+              <BadgePercent size={20} className="sm:size-6" />
+              <span className="text-xs font-black uppercase tracking-wide sm:text-sm">
                 Deals & Specials
               </span>
             </div>
-            <h1 className="text-[34px] font-normal leading-tight sm:text-[44px]">
+            <h1 className="text-[30px] font-normal leading-tight sm:text-[44px]">
               Today&apos;s Top Deals
             </h1>
-            <p className="mt-2 max-w-3xl text-[17px] leading-7 text-[#333]">
+            <p className="mt-1.5 max-w-3xl text-[14px] leading-5 text-[#333] sm:mt-2 sm:text-[17px] sm:leading-7">
               Save on genuine photography equipment, electronics, lighting,
               audio, computers, drones, and creator gear with pickup in Kigali
               or nationwide delivery across Rwanda.
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 sm:mt-5 sm:flex-wrap sm:gap-2 sm:overflow-visible sm:pb-0">
               {quickCategories.map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.label}
                     href={`/c/${item.slug}`}
-                    className="inline-flex items-center gap-2 rounded-sm border border-[#b9c7d6] bg-white px-3 py-2 text-sm text-[#004f94] hover:border-[#004f94]"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-sm border border-[#b9c7d6] bg-white px-2.5 py-1.5 text-xs font-semibold text-[#004f94] hover:border-[#004f94] sm:gap-2 sm:px-3 sm:py-2 sm:text-sm sm:font-normal"
                   >
-                    <Icon size={16} />
+                    <Icon size={14} className="sm:size-4" />
                     {item.label}
                   </Link>
                 );
@@ -203,24 +204,25 @@ export default async function DealsPage() {
         products={topDeals}
       />
 
-      <section className="bg-white py-6">
-        <div className="mx-auto max-w-[1368px] px-4">
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <h2 className="text-[28px] font-normal leading-tight">
+      <section className="bg-white py-4 sm:py-6">
+        <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
+          <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4 sm:gap-4">
+            <h2 className="text-[23px] font-normal leading-tight sm:text-[28px]">
               Shop Deals by Category
             </h2>
-            <Link href="/c/cameras" className="text-sm text-[#0066c0] hover:underline">
-              See all categories
+            <Link href="/c/cameras" className="shrink-0 text-sm font-medium text-[#0066c0] hover:underline">
+              <span className="sm:hidden">See All</span>
+              <span className="hidden sm:inline">See all categories</span>
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 sm:gap-2 lg:grid-cols-5">
             {categories.map((category) => (
               <Link
                 key={category.slug}
                 href={`/c/${category.slug}`}
-                className="group border border-[#d7d7d7] bg-white p-3 hover:border-[#004f94]"
+                className="group border border-[#d7d7d7] bg-white p-2 hover:border-[#004f94] sm:p-3"
               >
-                <span className="relative mb-3 block aspect-[4/3] overflow-hidden bg-[#f5f5f5]">
+                <span className="relative mb-2 block aspect-[4/3] overflow-hidden bg-[#f5f5f5] sm:mb-3">
                   <Image
                     src={categoryArt[category.slug] ?? category.image}
                     alt={category.name}
@@ -229,9 +231,9 @@ export default async function DealsPage() {
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
                 </span>
-                <span className="flex items-center justify-between gap-2 text-[16px] font-semibold text-black">
+                <span className="flex items-center justify-between gap-1.5 text-[13px] font-semibold leading-4 text-black sm:gap-2 sm:text-[16px] sm:leading-normal">
                   {category.name}
-                  <ChevronRight size={17} className="text-[#004f94]" />
+                  <ChevronRight size={15} className="shrink-0 text-[#004f94] sm:size-[17px]" />
                 </span>
               </Link>
             ))}
@@ -239,30 +241,30 @@ export default async function DealsPage() {
         </div>
       </section>
 
-      <section className="border-y border-[#d7d7d7] bg-[#eeeeee] py-6">
-        <div className="mx-auto max-w-[1368px] px-4">
-          <h2 className="mb-4 text-[28px] font-normal leading-tight">
+      <section className="border-y border-[#d7d7d7] bg-[#eeeeee] py-4 sm:py-6">
+        <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
+          <h2 className="mb-3 text-[23px] font-normal leading-tight sm:mb-4 sm:text-[28px]">
             Browse Deals by Type
           </h2>
-          <div className="grid gap-2 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-1.5 md:grid-cols-4 md:gap-2">
             {dealTypes.map((item) => {
               const Icon = item.icon;
               return (
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="group flex min-h-36 flex-col justify-between border border-[#d7d7d7] bg-white p-5 hover:border-[#004f94]"
+                  className="group flex min-h-28 flex-col justify-between border border-[#d7d7d7] bg-white p-3 hover:border-[#004f94] sm:min-h-36 sm:p-5"
                 >
                   <span>
-                    <Icon size={30} className="text-[#004f94]" />
-                    <span className="mt-4 block text-xl font-semibold">
+                    <Icon size={24} className="text-[#004f94] sm:size-[30px]" />
+                    <span className="mt-2 block text-[15px] font-semibold leading-5 sm:mt-4 sm:text-xl">
                       {item.title}
                     </span>
-                    <span className="mt-2 block text-sm leading-5 text-[#333]">
+                    <span className="mt-1 block text-xs leading-4 text-[#333] sm:mt-2 sm:text-sm sm:leading-5">
                       {item.body}
                     </span>
                   </span>
-                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#0066c0] group-hover:underline">
+                  <span className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-[#0066c0] group-hover:underline sm:mt-4 sm:text-sm">
                     Shop now <ChevronRight size={15} />
                   </span>
                 </Link>
@@ -299,17 +301,17 @@ export default async function DealsPage() {
         ].slice(0, 12)}
       />
 
-      <section className="bg-white py-8">
-        <div className="mx-auto grid max-w-[1368px] gap-3 px-4 md:grid-cols-3">
+      <section className="bg-white py-5 sm:py-8">
+        <div className="mx-auto grid max-w-[1368px] gap-2 px-2 sm:gap-3 sm:px-4 md:grid-cols-3">
           {[
             ["Same-Day Kigali Delivery", "Order eligible deals for fast delivery around Kigali."],
             ["Warranty Support", "All genuine new products include Photo Factory warranty support."],
             ["Pickup In Store", "Reserve online and pick up in Kacyiru or Kigali City Centre."],
           ].map(([title, body]) => (
-            <div key={title} className="border border-[#d7d7d7] bg-[#f7f7f7] p-5">
-              <Trophy size={28} className="text-[#004f94]" />
-              <h3 className="mt-4 text-xl font-semibold">{title}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#333]">{body}</p>
+            <div key={title} className="border border-[#d7d7d7] bg-[#f7f7f7] p-4 sm:p-5">
+              <Trophy size={24} className="text-[#004f94] sm:size-7" />
+              <h3 className="mt-3 text-lg font-semibold sm:mt-4 sm:text-xl">{title}</h3>
+              <p className="mt-1.5 text-sm leading-5 text-[#333] sm:mt-2 sm:leading-6">{body}</p>
             </div>
           ))}
         </div>
