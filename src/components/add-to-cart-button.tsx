@@ -1,29 +1,38 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Check, Heart } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useStore } from "@/components/store-context";
 
 export function AddToCartButton({
   slug,
   qty = 1,
+  name,
   className = "",
 }: {
   slug: string;
   qty?: number;
+  name?: string;
   className?: string;
 }) {
   const { addToCart } = useStore();
   const [added, setAdded] = useState(false);
 
   return (
-    <button
+    <motion.button
+      whileTap={{ scale: 0.96 }}
       onClick={() => {
         addToCart(slug, qty);
         setAdded(true);
+        toast.success("Added to cart", {
+          description: name,
+          duration: 2200,
+        });
         setTimeout(() => setAdded(false), 1500);
       }}
-      className={`rounded-sm px-4 py-3 text-sm font-black uppercase text-white transition ${
+      className={`rounded-sm px-4 py-3 text-sm font-black uppercase text-white transition-colors ${
         added ? "bg-[#15803d]" : "bg-[#005aa6] hover:bg-[#004277]"
       } ${className}`}
     >
@@ -34,7 +43,7 @@ export function AddToCartButton({
       ) : (
         "Add to cart"
       )}
-    </button>
+    </motion.button>
   );
 }
 
@@ -49,15 +58,21 @@ export function WishlistButton({
   const active = hydrated && wishlist.includes(slug);
 
   return (
-    <button
+    <motion.button
+      whileTap={{ scale: 0.85 }}
       aria-label={active ? "Remove from wishlist" : "Add to wishlist"}
-      onClick={() => toggleWishlist(slug)}
+      onClick={() => {
+        toggleWishlist(slug);
+        toast(active ? "Removed from wishlist" : "Saved to wishlist", {
+          duration: 1800,
+        });
+      }}
       className={`grid h-10 w-10 place-items-center rounded-full bg-white/95 text-[#005aa6] shadow ring-1 ring-black/10 transition hover:scale-105 ${className}`}
     >
       <Heart
         size={20}
         className={active ? "fill-[#e12d16] text-[#e12d16]" : ""}
       />
-    </button>
+    </motion.button>
   );
 }

@@ -12,6 +12,20 @@ export function ProductGallery({
 }) {
   const [active, setActive] = useState(0);
   const [origin, setOrigin] = useState({ x: 50, y: 50 });
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const swipe = (endX: number) => {
+    if (touchStartX === null || images.length < 2) return;
+    const delta = endX - touchStartX;
+    if (Math.abs(delta) > 40) {
+      setActive((index) =>
+        delta < 0
+          ? (index + 1) % images.length
+          : (index - 1 + images.length) % images.length,
+      );
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <div>
@@ -43,7 +57,9 @@ export function ProductGallery({
           </div>
         )}
         <div
-          className="group relative aspect-square min-w-0 flex-1 overflow-hidden rounded-sm bg-white md:cursor-zoom-in"
+          className="group relative aspect-square min-w-0 flex-1 touch-pan-y overflow-hidden rounded-sm bg-white md:cursor-zoom-in"
+          onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
+          onTouchEnd={(event) => swipe(event.changedTouches[0].clientX)}
           onMouseMove={(event) => {
             const rect = event.currentTarget.getBoundingClientRect();
             setOrigin({

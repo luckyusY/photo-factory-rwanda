@@ -8,6 +8,8 @@ const links = [
   { label: "Dashboard", href: "/admin" },
   { label: "Products", href: "/admin/products" },
   { label: "Add Product", href: "/admin/products/new" },
+  { label: "Categories", href: "/admin/categories" },
+  { label: "Hero Slides", href: "/admin/hero" },
 ];
 
 export function AdminBar() {

@@ -3,6 +3,7 @@
 import { Check, Heart, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import { useStore } from "@/components/store-context";
 
 export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
@@ -40,9 +41,10 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
         onClick={() => {
           addToCart(slug, qty);
           setAdded(true);
+          toast.success("Added to cart", { duration: 2200 });
           setTimeout(() => setAdded(false), 1500);
         }}
-        className={`flex w-full items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-[15px] font-black text-white transition ${
+        className={`press flex w-full items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-[15px] font-black text-white transition ${
           added ? "bg-[#15803d]" : "bg-[#5fa624] hover:bg-[#4e8c1c]"
         }`}
       >
@@ -61,7 +63,7 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
           addToCart(slug, qty);
           router.push("/checkout");
         }}
-        className="w-full rounded-sm bg-[#ff5a1f] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
+        className="press w-full rounded-sm bg-[#ff5a1f] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
       >
         Buy now
       </button>

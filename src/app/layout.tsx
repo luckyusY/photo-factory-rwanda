@@ -5,10 +5,12 @@ import {
   Geist_Mono,
   Great_Vibes,
 } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 import { MobileShopMenu } from "@/components/mobile-shop-menu";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,10 +53,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${dancingScript.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-[#eef2f7] text-[#111827] antialiased">
+        <SmoothScroll />
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
         <MobileShopMenu />
+        <Toaster
+          position="top-center"
+          richColors
+          toastOptions={{ style: { fontWeight: 600 } }}
+        />
       </body>
     </html>
   );

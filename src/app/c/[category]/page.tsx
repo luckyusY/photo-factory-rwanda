@@ -9,6 +9,8 @@ import {
 import { brandsOf, byCategory, getCategory } from "@/lib/catalog";
 import { getDepartment } from "@/lib/department-menu";
 import { getAllProducts } from "@/lib/products-db";
+import { getCategoryContent } from "@/lib/site-content";
+import { defaultCategoryImages } from "@/lib/site-content-types";
 
 export const dynamic = "force-dynamic";
 
@@ -32,6 +34,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const products = byCategory(await getAllProducts(), category.slug);
   const department = getDepartment(category.slug);
+  const content = (await getCategoryContent()).find(
+    (item) => item.slug === category.slug,
+  );
+  const displayName = content?.name ?? category.name;
+  const displayBlurb = content?.blurb ?? category.blurb;
+  const customImage =
+    content && content.image !== defaultCategoryImages[category.slug]
+      ? content.image
+      : undefined;
 
   return (
     <main>
@@ -42,15 +53,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               Home
             </Link>
             <span className="px-1">/</span>
-            <span>{category.name}</span>
+            <span>{displayName}</span>
           </nav>
           <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px]">
             <div>
               <h1 className="text-[32px] font-semibold leading-tight text-black">
-                {category.name}
+                {displayName}
               </h1>
               <p className="mt-2 max-w-3xl text-[15px] leading-6 text-[#333]">
-                {category.blurb} Browse trusted gear with local support, Rwanda
+                {displayBlurb} Browse trusted gear with local support, Rwanda
                 delivery, and pickup from Kacyiru or Town.
               </p>
               {department && (
@@ -79,8 +90,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             </div>
             <div className="relative hidden min-h-72 overflow-hidden bg-black lg:block">
               <Image
-                src={department?.image ?? category.image}
-                alt={category.name}
+                src={customImage ?? department?.image ?? category.image}
+                alt={displayName}
                 fill
                 sizes="260px"
                 className="object-cover opacity-90"
@@ -94,8 +105,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         </div>
       </section>
       <ProductListing
-        title={category.name}
-        subtitle={category.blurb}
+        title={displayName}
+        subtitle={displayBlurb}
         basePath={`/c/${category.slug}`}
         products={products}
         params={await searchParams}

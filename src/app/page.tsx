@@ -16,8 +16,10 @@ import Link from "next/link";
 import { DealCard } from "@/components/deal-card";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { ProductCard } from "@/components/product-card";
-import { categories, dealsOf, sortProducts, usedOf } from "@/lib/catalog";
+import { Reveal } from "@/components/reveal";
+import { dealsOf, sortProducts, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
+import { getCategoryContent, getHeroSlides } from "@/lib/site-content";
 
 export const revalidate = 300;
 
@@ -45,22 +47,6 @@ const mobileCategoryItems = [
 
 const campaignImage = (name: string, width = 1400) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
-
-const categoryImage = (name: string, width = 320) =>
-  `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width},h_${width}/v1/photo-factory-rwanda/hero/${name}`;
-
-const categoryVisuals: Record<string, string> = {
-  cameras: categoryImage("camera-shipping"),
-  lenses: categoryImage("lens-trade-up"),
-  lighting: categoryImage("studio-upgrade"),
-  computers: categoryImage("gaming-power"),
-  video: categoryImage("creator-gimbal"),
-  audio: categoryImage("vip-rewards"),
-  phones: categoryImage("gifts-for-grads"),
-  tripods: categoryImage("outdoor-gear"),
-  accessories: categoryImage("gifts-for-grads"),
-  drones: categoryImage("drone-preorder"),
-};
 
 const promoButton =
   "mt-5 inline-flex w-fit min-w-44 justify-center rounded-md bg-[#ff4a22] px-7 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_3px_0_rgba(0,0,0,0.16)] transition group-hover:bg-[#ff6a43]";
@@ -108,7 +94,14 @@ function PromoBanner({
 }
 
 export default async function Home() {
-  const allProducts = await getAllProducts();
+  const [allProducts, heroSlides, categoryContent] = await Promise.all([
+    getAllProducts(),
+    getHeroSlides(),
+    getCategoryContent(),
+  ]);
+  const categoryImages = new Map(
+    categoryContent.map((category) => [category.slug, category.image]),
+  );
   const deals = dealsOf(allProducts);
   const dealFillers = sortProducts(
     allProducts.filter((p) => !p.oldPrice),
@@ -119,7 +112,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen overflow-x-hidden">
-      <HeroCarousel />
+      <HeroCarousel slides={heroSlides} />
 
       <section className="bg-[#004f94] px-3 pb-4 pt-2 md:hidden">
         <h2 className="mb-3 text-center text-sm font-black uppercase tracking-wide text-white">
@@ -127,7 +120,8 @@ export default async function Home() {
         </h2>
         <div className="grid grid-cols-3 gap-1">
           {mobileCategoryItems.map((item) => {
-            const image = categoryVisuals[item.imageSlug] ?? categoryVisuals[item.slug];
+            const image =
+              categoryImages.get(item.imageSlug) ?? categoryImages.get(item.slug)!;
             return (
               <Link
                 key={`${item.label}-${item.slug}`}
@@ -151,15 +145,15 @@ export default async function Home() {
       </section>
 
       <section className="hidden bg-[linear-gradient(90deg,#003e75,#0074d9,#003e75)] py-5 md:block">
-        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
-          {categories.map((department) => (
+        <div className="rail-scroll mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
+          {categoryContent.map((department) => (
             <Link
               key={department.slug}
               href={`/c/${department.slug}`}
-              className="group relative h-44 w-48 shrink-0 overflow-hidden bg-black"
+              className="group relative h-44 w-48 shrink-0 snap-start overflow-hidden bg-black"
             >
               <Image
-                src={categoryVisuals[department.slug] ?? department.image}
+                src={department.image}
                 alt={department.name}
                 fill
                 sizes="192px"
@@ -174,6 +168,7 @@ export default async function Home() {
       </section>
 
       <section className="border-y-[3px] border-[#0074d9] bg-white">
+        <Reveal>
         <div className="mx-auto grid max-w-[1368px] gap-[3px] bg-[#0074d9] md:grid-cols-2">
           {/* Studio upgrade contest — yellow, centered stacked lockup */}
           <PromoBanner
@@ -265,6 +260,7 @@ export default async function Home() {
             </div>
           </PromoBanner>
         </div>
+        </Reveal>
       </section>
 
       <section id="deals" className="bg-[#eef0f2] py-3 sm:py-5">
@@ -282,7 +278,7 @@ export default async function Home() {
               <span className="hidden sm:inline">Browse All Deals &amp; Specials</span>
             </Link>
           </div>
-          <div className="mt-3 overflow-x-auto pb-1 sm:mt-4 sm:pb-2">
+          <div className="rail-scroll mt-3 overflow-x-auto pb-1 sm:mt-4 sm:pb-2">
             <div className="grid grid-flow-col grid-rows-2 gap-1 sm:gap-3">
               {topDeals.map((product) => (
                 <DealCard key={product.slug} product={product} />
@@ -293,7 +289,7 @@ export default async function Home() {
       </section>
 
       <section className="bg-white py-8" id="services">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => (
             <div
               key={service.label}
@@ -303,7 +299,7 @@ export default async function Home() {
               <p className="text-sm font-black leading-5">{service.label}</p>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-8">
@@ -321,14 +317,15 @@ export default async function Home() {
             Shop all used gear
           </Link>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {usedPicks.map((product) => (
             <ProductCard key={product.slug} product={product} />
           ))}
-        </div>
+        </Reveal>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-5 px-4 py-8 lg:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 py-8">
+        <Reveal className="grid gap-5 lg:grid-cols-3">
         <Link href="/c/cameras" className="rounded bg-[#07111f] p-7 text-white">
           <Camera aria-hidden className="text-[#ffde59]" size={34} />
           <h2 className="mt-5 text-2xl font-black">Photography & video</h2>
@@ -360,10 +357,11 @@ export default async function Home() {
             computer accessories, and SSD storage.
           </p>
         </Link>
+        </Reveal>
       </section>
 
       <section id="locations" className="bg-[#003b70] px-4 py-10 text-white">
-        <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_1.3fr]">
+        <Reveal className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1fr_1.3fr]">
           <div>
             <p className="text-sm font-black uppercase tracking-wider text-[#ffde59]">
               Visit us in Kigali
@@ -393,7 +391,7 @@ export default async function Home() {
               ),
             )}
           </div>
-        </div>
+        </Reveal>
       </section>
     </main>
   );
