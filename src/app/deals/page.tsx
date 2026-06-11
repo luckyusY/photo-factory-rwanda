@@ -128,6 +128,81 @@ function shelfProducts(
   ]).slice(0, 8);
 }
 
+function imageForCategory(products: Product[], slug: string) {
+  const aliases: Record<string, string> = {
+    gaming: "computers",
+    music: "accessories",
+  };
+  const category = aliases[slug] ?? slug;
+  return (
+    products.find((product) => product.category === category && product.oldPrice)
+      ?.images[0] ??
+    products.find((product) => product.category === category)?.images[0] ??
+    products[0]?.images[0] ??
+    cld("camera-shipping", 420)
+  );
+}
+
+function DealsHero({ products }: { products: Product[] }) {
+  const heroProducts = products.slice(0, 5);
+
+  return (
+    <section className="relative overflow-hidden bg-[#003a75] text-white">
+      <Image
+        src={cld("gaming-power", 1800)}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover opacity-18"
+      />
+      <div className="absolute inset-0 bg-[#003a75]/88" />
+      <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#001f49] to-transparent" />
+      <div className="relative mx-auto grid min-h-[270px] max-w-[1348px] items-center gap-5 px-4 py-8 md:grid-cols-[minmax(0,1fr)_460px]">
+        <div className="text-center md:text-left">
+          <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
+            Photo Factory Rwanda
+          </p>
+          <h1 className="mt-3 text-[42px] font-normal leading-none sm:text-[64px]">
+            Deals &amp; Specials
+          </h1>
+          <p className="mt-3 max-w-3xl text-xs font-bold uppercase tracking-[0.22em] text-white/85 md:max-w-xl">
+            Score exclusive savings with our amazing deals
+          </p>
+        </div>
+        <div className="relative hidden min-h-[210px] md:block">
+          {heroProducts.map((product, index) => (
+            <Link
+              key={product.slug}
+              href={`/p/${product.slug}`}
+              className={`absolute grid place-items-center rounded-sm bg-white shadow-2xl ring-1 ring-white/30 ${
+                index === 0
+                  ? "left-20 top-0 z-30 h-44 w-56"
+                  : index === 1
+                    ? "right-8 top-10 z-20 h-36 w-44 rotate-3"
+                    : index === 2
+                      ? "left-0 bottom-2 z-20 h-32 w-44 -rotate-3"
+                      : index === 3
+                        ? "right-32 bottom-0 z-10 h-28 w-36"
+                        : "right-0 bottom-4 z-0 h-24 w-32"
+              }`}
+            >
+              <Image
+                src={product.images[0]}
+                alt={product.name}
+                fill
+                sizes="260px"
+                className="object-contain p-4"
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function DealProductCard({
   product,
   compact = false,
@@ -224,21 +299,31 @@ function TopDealsGrid({ products }: { products: Product[] }) {
   );
 }
 
-function CategoryStrip() {
+function CategoryStrip({ products }: { products: Product[] }) {
   return (
     <section className="bg-[#004f94]">
       <div className="mx-auto max-w-[1348px] overflow-x-auto px-1 py-2">
         <div className="flex min-w-max">
           {categories.map((category) => {
             const Icon = category.icon;
+            const image = imageForCategory(products, category.slug);
             return (
               <Link
                 key={`${category.slug}-${category.label}`}
                 href={`/c/${category.slug}`}
-                className="grid w-[86px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#0067bd]"
+                className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#0067bd]"
               >
-                <span className="grid h-9 w-9 place-items-center rounded-sm bg-white text-[#004f94]">
-                  <Icon size={24} strokeWidth={1.8} />
+                <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#004f94]">
+                  <Image
+                    src={image}
+                    alt=""
+                    fill
+                    sizes="56px"
+                    className="object-contain p-1"
+                  />
+                  <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#004f94]">
+                    <Icon size={13} strokeWidth={2} />
+                  </span>
                 </span>
                 {category.label}
               </Link>
@@ -389,24 +474,10 @@ export default async function DealsPage() {
 
   return (
     <main className="min-h-screen bg-[#eeeeee] text-black">
-      <section className="relative overflow-hidden bg-[#003a75] text-white">
-        <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#001f49] to-transparent" />
-        <div className="relative mx-auto flex min-h-[245px] max-w-[1348px] flex-col items-center justify-center px-4 py-9 text-center">
-          <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
-            Photo Factory Rwanda
-          </p>
-          <h1 className="mt-3 text-[42px] font-normal leading-none sm:text-[64px]">
-            Deals &amp; Specials
-          </h1>
-          <p className="mt-3 max-w-3xl text-xs font-bold uppercase tracking-[0.22em] text-white/85">
-            Score exclusive savings with our amazing deals
-          </p>
-        </div>
-      </section>
+      <DealsHero products={topDeals} />
 
       <TopDealsGrid products={topDeals} />
-      <CategoryStrip />
+      <CategoryStrip products={allProducts} />
 
       {shelfConfig.slice(0, 5).map((shelf) => (
         <DealShelf
