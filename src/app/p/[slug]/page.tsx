@@ -352,22 +352,23 @@ export default async function ProductPage({ params }: Props) {
         </nav>
 
         <div className="mt-4 grid gap-6 xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px]">
-          <section className="xl:sticky xl:top-32 xl:self-start">
-            <ProductGallery images={product.images} name={product.name} />
-            <div className="mt-5 hidden grid-cols-3 gap-2 text-center text-xs font-semibold text-[#374151] sm:grid">
-              {serviceBadges.map(({ label, icon: Icon }) => {
-                return (
-                  <div key={label} className="border border-[#e7ddc7] p-3">
-                    <Icon className="mx-auto mb-1 text-[#8b641e]" size={20} />
-                    {label}
-                  </div>
-                );
-              })}
-            </div>
-          </section>
+          <div className="xl:contents">
+            <section className="sticky top-[108px] z-20 self-start border-b border-[#e7ddc7] bg-white pb-2 xl:top-32 xl:border-0 xl:pb-0">
+              <ProductGallery images={product.images} name={product.name} />
+              <div className="mt-5 hidden grid-cols-3 gap-2 text-center text-xs font-semibold text-[#374151] sm:grid">
+                {serviceBadges.map(({ label, icon: Icon }) => {
+                  return (
+                    <div key={label} className="border border-[#e7ddc7] p-3">
+                      <Icon className="mx-auto mb-1 text-[#8b641e]" size={20} />
+                      {label}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
 
-          <section>
-            <div className="border-b border-[#e7ddc7] pb-4">
+            <section>
+              <div className="border-b border-[#e7ddc7] pb-4">
               {product.badge && (
                 <span className="mb-2 inline-block bg-[#ffe25a] px-2 py-1 text-[11px] font-black uppercase text-[#3b2f00]">
                   {product.badge}
@@ -439,25 +440,26 @@ export default async function ProductPage({ params }: Props) {
             />
             <OptionGroup label="Glass" options={glassOptions} active="Standard Glass" />
 
-            <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
-              <h2 className="text-xl font-semibold">Key Features</h2>
-              <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#333]">
-                {[...product.shortSpecs, ...product.specs.slice(0, 3).map((spec) => `${spec.label}: ${spec.value}`)].map(
-                  (feature) => (
-                    <li key={feature} className="flex gap-2">
-                      <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#333]" />
-                      {feature}
-                    </li>
-                  ),
-                )}
-              </ul>
-              <a href="#about" className="mt-3 inline-block text-sm font-bold text-[#8b641e] hover:underline">
-                See More Product Details
-              </a>
+              <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
+                <h2 className="text-xl font-semibold">Key Features</h2>
+                <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#333]">
+                  {[...product.shortSpecs, ...product.specs.slice(0, 3).map((spec) => `${spec.label}: ${spec.value}`)].map(
+                    (feature) => (
+                      <li key={feature} className="flex gap-2">
+                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#333]" />
+                        {feature}
+                      </li>
+                    ),
+                  )}
+                </ul>
+                <a href="#about" className="mt-3 inline-block text-sm font-bold text-[#8b641e] hover:underline">
+                  See More Product Details
+                </a>
+              </section>
             </section>
-          </section>
+          </div>
 
-          <aside className="xl:sticky xl:top-32 xl:self-start">
+          <aside className="sticky top-[108px] z-20 self-start bg-white xl:top-32">
             <div className="border border-[#e7ddc7] bg-white p-3 shadow-sm">
               <div className="mb-3 flex items-center gap-2 text-sm text-[#333]">
                 <Truck size={18} className="text-[#8b641e]" />

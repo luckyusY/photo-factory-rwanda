@@ -57,7 +57,7 @@ export function ProductGallery({
           </div>
         )}
         <div
-          className="group relative aspect-square min-w-0 flex-1 touch-pan-y overflow-hidden rounded-sm bg-white md:cursor-zoom-in"
+          className="group relative h-[260px] min-w-0 flex-1 touch-pan-y overflow-hidden rounded-sm bg-white sm:aspect-square sm:h-auto md:cursor-zoom-in"
           onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
           onTouchEnd={(event) => swipe(event.changedTouches[0].clientX)}
           onMouseMove={(event) => {
