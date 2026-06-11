@@ -1,45 +1,61 @@
 "use client";
 
-import { Minus, Plus } from "lucide-react";
+import { Check, Heart, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { AddToCartButton, WishlistButton } from "@/components/add-to-cart-button";
 import { useStore } from "@/components/store-context";
 
 export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
   const [qty, setQty] = useState(1);
-  const { addToCart } = useStore();
+  const [added, setAdded] = useState(false);
+  const { addToCart, wishlist, toggleWishlist, hydrated } = useStore();
   const router = useRouter();
+  const wished = hydrated && wishlist.includes(slug);
+  const maxQty = Math.max(1, Math.min(stock, 10));
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <span className="text-sm font-bold">Quantity</span>
-        <div className="flex items-center rounded border border-[#d7e2ef] bg-white">
-          <button
-            aria-label="Decrease quantity"
-            onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="px-3 py-2 text-[#005aa6]"
+        <label className="text-sm font-bold text-[#111827]">
+          Qty
+          <select
+            value={qty}
+            onChange={(event) => setQty(Number(event.target.value))}
+            className="ml-2 rounded-sm border border-[#9ca3af] bg-white px-2 py-1.5 text-sm font-semibold"
           >
-            <Minus size={16} />
-          </button>
-          <span className="min-w-10 text-center text-sm font-black">{qty}</span>
-          <button
-            aria-label="Increase quantity"
-            onClick={() => setQty((q) => Math.min(stock, q + 1))}
-            className="px-3 py-2 text-[#005aa6]"
-          >
-            <Plus size={16} />
-          </button>
-        </div>
-        <span className="text-xs font-bold text-[#6b7280]">
+            {Array.from({ length: maxQty }, (_, index) => index + 1).map(
+              (value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ),
+            )}
+          </select>
+        </label>
+        <span className="text-xs font-semibold text-[#6b7280]">
           {stock} in stock
         </span>
       </div>
-      <div className="flex gap-3">
-        <AddToCartButton slug={slug} qty={qty} className="flex-1" />
-        <WishlistButton slug={slug} className="h-12 w-12 shrink-0 self-center" />
-      </div>
+      <button
+        onClick={() => {
+          addToCart(slug, qty);
+          setAdded(true);
+          setTimeout(() => setAdded(false), 1500);
+        }}
+        className={`flex w-full items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-[15px] font-black text-white transition ${
+          added ? "bg-[#15803d]" : "bg-[#5fa624] hover:bg-[#4e8c1c]"
+        }`}
+      >
+        {added ? (
+          <>
+            <Check size={18} /> Added to cart
+          </>
+        ) : (
+          <>
+            <ShoppingCart size={18} /> Add to Cart
+          </>
+        )}
+      </button>
       <button
         onClick={() => {
           addToCart(slug, qty);
@@ -48,6 +64,16 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
         className="w-full rounded-sm bg-[#ff5a1f] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#ff7440]"
       >
         Buy now
+      </button>
+      <button
+        onClick={() => toggleWishlist(slug)}
+        className="flex w-full items-center justify-center gap-2 py-1 text-sm font-bold text-[#0066c0] hover:underline"
+      >
+        <Heart
+          size={16}
+          className={wished ? "fill-[#e12d16] text-[#e12d16]" : ""}
+        />
+        {wished ? "Saved to Wish List" : "Add to Wish List"}
       </button>
     </div>
   );
