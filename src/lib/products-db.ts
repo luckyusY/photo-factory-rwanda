@@ -10,6 +10,9 @@ import { products as seedProducts, slugify, type Product } from "@/lib/catalog";
 type OverrideDoc = Partial<Product> & { slug: string; deleted?: boolean };
 
 const COLLECTION = "product_overrides";
+const DB_FAILURE_COOLDOWN_MS = 60_000;
+
+let skipDbUntil = 0;
 
 export function isDbConfigured() {
   return Boolean(process.env.MONGODB_URI);
@@ -26,6 +29,8 @@ function toProduct(doc: OverrideDoc): Product {
 
 export const getAllProducts = cache(async (): Promise<Product[]> => {
   if (!isDbConfigured()) return seedProducts;
+  if (Date.now() < skipDbUntil) return seedProducts;
+
   try {
     const db = await getDb();
     const docs = await db
@@ -48,6 +53,7 @@ export const getAllProducts = cache(async (): Promise<Product[]> => {
     }
     return merged;
   } catch (error) {
+    skipDbUntil = Date.now() + DB_FAILURE_COOLDOWN_MS;
     console.error("Failed to load products from MongoDB", error);
     return seedProducts;
   }

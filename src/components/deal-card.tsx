@@ -27,7 +27,7 @@ export function DealCard({ product }: { product: Product }) {
           alt={product.name}
           fill
           sizes="238px"
-          className="object-cover"
+          className="object-contain"
         />
       </Link>
       <Link href={`/p/${product.slug}`} className="mt-4 block">
