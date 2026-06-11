@@ -83,7 +83,7 @@ export function CardSwiper({
         {slides.map((group, index) => (
           <SwiperSlide key={index} className="!w-auto">
             {rows > 1 ? (
-              <div className={`flex h-full flex-col ${columnGapClassName}`}>
+              <div className={`flex flex-col ${columnGapClassName}`}>
                 {group}
               </div>
             ) : (
