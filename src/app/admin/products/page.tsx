@@ -36,6 +36,7 @@ export default async function AdminProductsPage() {
         <table className="w-full min-w-[860px] text-left text-sm">
           <thead className="bg-[#f3f7fc] text-xs font-black uppercase tracking-wide text-[#005aa6]">
             <tr>
+              <th className="w-16 px-4 py-3 text-right">#</th>
               <th className="px-4 py-3">Product</th>
               <th className="px-4 py-3">Brand</th>
               <th className="px-4 py-3">Category</th>
@@ -46,17 +47,20 @@ export default async function AdminProductsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#eef2f7] font-semibold">
-            {products.map((product) => (
+            {products.map((product, index) => (
               <tr key={product.slug}>
+                <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
+                  {index + 1}
+                </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <div className="relative h-10 w-12 shrink-0 overflow-hidden rounded bg-[#f5f7fb]">
+                    <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#d7e2ef] bg-white">
                       <Image
                         src={product.images[0]}
                         alt=""
                         fill
                         sizes="48px"
-                        className="object-cover"
+                        className="object-contain p-1"
                       />
                     </div>
                     <Link

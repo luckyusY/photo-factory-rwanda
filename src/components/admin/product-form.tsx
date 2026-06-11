@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { categories, type Product } from "@/lib/catalog";
 
+const CLOUDINARY_CLOUD_NAME = "dvkifxvj6";
+
 const inputClass =
   "w-full rounded border border-[#d7e2ef] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#005aa6]";
 
@@ -31,7 +33,7 @@ export function ProductForm({ product }: Props) {
   );
 
   const cleanImages = useMemo(
-    () => images.map((image) => image.trim()).filter(Boolean),
+    () => images.map(normalizeImageInput).filter(Boolean),
     [images],
   );
 
@@ -134,7 +136,7 @@ export function ProductForm({ product }: Props) {
           <section className={panelClass}>
             <SectionTitle
               title="Product Images"
-              description="The first image is the main product image. Add Cloudinary URLs, remote image URLs, or local paths like /products/item/1.jpg."
+              description="The first image is the main product image. Add Cloudinary URLs, public IDs, remote image URLs, or local paths like /products/item/1.jpg."
             />
             <ImageManager images={images} setImages={setImages} />
           </section>
@@ -356,9 +358,14 @@ function ImageManager({
             <input
               value={image}
               onChange={(event) => update(index, event.target.value)}
-              placeholder="https://res.cloudinary.com/... or /products/product-name/1.jpg"
+              placeholder="Cloudinary public ID, https://res.cloudinary.com/..., or /products/product-name/1.jpg"
               className={inputClass}
             />
+            {image.trim() && image.trim() !== normalizeImageInput(image) && (
+              <p className="mt-1 text-xs font-semibold text-[#6b7280]">
+                Previewing as Cloudinary image: {normalizeImageInput(image)}
+              </p>
+            )}
           </div>
         </div>
       ))}
@@ -382,18 +389,20 @@ function ImagePreview({
   label: string;
   large?: boolean;
 }) {
+  const previewUrl = normalizeImageInput(url ?? "");
+
   return (
     <div
       className={`relative grid place-items-center overflow-hidden rounded border border-[#d7e2ef] bg-white ${
         large ? "aspect-[4/3]" : "h-[112px] md:h-[118px]"
       }`}
     >
-      {url ? (
+      {previewUrl ? (
         <div
           aria-label={label}
           role="img"
           className="absolute inset-2 bg-contain bg-center bg-no-repeat"
-          style={{ backgroundImage: `url("${cssUrl(url)}")` }}
+          style={{ backgroundImage: `url("${cssUrl(previewUrl)}")` }}
         />
       ) : (
         <div className="grid justify-items-center gap-2 text-center text-xs font-bold text-[#9ca3af]">
@@ -573,4 +582,17 @@ function Field({
 
 function cssUrl(url: string) {
   return url.replace(/["\\]/g, "\\$&");
+}
+
+function normalizeImageInput(value: string) {
+  const image = value.trim();
+  if (!image) return "";
+  if (
+    image.startsWith("/") ||
+    /^https?:\/\//.test(image) ||
+    image.startsWith("data:image/")
+  ) {
+    return image;
+  }
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto/${image}`;
 }

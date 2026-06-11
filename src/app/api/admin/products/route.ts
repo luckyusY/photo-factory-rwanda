@@ -10,6 +10,7 @@ import {
 
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80";
+const CLOUDINARY_CLOUD_NAME = "dvkifxvj6";
 
 type ProductPayload = {
   originalSlug?: string;
@@ -72,8 +73,8 @@ export async function POST(request: Request) {
     ? (payload.condition as ProductCondition)
     : "New";
   const images = (payload.images ?? [])
-    .map((url) => url.trim())
-    .filter((url) => /^https?:\/\//.test(url) || url.startsWith("/"));
+    .map(normalizeImageInput)
+    .filter(Boolean);
 
   const product: Product = {
     id: existing?.id ?? `PF-${Date.now().toString(36).toUpperCase()}`,
@@ -110,4 +111,11 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json({ ok: true, slug: product.slug });
+}
+
+function normalizeImageInput(value: string) {
+  const image = value.trim();
+  if (!image) return "";
+  if (image.startsWith("/") || /^https?:\/\//.test(image)) return image;
+  return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto/${image}`;
 }
