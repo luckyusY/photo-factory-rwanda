@@ -24,36 +24,36 @@ export function ProductCard({ product }: { product: Product }) {
         )}
         <WishlistButton slug={product.slug} className="absolute right-3 top-3" />
       </div>
-      <div className="flex flex-1 flex-col p-4">
-        <p className="text-[12px] font-bold uppercase tracking-wide text-[#6b7280]">
+      <div className="flex flex-1 flex-col p-2.5 sm:p-4">
+        <p className="text-[11px] font-bold uppercase tracking-wide text-[#6b7280] sm:text-[12px]">
           {product.brand}
           {product.condition !== "New" && (
-            <span className="ml-2 rounded bg-[#fef3c7] px-1.5 py-0.5 text-[10px] text-[#92400e]">
+            <span className="ml-1.5 rounded bg-[#fef3c7] px-1.5 py-0.5 text-[9px] text-[#92400e] sm:ml-2 sm:text-[10px]">
               {product.condition}
             </span>
           )}
         </p>
-        <Link href={`/p/${product.slug}`} className="mt-2 flex-1">
-          <h3 className="min-h-12 text-[15px] font-medium leading-tight text-[#0066c0] hover:underline">
+        <Link href={`/p/${product.slug}`} className="mt-1.5 flex-1 sm:mt-2">
+          <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-medium leading-snug text-[#0066c0] hover:underline sm:min-h-12 sm:text-[15px]">
             {product.name}
           </h3>
         </Link>
-        <div className="mt-2 flex items-center gap-1 text-xs font-bold text-[#6b7280]">
-          <Star size={14} className="fill-[#f59e0b] text-[#f59e0b]" />
+        <div className="mt-1.5 flex items-center gap-1 text-[11px] font-bold text-[#6b7280] sm:mt-2 sm:text-xs">
+          <Star size={13} className="fill-[#f59e0b] text-[#f59e0b]" />
           {product.rating.toFixed(1)}
           <span className="font-semibold">({product.reviews})</span>
         </div>
-        <div className="mt-3 flex items-baseline gap-2">
-          <p className="text-[22px] font-bold text-[#b91c1c]">
+        <div className="mt-2 flex flex-wrap items-baseline gap-x-2 sm:mt-3">
+          <p className="text-[17px] font-bold text-[#b91c1c] sm:text-[22px]">
             {formatRWF(product.price)}
           </p>
           {product.oldPrice && (
-            <p className="text-sm font-bold text-[#9ca3af] line-through">
+            <p className="text-xs font-bold text-[#9ca3af] line-through sm:text-sm">
               {formatRWF(product.oldPrice)}
             </p>
           )}
         </div>
-        <AddToCartButton slug={product.slug} className="mt-4 w-full" />
+        <AddToCartButton slug={product.slug} className="mt-3 w-full sm:mt-4" />
       </div>
     </article>
   );

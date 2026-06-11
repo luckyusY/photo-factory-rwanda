@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "@/components/store-context";
 
 const tabs = ["Products", "Brands", "Used", "Deals"] as const;
@@ -191,6 +191,23 @@ export function MobileShopMenu() {
     setActiveDepartment(null);
   };
 
+  // Lock background scroll while the sheet is open.
+  useEffect(() => {
+    if (!open) return;
+    document.body.classList.add("no-scroll");
+    return () => document.body.classList.remove("no-scroll");
+  }, [open]);
+
+  // Close on Escape and on browser back.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <>
       <div className="fixed inset-x-0 bottom-0 z-[100] border-t border-white/25 bg-[#005098] text-white shadow-[0_-4px_18px_rgba(0,0,0,0.25)] md:hidden">
@@ -236,8 +253,15 @@ export function MobileShopMenu() {
       </div>
 
       {open && (
-        <div className="fixed inset-0 z-[80] bg-black/55 md:hidden">
-          <div className="absolute inset-x-2 bottom-14 top-14 overflow-hidden rounded-t-md bg-[#f2f2f2] shadow-2xl">
+        <div
+          className="sheet-backdrop fixed inset-0 z-[80] bg-black/55 md:hidden"
+          onClick={close}
+        >
+          <div
+            className="sheet-panel absolute inset-x-2 bottom-14 top-14 overflow-hidden rounded-t-xl bg-[#f2f2f2] shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="absolute inset-x-0 top-1.5 z-10 mx-auto h-1 w-10 rounded-full bg-white/50" />
             <button
               aria-label="Close menu"
               onClick={() => setOpen(false)}
@@ -264,11 +288,13 @@ export function MobileShopMenu() {
               {activeTab === "Products" && (
                 <>
                   {activeDepartment ? (
-                    <DepartmentPanel
-                      department={activeDepartment}
-                      onBack={() => setActiveDepartment(null)}
-                      onNavigate={close}
-                    />
+                    <div className="panel-slide-in">
+                      <DepartmentPanel
+                        department={activeDepartment}
+                        onBack={() => setActiveDepartment(null)}
+                        onNavigate={close}
+                      />
+                    </div>
                   ) : (
                     <>
                       <ShortcutPills onNavigate={close} />

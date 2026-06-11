@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import Link from "next/link";
+import { FilterPanel } from "@/components/filter-panel";
 import { ProductCard } from "@/components/product-card";
 import { SortSelect } from "@/components/sort-select";
 import {
@@ -126,7 +127,7 @@ export function ProductListing({
         <SortSelect />
       </div>
       <div className="grid gap-5 lg:grid-cols-[230px_minmax(0,1fr)]">
-        <aside className="space-y-4">
+        <FilterPanel active={hasFilters}>
           {hasFilters && (
             <Link
               href={buildHref(basePath, {}, {}, extraParams)}
@@ -185,7 +186,7 @@ export function ProductListing({
               })}
             </FilterGroup>
           )}
-        </aside>
+        </FilterPanel>
         <div>
           {filtered.length === 0 ? (
             <div className="rounded bg-white p-10 text-center ring-1 ring-black/10">
@@ -196,7 +197,7 @@ export function ProductListing({
               </p>
             </div>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 xl:grid-cols-3">
               {filtered.map((product) => (
                 <ProductCard key={product.slug} product={product} />
               ))}
