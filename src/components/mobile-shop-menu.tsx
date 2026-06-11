@@ -129,7 +129,7 @@ export function MobileShopMenu() {
                 </button>
               ))}
             </div>
-            <div className="h-[calc(100%-58px)] overflow-y-auto p-3">
+            <div className="h-[calc(100%-58px)] overflow-y-auto p-3 text-[#111827]">
               {activeTab === "Products" && (
                 <>
                   <div className="mb-3 flex flex-wrap gap-2">
@@ -142,7 +142,7 @@ export function MobileShopMenu() {
                         key={pill.label}
                         href={pill.href}
                         onClick={close}
-                        className="rounded-full border border-[#9ca3af] bg-white px-3 py-1 text-sm"
+                        className="rounded-full border border-[#7d8794] bg-white px-3 py-1 text-sm font-bold text-[#111827] shadow-sm"
                       >
                         {pill.label}
                       </Link>
@@ -155,9 +155,9 @@ export function MobileShopMenu() {
               )}
               {activeTab === "Brands" && (
                 <>
-                  <div className="mb-3 flex justify-between py-3 text-sm uppercase">
+                  <div className="mb-3 flex justify-between py-3 text-sm font-bold uppercase text-[#111827]">
                     <span>Featured brands:</span>
-                    <Link href="/brands" onClick={close}>
+                    <Link href="/brands" onClick={close} className="text-[#005098]">
                       See all
                     </Link>
                   </div>
@@ -183,9 +183,9 @@ export function MobileShopMenu() {
                 dealRows.map((item) => (
                   <MenuRow key={item.label} {...item} boxed onNavigate={close} />
                 ))}
-              <div className="mt-8 space-y-4 bg-white p-4 text-sm">
-                <p className="text-lg font-semibold">Photo Factory Rewards</p>
-                <p>Ask about bulk supply, creator bundles, and same-day Kigali delivery.</p>
+              <div className="mt-8 space-y-4 bg-white p-4 text-sm text-[#111827] shadow-sm">
+                <p className="text-lg font-bold text-[#002d5a]">Photo Factory Rewards</p>
+                <p className="font-medium">Ask about bulk supply, creator bundles, and same-day Kigali delivery.</p>
               </div>
             </div>
           </div>
@@ -212,7 +212,7 @@ function MenuRow({
     <Link
       href={href}
       onClick={onNavigate}
-      className="mb-1.5 flex min-h-[72px] items-center gap-4 rounded bg-white px-4 text-lg shadow-sm"
+      className="mb-1.5 flex min-h-[72px] items-center gap-4 rounded bg-white px-4 text-lg font-medium text-[#111827] shadow-sm ring-1 ring-black/5"
     >
       <span
         className={`grid h-14 w-14 shrink-0 place-items-center ${
@@ -222,7 +222,7 @@ function MenuRow({
         <Icon size={32} strokeWidth={1.8} />
       </span>
       <span className="flex-1">{label}</span>
-      <ChevronRight size={25} />
+      <ChevronRight size={25} className="text-[#111827]" />
     </Link>
   );
 }
