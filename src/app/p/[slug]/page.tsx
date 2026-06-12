@@ -579,7 +579,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="mt-4 xl:hidden">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_310px] md:items-start">
             <div>
-              <div className="sticky top-[72px] z-20 border-b border-[#e7ddc7] bg-white pb-2 md:top-32">
+              <div className="sticky top-[62px] z-20 border-b border-[#e7ddc7] bg-white pb-2 md:top-32">
                 <ProductMediaPanel product={product} />
               </div>
               <ProductInfoPanel
