@@ -21,7 +21,7 @@ export function ProductStickyBar({
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 hidden border-t border-[#e7ddc7] bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.16)] md:block">
-      <div className="mx-auto flex max-w-[1340px] items-center gap-4 px-4 py-2">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-4 px-4 py-2 2xl:px-6">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-semibold text-black">{name}</p>
           <p className="text-xs font-semibold text-[#8b641e]">

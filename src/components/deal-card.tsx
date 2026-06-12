@@ -12,7 +12,7 @@ export function DealCard({ product }: { product: Product }) {
   );
 
   return (
-    <article className="group relative flex w-[160px] shrink-0 snap-start flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:w-[238px] sm:px-4 sm:pb-4 sm:pt-9">
+    <article className="group relative flex w-[158px] shrink-0 snap-start flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:w-[220px] sm:px-3 sm:pb-4 sm:pt-9 lg:w-[238px] lg:px-4 2xl:w-[252px]">
       {save > 0 && (
         <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
@@ -20,13 +20,13 @@ export function DealCard({ product }: { product: Product }) {
       )}
       <Link
         href={`/p/${product.slug}`}
-        className="relative block h-[118px] w-full overflow-hidden sm:h-36"
+        className="relative block h-[118px] w-full overflow-hidden sm:h-36 2xl:h-40"
       >
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="(min-width: 640px) 238px, 160px"
+          sizes="(min-width: 1536px) 252px, (min-width: 1024px) 238px, (min-width: 640px) 220px, 158px"
           className="object-contain transition duration-300 group-hover:scale-[1.035]"
         />
       </Link>

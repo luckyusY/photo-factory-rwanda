@@ -31,7 +31,7 @@ export function RailSkeleton({ count = 6 }: { count?: number }) {
       {Array.from({ length: count }).map((_, index) => (
         <div
           key={index}
-          className="w-[160px] shrink-0 sm:w-[238px]"
+          className="w-[158px] shrink-0 sm:w-[220px] lg:w-[238px] 2xl:w-[252px]"
         >
           <ProductCardSkeleton />
         </div>

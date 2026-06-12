@@ -24,13 +24,13 @@ export function ProductCard({ product }: { product: Product }) {
       ) : null}
       <Link
         href={`/p/${product.slug}`}
-        className="relative block h-[118px] w-full overflow-hidden sm:h-36"
+        className="relative block h-[118px] w-full overflow-hidden sm:h-36 2xl:h-40"
       >
         <Image
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="(min-width: 1024px) 238px, (min-width: 640px) 33vw, 50vw"
+          sizes="(min-width: 1536px) 252px, (min-width: 1024px) 238px, (min-width: 640px) 33vw, 50vw"
           className="object-contain transition duration-300 group-hover:scale-[1.035]"
         />
       </Link>

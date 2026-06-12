@@ -160,7 +160,7 @@ function DealsHero({ products }: { products: Product[] }) {
       <div className="absolute inset-0 bg-[#8b641e]/88" />
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#15110a] to-transparent" />
-      <div className="relative mx-auto grid min-h-[270px] max-w-[1348px] items-center gap-5 px-4 py-8 md:grid-cols-[minmax(0,1fr)_460px]">
+      <div className="relative mx-auto grid min-h-[270px] max-w-[1440px] items-center gap-5 px-4 py-8 md:grid-cols-[minmax(0,1fr)_460px] 2xl:px-6">
         <div className="text-center md:text-left">
           <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
             Photo Factory Rwanda
@@ -217,8 +217,8 @@ function DealProductCard({
 
   return (
     <article
-      className={`group relative flex min-w-0 flex-col border-r border-[#e4e4e4] bg-white px-3 pb-3 pt-7 ${
-        compact ? "min-h-[292px]" : "min-h-[330px]"
+      className={`group relative flex min-w-0 flex-col border-r border-[#e4e4e4] bg-white px-2 pb-3 pt-7 sm:px-3 ${
+        compact ? "min-h-[284px] sm:min-h-[292px]" : "min-h-[292px] sm:min-h-[330px]"
       }`}
     >
       {save > 0 && (
@@ -229,7 +229,7 @@ function DealProductCard({
       <Link
         href={`/p/${product.slug}`}
         className={`relative mx-auto block w-full overflow-hidden bg-white ${
-          compact ? "h-[126px]" : "h-[150px]"
+          compact ? "h-[118px] sm:h-[126px]" : "h-[124px] sm:h-[150px]"
         }`}
       >
         <Image
@@ -283,7 +283,7 @@ function DealProductCard({
 function TopDealsGrid({ products }: { products: Product[] }) {
   return (
     <section className="bg-[#eeeeee] py-2">
-      <div className="mx-auto max-w-[1348px] px-1 sm:px-2">
+      <div className="mx-auto max-w-[1440px] px-1 sm:px-2 2xl:px-4">
         <div className="mb-1 flex items-center justify-center gap-2 text-center text-white">
           <Trophy size={20} className="text-[#15110a]" />
           <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#15110a]">
@@ -303,7 +303,7 @@ function TopDealsGrid({ products }: { products: Product[] }) {
 function CategoryStrip({ products }: { products: Product[] }) {
   return (
     <section className="bg-[#050505]">
-      <div className="mx-auto max-w-[1348px] overflow-x-auto px-1 py-2">
+      <div className="mx-auto max-w-[1440px] overflow-x-auto px-1 py-2 2xl:px-4">
         <div className="flex min-w-max">
           {categories.map((category) => {
             const Icon = category.icon;
@@ -351,7 +351,7 @@ function DealShelf({
 
   return (
     <section className="border-t border-[#dedede] bg-[#f1f1f1] py-3">
-      <div className="mx-auto max-w-[1348px] px-1 sm:px-2">
+      <div className="mx-auto max-w-[1440px] px-1 sm:px-2 2xl:px-4">
         <div className="mb-2 flex items-center justify-between gap-2 px-1">
           <h2 className="flex items-center gap-2 text-[17px] font-normal text-black">
             <Icon size={18} strokeWidth={1.8} className="text-[#444]" />
@@ -363,7 +363,7 @@ function DealShelf({
         </div>
         <CardSwiper gap={2} gapSm={4}>
           {products.map((product) => (
-            <div key={`${title}-${product.slug}`} className="w-[190px] sm:w-[252px]">
+            <div key={`${title}-${product.slug}`} className="w-[184px] sm:w-[232px] lg:w-[252px] 2xl:w-[268px]">
               <DealProductCard product={product} compact />
             </div>
           ))}
@@ -378,7 +378,7 @@ function SandiskBanner() {
     <section className="bg-[#f6f2ea]">
       <Link
         href="/c/accessories"
-        className="mx-auto grid max-w-[1348px] overflow-hidden bg-[#f6f2ea] md:grid-cols-[310px_minmax(0,1fr)_210px]"
+        className="mx-auto grid max-w-[1440px] overflow-hidden bg-[#f6f2ea] md:grid-cols-[310px_minmax(0,1fr)_210px]"
       >
         <div className="flex flex-col justify-center bg-white px-6 py-5">
           <p className="text-3xl font-black uppercase tracking-wide text-[#8b641e]">
@@ -411,7 +411,7 @@ function SandiskBanner() {
 function BrowseTiles() {
   return (
     <section className="bg-[#eeeeee] py-5">
-      <div className="mx-auto max-w-[1348px] px-2">
+      <div className="mx-auto max-w-[1440px] px-2 2xl:px-4">
         <h2 className="mb-2 text-[14px] font-bold uppercase text-[#333]">
           Browse Deals By Type
         </h2>

@@ -74,7 +74,7 @@ export function MainNav() {
       onMouseLeave={close}
       className="relative hidden border-y border-[#d9a441]/30 bg-[#15110a] text-white md:block"
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-2 px-4">
+      <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-4 2xl:px-6">
         <Link
           href="/c/cameras"
           onMouseEnter={close}
@@ -108,8 +108,8 @@ export function MainNav() {
         </div>
       </div>
       {active?.label === "Products" && (
-        <div className="absolute left-1/2 top-full z-[90] w-[min(1340px,calc(100vw-24px))] -translate-x-1/2 bg-white text-[#111827] shadow-2xl ring-1 ring-black/10">
-          <div className="grid min-h-[560px] grid-cols-[220px_minmax(0,1fr)_240px]">
+        <div className="absolute left-1/2 top-full z-[90] w-[min(1440px,calc(100vw-24px))] -translate-x-1/2 bg-white text-[#111827] shadow-2xl ring-1 ring-black/10">
+          <div className="grid min-h-[560px] grid-cols-[220px_minmax(0,1fr)_240px] 2xl:grid-cols-[240px_minmax(0,1fr)_260px]">
             <aside className="border-r border-[#e7ddc7] px-3 py-5">
               {departments.map((department) => (
                 <Link

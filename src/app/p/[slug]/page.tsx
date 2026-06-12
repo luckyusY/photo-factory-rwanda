@@ -185,7 +185,7 @@ function RailCard({
       : "";
 
   return (
-    <article className="relative flex h-full w-[196px] shrink-0 flex-col bg-white px-3 pb-4 pt-6 sm:w-[204px]">
+    <article className="relative flex h-full w-[184px] shrink-0 flex-col bg-white px-3 pb-4 pt-6 sm:w-[204px] 2xl:w-[220px]">
       {save > 0 && (
         <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           {saveLabel}
@@ -204,7 +204,7 @@ function RailCard({
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="204px"
+          sizes="(min-width: 1536px) 220px, 204px"
           className="object-contain p-2"
         />
       </Link>
@@ -250,7 +250,7 @@ function ProductRail({
 
   return (
     <section className="border-t border-white bg-[#f0f0f0] py-3">
-      <div className="mx-auto max-w-[1340px] px-2 sm:px-4">
+      <div className="mx-auto max-w-[1440px] px-2 sm:px-4 2xl:px-6">
         <div className="mb-2 flex items-center justify-between gap-4">
           <h2 className="text-[16px] font-normal uppercase text-black">{title}</h2>
           {href && (
@@ -542,7 +542,7 @@ export default async function ProductPage({ params }: Props) {
         stock={product.stock}
       />
 
-      <div className="mx-auto max-w-[1340px] px-3 py-3 sm:px-4">
+      <div className="mx-auto max-w-[1440px] px-3 py-3 sm:px-4 2xl:px-6">
         <nav className="flex flex-wrap items-center gap-1 text-xs text-[#6b7280]">
           <Link href="/" className="text-[#8b641e] hover:underline">
             Home
@@ -562,7 +562,7 @@ export default async function ProductPage({ params }: Props) {
           <span className="line-clamp-1 text-[#374151]">{product.name}</span>
         </nav>
 
-        <div className="mt-4 hidden min-h-[1320px] items-start gap-6 xl:grid xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px]">
+        <div className="mt-4 hidden min-h-[1320px] items-start gap-5 xl:grid xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px] 2xl:grid-cols-[minmax(0,620px)_minmax(360px,1fr)_330px] 2xl:gap-7">
           <div className="no-scrollbar sticky top-32 self-start max-h-[calc(100vh-8.5rem)] overflow-y-auto">
             <ProductMediaPanel product={product} />
           </div>

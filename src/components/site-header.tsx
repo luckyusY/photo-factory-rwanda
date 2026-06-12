@@ -54,7 +54,7 @@ export function SiteHeader() {
         </Link>
       </div>
       <div className="hidden border-y border-[#d9a441]/25 bg-[#15110a] text-white sm:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1 text-[10px] font-semibold uppercase tracking-wide">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 px-4 py-1 text-[10px] font-semibold uppercase tracking-wide 2xl:px-6">
           <div className="hidden gap-5 md:flex">
             <Link href="/about">Business & Creators</Link>
             <Link href="/stores">Kigali Store</Link>
@@ -70,7 +70,7 @@ export function SiteHeader() {
         </div>
       </div>
       <div className="bg-[#050505] text-white">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-2 py-1.5 sm:gap-4 sm:px-4">
+        <div className="mx-auto grid w-full max-w-[1440px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-2 py-1.5 sm:gap-4 sm:px-4 2xl:px-6">
           <Link href="/" className="shrink-0" aria-label="Photo Factory Shop home">
             <Image
               src="/logo-transparent.png"

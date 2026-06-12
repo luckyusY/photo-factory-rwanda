@@ -124,7 +124,7 @@ export function ProductListing({
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6">
+    <div className="mx-auto max-w-[1440px] px-2 py-4 sm:px-4 sm:py-6 2xl:px-6">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b border-[#e7ddc7] bg-white p-4 ring-1 ring-black/5">
         <div>
           <h1 className="text-2xl font-semibold text-black">{title}</h1>
@@ -137,7 +137,7 @@ export function ProductListing({
         </div>
         <SortSelect />
       </div>
-      <div className="grid gap-5 lg:grid-cols-[230px_minmax(0,1fr)]">
+      <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)] 2xl:gap-6">
         <FilterPanel active={hasFilters}>
           {hasFilters && (
             <Link
