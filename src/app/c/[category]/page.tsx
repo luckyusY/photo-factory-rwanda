@@ -19,6 +19,7 @@ import {
 import {
   computerBrandLogos,
   featuredBrandLogos,
+  productBrandLogos,
   type BrandLogo,
 } from "@/lib/brand-logos";
 import { getDepartment, type Department } from "@/lib/department-menu";
@@ -193,7 +194,7 @@ const curatedBrands: Record<string, BrandLogo[]> = {
 // Brand styling lookup so generated featured-brand tiles inherit the same
 // colors/marks used elsewhere on the site.
 const brandStyleByName = new Map<string, BrandLogo>();
-for (const logo of [...featuredBrandLogos, ...computerBrandLogos]) {
+for (const logo of productBrandLogos) {
   if (!brandStyleByName.has(logo.name.toLowerCase())) {
     brandStyleByName.set(logo.name.toLowerCase(), logo);
   }

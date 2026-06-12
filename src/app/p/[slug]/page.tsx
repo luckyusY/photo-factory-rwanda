@@ -345,11 +345,15 @@ function ProductInfoPanel({
             {formatRWF(product.price)}
           </p>
           {product.oldPrice && (
-            <p className="text-sm font-semibold text-[#777] line-through">
-              {formatRWF(product.oldPrice)}
-            </p>
+            <>
+              <p className="text-sm font-semibold text-[#777] line-through">
+                {formatRWF(product.oldPrice)}
+              </p>
+              <span className="text-sm font-bold text-[#8b641e]">
+                Save {discount}%
+              </span>
+            </>
           )}
-          <span className="text-sm font-bold text-[#8b641e]">Save {discount}%</span>
         </div>
         <p className="mt-2 text-sm text-[#333]">
           <strong>{formatRWF(monthlyEstimate)}/mo</strong> suggested payments
@@ -520,7 +524,7 @@ export default async function ProductPage({ params }: Props) {
   )].slice(0, 10);
   const discount = product.oldPrice
     ? Math.max(1, Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100))
-    : 4;
+    : 0;
   const rewardPoints = Math.max(1, Math.round(product.price / 1000));
   const monthlyEstimate = Math.max(1000, Math.round(product.price / 12 / 1000) * 1000);
   const histogram = ratingHistogram(product.rating, product.reviews);
