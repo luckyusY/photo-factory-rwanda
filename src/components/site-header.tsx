@@ -1,14 +1,52 @@
+"use client";
+
 import { MessageCircle, Phone, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { HeaderActions } from "@/components/header-actions";
 import { MainNav } from "@/components/main-nav";
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, WHATSAPP_URL } from "@/lib/contact";
 
 export function SiteHeader() {
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - lastY;
+      if (currentY < 24) {
+        setHidden(false);
+      } else if (delta > 8) {
+        setHidden(true);
+      } else if (delta < -8) {
+        setHidden(false);
+      }
+      lastY = currentY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(update);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 shadow-lg shadow-black/30">
-      <div className="bg-[#050505] px-2 py-1 text-center text-[11px] font-black leading-tight text-white sm:px-4 sm:py-2 sm:text-xs">
+    <header
+      className={`sticky top-0 z-50 shadow-lg shadow-black/25 transition-transform duration-300 ease-out ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
+      <div className="bg-[#050505] px-2 py-0.5 text-center text-[11px] font-black leading-[18px] text-white sm:px-4">
         <span className="text-[#ffcf57]">5% OFF Every Day</span> with Photo
         Factory Pay.{" "}
         <Link href="/support" className="text-[#ffcf57] underline-offset-2 hover:underline">
@@ -16,7 +54,7 @@ export function SiteHeader() {
         </Link>
       </div>
       <div className="hidden border-y border-[#d9a441]/25 bg-[#15110a] text-white sm:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 text-[11px] font-semibold uppercase tracking-wide">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1 text-[10px] font-semibold uppercase tracking-wide">
           <div className="hidden gap-5 md:flex">
             <Link href="/about">Business & Creators</Link>
             <Link href="/stores">Kigali Store</Link>
@@ -32,7 +70,7 @@ export function SiteHeader() {
         </div>
       </div>
       <div className="bg-[#050505] text-white">
-        <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-2 py-2 sm:gap-4 sm:px-4 sm:py-3">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 px-2 py-1.5 sm:gap-4 sm:px-4">
           <Link href="/" className="shrink-0" aria-label="Photo Factory Shop home">
             <Image
               src="/logo-transparent.png"
@@ -40,7 +78,7 @@ export function SiteHeader() {
               width={991}
               height={573}
               priority
-              className="h-10 w-auto sm:h-14"
+              className="h-8 w-auto sm:h-12"
             />
           </Link>
           <form action="/search" className="relative min-w-0">
@@ -48,7 +86,7 @@ export function SiteHeader() {
               name="q"
               aria-label="Search products"
               placeholder="Search"
-              className="h-8 w-full rounded-full border-0 bg-white px-4 pr-9 text-sm font-medium text-[#111827] outline-none ring-2 ring-transparent transition focus:ring-[#d9a441] sm:h-11 sm:px-5 sm:pr-12 sm:font-semibold"
+              className="h-8 w-full rounded-full border-0 bg-white px-4 pr-9 text-sm font-medium text-[#111827] outline-none ring-2 ring-transparent transition focus:ring-[#d9a441] sm:h-8 sm:px-5 sm:pr-11 sm:font-semibold"
             />
             <button
               type="submit"

@@ -423,7 +423,7 @@ function PurchasePanel({
   protectionBase: number;
 }) {
   return (
-    <aside className="no-scrollbar sticky top-[88px] z-20 self-start overflow-y-auto bg-white md:top-[184px] md:max-h-[calc(100vh-12rem)]">
+    <aside className="no-scrollbar sticky top-[72px] z-20 self-start overflow-y-auto bg-white md:top-32 md:max-h-[calc(100vh-8.5rem)]">
       <div className="border border-[#e7ddc7] bg-white p-3 shadow-sm">
         <div className="mb-3 flex items-center gap-2 text-sm text-[#333]">
           <Truck size={18} className="text-[#8b641e]" />
@@ -563,7 +563,7 @@ export default async function ProductPage({ params }: Props) {
         </nav>
 
         <div className="mt-4 hidden min-h-[1320px] items-start gap-6 xl:grid xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px]">
-          <div className="no-scrollbar sticky top-[184px] self-start max-h-[calc(100vh-12rem)] overflow-y-auto">
+          <div className="no-scrollbar sticky top-32 self-start max-h-[calc(100vh-8.5rem)] overflow-y-auto">
             <ProductMediaPanel product={product} />
           </div>
           <ProductInfoPanel
@@ -579,7 +579,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="mt-4 xl:hidden">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_310px] md:items-start">
             <div>
-              <div className="sticky top-[76px] z-20 border-b border-[#e7ddc7] bg-white pb-2 md:top-[184px]">
+              <div className="sticky top-[72px] z-20 border-b border-[#e7ddc7] bg-white pb-2 md:top-32">
                 <ProductMediaPanel product={product} />
               </div>
               <ProductInfoPanel
@@ -594,7 +594,7 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
 
-        <nav className="sticky top-[76px] z-40 mt-8 border-y border-[#e7ddc7] bg-white shadow-sm md:top-[184px]">
+        <nav className="sticky top-[72px] z-40 mt-8 border-y border-[#e7ddc7] bg-white shadow-sm md:top-32">
           <div className="no-scrollbar flex overflow-x-auto">
             {tabs.map((tab) => (
               <a

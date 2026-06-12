@@ -78,7 +78,7 @@ export function MainNav() {
         <Link
           href="/c/cameras"
           onMouseEnter={close}
-          className="flex shrink-0 items-center gap-2 px-3 py-3 text-sm font-bold"
+          className="flex shrink-0 items-center gap-2 px-3 py-2 text-sm font-bold"
         >
           <Menu aria-hidden size={18} />
           Departments
@@ -90,7 +90,7 @@ export function MainNav() {
             onMouseEnter={() => setOpenMenu(menu.label)}
             onFocus={() => setOpenMenu(menu.label)}
             onClick={close}
-            className={`flex shrink-0 items-center gap-1 px-4 py-3 text-sm font-semibold ${
+            className={`flex shrink-0 items-center gap-1 px-4 py-2 text-sm font-semibold ${
               openMenu === menu.label ? "bg-[#d9a441] text-black" : "hover:bg-[#2a2113]"
             }`}
           >
