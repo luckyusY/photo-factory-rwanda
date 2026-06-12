@@ -279,6 +279,213 @@ function ProductRail({
   );
 }
 
+function ProductMediaPanel({ product }: { product: Product }) {
+  return (
+    <section className="self-start">
+      <ProductGallery images={product.images} name={product.name} />
+      <div className="mt-5 hidden grid-cols-3 gap-2 text-center text-xs font-semibold text-[#374151] sm:grid">
+        {serviceBadges.map(({ label, icon: Icon }) => (
+          <div key={label} className="border border-[#e7ddc7] p-3">
+            <Icon className="mx-auto mb-1 text-[#8b641e]" size={20} />
+            {label}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductInfoPanel({
+  product,
+  discount,
+  monthlyEstimate,
+  rewardPoints,
+  mfr,
+}: {
+  product: Product;
+  discount: number;
+  monthlyEstimate: number;
+  rewardPoints: number;
+  mfr: string;
+}) {
+  return (
+    <section>
+      <div className="border-b border-[#e7ddc7] pb-4">
+        {product.badge && (
+          <span className="mb-2 inline-block bg-[#ffe25a] px-2 py-1 text-[11px] font-black uppercase text-[#3b2f00]">
+            {product.badge}
+          </span>
+        )}
+        <h1 className="text-[23px] font-semibold leading-snug text-black sm:text-[28px]">
+          {product.name}
+        </h1>
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[13px] text-[#4b5563]">
+          <span className="flex items-center gap-1.5">
+            <Stars rating={product.rating} />
+            <strong className="text-black">{product.rating.toFixed(1)}</strong>
+            <a href="#reviews" className="text-[#8b641e] hover:underline">
+              ({product.reviews} Reviews)
+            </a>
+          </span>
+          <a href="#qa" className="text-[#8b641e] hover:underline">
+            Ask a Question
+          </a>
+          <span>
+            SKU: <strong className="text-black">{product.id}</strong>
+          </span>
+          <span>
+            MFR: <strong className="text-black">{mfr}</strong>
+          </span>
+        </div>
+      </div>
+
+      <div className="border-b border-[#e7ddc7] py-4">
+        <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
+          <p className="text-[38px] font-bold leading-none text-black">
+            {formatRWF(product.price)}
+          </p>
+          {product.oldPrice && (
+            <p className="text-sm font-semibold text-[#777] line-through">
+              {formatRWF(product.oldPrice)}
+            </p>
+          )}
+          <span className="text-sm font-bold text-[#8b641e]">Save {discount}%</span>
+        </div>
+        <p className="mt-2 text-sm text-[#333]">
+          <strong>{formatRWF(monthlyEstimate)}/mo</strong> suggested payments
+          with 12-month special financing.{" "}
+          <Link href="/support" className="text-[#8b641e] hover:underline">
+            Learn how.
+          </Link>
+        </p>
+        <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#8b641e]">
+          <Sparkles size={16} /> Earn {rewardPoints.toLocaleString("en-US")} Reward
+          Points
+        </p>
+        {product.condition === "New" && (
+          <p className="mt-2 text-sm text-[#8b641e]">
+            See all used options from {formatRWF(Math.round(product.price * 0.85))}
+          </p>
+        )}
+      </div>
+
+      <OptionGroup
+        label="Capacity"
+        options={capacityOptions}
+        active={
+          product.category === "computers" || product.category === "phones"
+            ? "256GB"
+            : capacityOptions[0]
+        }
+      />
+      <OptionGroup
+        label="Connectivity"
+        options={connectivityOptions}
+        active={product.category === "phones" ? "Wi-Fi + Cellular" : "Wi-Fi"}
+      />
+      <OptionGroup label="Glass" options={glassOptions} active="Standard Glass" />
+
+      <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
+        <h2 className="text-xl font-semibold">Key Features</h2>
+        <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#333]">
+          {[
+            ...product.shortSpecs,
+            ...product.specs
+              .slice(0, 3)
+              .map((spec) => `${spec.label}: ${spec.value}`),
+          ].map((feature) => (
+            <li key={feature} className="flex gap-2">
+              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#333]" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <a
+          href="#about"
+          className="mt-3 inline-block text-sm font-bold text-[#8b641e] hover:underline"
+        >
+          See More Product Details
+        </a>
+      </section>
+    </section>
+  );
+}
+
+function PurchasePanel({
+  product,
+  protectionBase,
+}: {
+  product: Product;
+  protectionBase: number;
+}) {
+  return (
+    <aside className="sticky top-[108px] z-20 self-start overflow-y-auto bg-white xl:top-28 xl:max-h-[calc(100vh-7.5rem)]">
+      <div className="border border-[#e7ddc7] bg-white p-3 shadow-sm">
+        <div className="mb-3 flex items-center gap-2 text-sm text-[#333]">
+          <Truck size={18} className="text-[#8b641e]" />
+          Calculate Shipping -{" "}
+          <Link href="/support" className="text-[#8b641e] hover:underline">
+            See Options
+          </Link>
+        </div>
+        <BuyBox slug={product.slug} stock={product.stock} />
+        <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#e7ddc7] pt-3 text-xs font-semibold">
+          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
+            <Heart size={14} /> Add to List
+          </button>
+          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
+            <Mail size={14} /> Sale Alert
+          </button>
+        </div>
+        <Link
+          href="/support"
+          className="mt-4 flex items-center gap-3 border-y border-[#e7ddc7] bg-[#f6f2ea] p-3 text-sm"
+        >
+          <CreditCard size={28} className="text-[#8b641e]" />
+          <span>
+            <strong className="block text-[#8b641e]">Save 5% Every Day</strong>
+            with the Photo Factory Card. Learn More
+          </span>
+        </Link>
+
+        <div className="mt-4">
+          <p className="flex items-center gap-2 text-sm font-bold text-black">
+            <ShieldCheck size={18} className="text-[#d71920]" />
+            Add a Protection Plan:
+          </p>
+          {[
+            ["1-Year Extra Care", protectionBase],
+            ["2-Year Photo Factory Protect", protectionBase * 2],
+            ["3-Year Photo Factory Protect", protectionBase * 3],
+          ].map(([label, price]) => (
+            <label
+              key={String(label)}
+              className="mt-2 flex items-center justify-between gap-3 text-sm"
+            >
+              <span className="flex items-center gap-2">
+                <input type="checkbox" className="h-4 w-4 accent-[#8b641e]" />
+                <span className="text-[#8b641e]">{label}</span>
+              </span>
+              <span className="font-semibold">{formatRWF(Number(price))}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <Link
+        href="/used/sell"
+        className="mt-3 flex items-center gap-3 border border-[#e7ddc7] bg-[#f8fafc] p-3 text-sm hover:border-[#8b641e]"
+      >
+        <Repeat size={24} className="shrink-0 text-[#8b641e]" />
+        <span>
+          <strong className="block text-black">Sell or Trade your Gear</strong>
+          Get started in 3 easy steps
+        </span>
+      </Link>
+    </aside>
+  );
+}
+
 export default async function ProductPage({ params }: Props) {
   const product = await getProductBySlug((await params).slug);
   if (!product) notFound();
@@ -351,177 +558,36 @@ export default async function ProductPage({ params }: Props) {
           <span className="line-clamp-1 text-[#374151]">{product.name}</span>
         </nav>
 
-        <div className="mt-4 grid gap-6 xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px]">
-          <div className="xl:contents">
-            <section className="sticky top-[108px] z-20 self-start border-b border-[#e7ddc7] bg-white pb-2 xl:top-32 xl:border-0 xl:pb-0">
-              <ProductGallery images={product.images} name={product.name} />
-              <div className="mt-5 hidden grid-cols-3 gap-2 text-center text-xs font-semibold text-[#374151] sm:grid">
-                {serviceBadges.map(({ label, icon: Icon }) => {
-                  return (
-                    <div key={label} className="border border-[#e7ddc7] p-3">
-                      <Icon className="mx-auto mb-1 text-[#8b641e]" size={20} />
-                      {label}
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-
-            <section>
-              <div className="border-b border-[#e7ddc7] pb-4">
-              {product.badge && (
-                <span className="mb-2 inline-block bg-[#ffe25a] px-2 py-1 text-[11px] font-black uppercase text-[#3b2f00]">
-                  {product.badge}
-                </span>
-              )}
-              <h1 className="text-[23px] font-semibold leading-snug text-black sm:text-[28px]">
-                {product.name}
-              </h1>
-              <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[13px] text-[#4b5563]">
-                <span className="flex items-center gap-1.5">
-                  <Stars rating={product.rating} />
-                  <strong className="text-black">{product.rating.toFixed(1)}</strong>
-                  <a href="#reviews" className="text-[#8b641e] hover:underline">
-                    ({product.reviews} Reviews)
-                  </a>
-                </span>
-                <a href="#qa" className="text-[#8b641e] hover:underline">
-                  Ask a Question
-                </a>
-                <span>
-                  SKU: <strong className="text-black">{product.id}</strong>
-                </span>
-                <span>
-                  MFR: <strong className="text-black">{mfr}</strong>
-                </span>
-              </div>
-            </div>
-
-            <div className="border-b border-[#e7ddc7] py-4">
-              <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
-                <p className="text-[38px] font-bold leading-none text-black">
-                  {formatRWF(product.price)}
-                </p>
-                {product.oldPrice && (
-                  <p className="text-sm font-semibold text-[#777] line-through">
-                    {formatRWF(product.oldPrice)}
-                  </p>
-                )}
-                <span className="text-sm font-bold text-[#8b641e]">
-                  Save {discount}%
-                </span>
-              </div>
-              <p className="mt-2 text-sm text-[#333]">
-                <strong>{formatRWF(monthlyEstimate)}/mo</strong> suggested
-                payments with 12-month special financing.{" "}
-                <Link href="/support" className="text-[#8b641e] hover:underline">
-                  Learn how.
-                </Link>
-              </p>
-              <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#8b641e]">
-                <Sparkles size={16} /> Earn {rewardPoints.toLocaleString("en-US")} Reward Points
-              </p>
-              {product.condition === "New" && (
-                <p className="mt-2 text-sm text-[#8b641e]">
-                  See all used options from {formatRWF(Math.round(product.price * 0.85))}
-                </p>
-              )}
-            </div>
-
-            <OptionGroup
-              label="Capacity"
-              options={capacityOptions}
-              active={product.category === "computers" || product.category === "phones" ? "256GB" : capacityOptions[0]}
-            />
-            <OptionGroup
-              label="Connectivity"
-              options={connectivityOptions}
-              active={product.category === "phones" ? "Wi-Fi + Cellular" : "Wi-Fi"}
-            />
-            <OptionGroup label="Glass" options={glassOptions} active="Standard Glass" />
-
-              <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
-                <h2 className="text-xl font-semibold">Key Features</h2>
-                <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#333]">
-                  {[...product.shortSpecs, ...product.specs.slice(0, 3).map((spec) => `${spec.label}: ${spec.value}`)].map(
-                    (feature) => (
-                      <li key={feature} className="flex gap-2">
-                        <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#333]" />
-                        {feature}
-                      </li>
-                    ),
-                  )}
-                </ul>
-                <a href="#about" className="mt-3 inline-block text-sm font-bold text-[#8b641e] hover:underline">
-                  See More Product Details
-                </a>
-              </section>
-            </section>
+        <div className="mt-4 hidden min-h-[1320px] items-start gap-6 xl:grid xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px]">
+          <div className="sticky top-28 self-start max-h-[calc(100vh-7.5rem)] overflow-y-auto">
+            <ProductMediaPanel product={product} />
           </div>
+          <ProductInfoPanel
+            product={product}
+            discount={discount}
+            monthlyEstimate={monthlyEstimate}
+            rewardPoints={rewardPoints}
+            mfr={mfr}
+          />
+          <PurchasePanel product={product} protectionBase={protectionBase} />
+        </div>
 
-          <aside className="sticky top-[108px] z-20 self-start bg-white xl:top-32">
-            <div className="border border-[#e7ddc7] bg-white p-3 shadow-sm">
-              <div className="mb-3 flex items-center gap-2 text-sm text-[#333]">
-                <Truck size={18} className="text-[#8b641e]" />
-                Calculate Shipping -{" "}
-                <Link href="/support" className="text-[#8b641e] hover:underline">
-                  See Options
-                </Link>
+        <div className="mt-4 xl:hidden">
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_310px] md:items-start">
+            <div>
+              <div className="sticky top-[108px] z-20 border-b border-[#e7ddc7] bg-white pb-2">
+                <ProductMediaPanel product={product} />
               </div>
-              <BuyBox slug={product.slug} stock={product.stock} />
-              <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#e7ddc7] pt-3 text-xs font-semibold">
-                <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
-                  <Heart size={14} /> Add to List
-                </button>
-                <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
-                  <Mail size={14} /> Sale Alert
-                </button>
-              </div>
-              <Link
-                href="/support"
-                className="mt-4 flex items-center gap-3 border-y border-[#e7ddc7] bg-[#f6f2ea] p-3 text-sm"
-              >
-                <CreditCard size={28} className="text-[#8b641e]" />
-                <span>
-                  <strong className="block text-[#8b641e]">
-                    Save 5% Every Day
-                  </strong>
-                  with the Photo Factory Card. Learn More
-                </span>
-              </Link>
-
-              <div className="mt-4">
-                <p className="flex items-center gap-2 text-sm font-bold text-black">
-                  <ShieldCheck size={18} className="text-[#d71920]" />
-                  Add a Protection Plan:
-                </p>
-                {[
-                  ["1-Year Extra Care", protectionBase],
-                  ["2-Year Photo Factory Protect", protectionBase * 2],
-                  ["3-Year Photo Factory Protect", protectionBase * 3],
-                ].map(([label, price]) => (
-                  <label key={String(label)} className="mt-2 flex items-center justify-between gap-3 text-sm">
-                    <span className="flex items-center gap-2">
-                      <input type="checkbox" className="h-4 w-4 accent-[#8b641e]" />
-                      <span className="text-[#8b641e]">{label}</span>
-                    </span>
-                    <span className="font-semibold">{formatRWF(Number(price))}</span>
-                  </label>
-                ))}
-              </div>
+              <ProductInfoPanel
+                product={product}
+                discount={discount}
+                monthlyEstimate={monthlyEstimate}
+                rewardPoints={rewardPoints}
+                mfr={mfr}
+              />
             </div>
-
-            <Link
-              href="/used/sell"
-              className="mt-3 flex items-center gap-3 border border-[#e7ddc7] bg-[#f8fafc] p-3 text-sm hover:border-[#8b641e]"
-            >
-              <Repeat size={24} className="shrink-0 text-[#8b641e]" />
-              <span>
-                <strong className="block text-black">Sell or Trade your Gear</strong>
-                Get started in 3 easy steps
-              </span>
-            </Link>
-          </aside>
+            <PurchasePanel product={product} protectionBase={protectionBase} />
+          </div>
         </div>
 
         <nav className="sticky top-[106px] z-30 mt-8 hidden border-y border-[#e7ddc7] bg-white md:block">
