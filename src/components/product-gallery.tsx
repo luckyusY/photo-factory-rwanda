@@ -31,7 +31,7 @@ export function ProductGallery({
     <div>
       <div className="flex flex-col-reverse gap-3 sm:flex-row">
         {images.length > 1 && (
-          <div className="flex shrink-0 gap-2 overflow-x-auto sm:flex-col sm:overflow-visible">
+          <div className="no-scrollbar flex shrink-0 gap-2 overflow-x-auto sm:flex-col sm:overflow-visible">
             {images.map((image, index) => (
               <button
                 key={image + index}
@@ -57,7 +57,7 @@ export function ProductGallery({
           </div>
         )}
         <div
-          className="group relative h-[260px] min-w-0 flex-1 touch-pan-y overflow-hidden rounded-sm bg-white sm:aspect-square sm:h-auto md:cursor-zoom-in"
+          className="group relative h-[300px] min-w-0 flex-1 touch-pan-y overflow-hidden rounded-sm bg-white sm:aspect-square sm:h-auto md:cursor-zoom-in"
           onTouchStart={(event) => setTouchStartX(event.touches[0].clientX)}
           onTouchEnd={(event) => swipe(event.changedTouches[0].clientX)}
           onMouseMove={(event) => {

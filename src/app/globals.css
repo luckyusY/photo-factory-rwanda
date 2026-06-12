@@ -85,6 +85,14 @@ a:active {
   background: transparent;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ---------- Hero Swiper ---------- */
 
 .hero-swiper .swiper-pagination {
