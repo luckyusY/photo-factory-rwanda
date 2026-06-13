@@ -26,7 +26,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
         }}
         navigation
         pagination={{ clickable: true }}
-        className="h-[280px] sm:h-[360px] lg:h-[376px]"
+        className="h-[280px] sm:h-[430px] lg:h-[520px] 2xl:h-[620px]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={`${slide.title}-${index}`}>
@@ -47,6 +47,36 @@ function SlideContent({
 }) {
   const dark = slide.tone === "dark";
   const reduceMotion = useReducedMotion();
+  const imageClass = slide.imageOnly
+    ? "object-cover object-center"
+    : "object-cover object-center";
+
+  if (slide.imageOnly) {
+    return (
+      <Link
+        href={slide.href}
+        aria-label={slide.title}
+        className="absolute inset-0 block bg-black"
+      >
+        <Image
+          src={slide.image}
+          alt=""
+          fill
+          priority={priority}
+          sizes="100vw"
+          className={`hidden ${imageClass} sm:block`}
+        />
+        <Image
+          src={slide.mobileImage ?? slide.image}
+          alt=""
+          fill
+          priority={priority}
+          sizes="100vw"
+          className="object-cover object-center sm:hidden"
+        />
+      </Link>
+    );
+  }
 
   return (
     <div className="absolute inset-0">

@@ -208,6 +208,16 @@ export function HeroEditor({
                       <option value="center">Center</option>
                     </select>
                   </Field>
+                  <label className="flex items-center gap-2 rounded border border-[#e7ddc7] bg-[#f8fafc] px-3 py-2 text-xs font-bold text-[#374151] sm:col-span-2">
+                    <input
+                      type="checkbox"
+                      checked={slide.imageOnly === true}
+                      onChange={(e) => update(index, { imageOnly: e.target.checked })}
+                      className="h-4 w-4 accent-[#8b641e]"
+                    />
+                    Image-only slide. Use this when the uploaded artwork already
+                    contains all text and should be fully clickable.
+                  </label>
                   <ImageField
                     label="Desktop image URL *"
                     value={slide.image}

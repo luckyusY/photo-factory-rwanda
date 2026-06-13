@@ -23,6 +23,7 @@ function sanitizeHero(items: unknown[]): HeroSlide[] {
         mobileImage: str(item.mobileImage) || undefined,
         tone: item.tone === "light" ? "light" : "dark",
         copyPosition: item.copyPosition === "center" ? "center" : undefined,
+        imageOnly: item.imageOnly === true,
       };
       return slide;
     })

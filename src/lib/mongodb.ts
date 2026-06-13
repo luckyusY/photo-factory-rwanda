@@ -9,10 +9,10 @@ export function getMongoClient() {
 
   if (!client) {
     client = new MongoClient(process.env.MONGODB_URI, {
-      connectTimeoutMS: 800,
+      connectTimeoutMS: 5000,
       maxIdleTimeMS: 10000,
-      serverSelectionTimeoutMS: 650,
-      socketTimeoutMS: 2500,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 10000,
     });
   }
 
