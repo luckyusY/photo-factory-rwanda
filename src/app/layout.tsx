@@ -41,6 +41,14 @@ export const metadata: Metadata = {
   },
   description:
     "Shop cameras, lenses, electronics, creator gear, and professional photography equipment from Photo Factory Rwanda in Kigali.",
+  icons: {
+    icon: [
+      { url: "/logo-transparent.png", type: "image/png" },
+      { url: "/logo.jpg", type: "image/jpeg" },
+    ],
+    apple: [{ url: "/logo-transparent.png", type: "image/png" }],
+    shortcut: ["/logo-transparent.png"],
+  },
 };
 
 export default function RootLayout({
