@@ -3,7 +3,7 @@ import { isAdmin } from "@/lib/admin-auth";
 import { categories } from "@/lib/catalog";
 import { isDbConfigured } from "@/lib/products-db";
 import { saveContent, type ContentKey } from "@/lib/site-content";
-import type { CategoryContent, HeroSlide } from "@/lib/site-content-types";
+import type { CategoryContent, HeroSlide, PromoContent } from "@/lib/site-content-types";
 
 const str = (value: unknown) => (typeof value === "string" ? value.trim() : "");
 
@@ -45,6 +45,21 @@ function sanitizeCategories(items: unknown[]): CategoryContent[] {
     .filter((item) => validSlugs.has(item.slug));
 }
 
+function sanitizePromos(items: unknown[]): PromoContent[] {
+  const validKeys = new Set(["studio-upgrade", "gifts-for-grads", "wedding-season"]);
+  return items
+    .map((raw) => {
+      const item = (raw ?? {}) as Record<string, unknown>;
+      return {
+        key: str(item.key) as PromoContent["key"],
+        name: str(item.name),
+        image: str(item.image),
+        mobileImage: str(item.mobileImage),
+      };
+    })
+    .filter((item) => validKeys.has(item.key) && item.image && item.mobileImage);
+}
+
 export async function POST(request: Request) {
   if (!(await isAdmin())) {
     return NextResponse.json({ error: "Not authorized." }, { status: 401 });
@@ -64,7 +79,7 @@ export async function POST(request: Request) {
   }
 
   const key = payload.key as ContentKey;
-  if (key !== "hero" && key !== "categories") {
+  if (key !== "hero" && key !== "categories" && key !== "promos") {
     return NextResponse.json({ error: "Unknown content key." }, { status: 400 });
   }
 
@@ -79,7 +94,9 @@ export async function POST(request: Request) {
     const items =
       key === "hero"
         ? sanitizeHero(payload.items)
-        : sanitizeCategories(payload.items);
+        : key === "categories"
+          ? sanitizeCategories(payload.items)
+          : sanitizePromos(payload.items);
     if (items.length === 0) {
       return NextResponse.json(
         { error: "Nothing valid to save. Check required fields." },

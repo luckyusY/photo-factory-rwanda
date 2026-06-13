@@ -20,7 +20,7 @@ import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
 import { dealsOf, sortProducts, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
-import { getCategoryContent, getHeroSlides } from "@/lib/site-content";
+import { getCategoryContent, getHeroSlides, getPromoBanners } from "@/lib/site-content";
 
 export const revalidate = 300;
 
@@ -95,11 +95,13 @@ function PromoBanner({
 }
 
 export default async function Home() {
-  const [allProducts, heroSlides, categoryContent] = await Promise.all([
+  const [allProducts, heroSlides, categoryContent, promoBanners] = await Promise.all([
     getAllProducts(),
     getHeroSlides(),
     getCategoryContent(),
+    getPromoBanners(),
   ]);
+  const promoImages = new Map(promoBanners.map((promo) => [promo.key, promo]));
   const categoryImages = new Map(
     categoryContent.map((category) => [category.slug, category.image]),
   );
@@ -176,8 +178,11 @@ export default async function Home() {
           {/* Studio upgrade contest — yellow, centered stacked lockup */}
           <PromoBanner
             href="/support"
-            image={campaignImage("studio-upgrade")}
-            mobileImage={campaignImage("studio-upgrade-mobile", 720)}
+            image={promoImages.get("studio-upgrade")?.image ?? campaignImage("studio-upgrade")}
+            mobileImage={
+              promoImages.get("studio-upgrade")?.mobileImage ??
+              campaignImage("studio-upgrade-mobile", 720)
+            }
             overlayClass="bg-[linear-gradient(90deg,rgba(255,205,27,0.97)_0%,rgba(255,205,27,0.94)_52%,transparent_78%)]"
           >
             <div className="absolute inset-y-0 left-0 hidden w-[62%] flex-col items-center justify-center px-6 text-center text-[#15110a] md:flex">
@@ -211,8 +216,11 @@ export default async function Home() {
           {/* Gifts for grads — script + giant GRADS */}
           <PromoBanner
             href="/deals"
-            image={campaignImage("gifts-for-grads")}
-            mobileImage={campaignImage("gifts-for-grads-mobile", 720)}
+            image={promoImages.get("gifts-for-grads")?.image ?? campaignImage("gifts-for-grads")}
+            mobileImage={
+              promoImages.get("gifts-for-grads")?.mobileImage ??
+              campaignImage("gifts-for-grads-mobile", 720)
+            }
             overlayClass="bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.9)_52%,transparent_80%)]"
           >
             <div className="absolute inset-y-0 left-0 hidden w-[64%] max-w-[480px] flex-col justify-center px-7 text-black sm:px-10 md:flex">
@@ -237,8 +245,11 @@ export default async function Home() {
           {/* Wedding season — full width, letterspaced + script */}
           <PromoBanner
             href="/c/cameras"
-            image={campaignImage("wedding-season", 1600)}
-            mobileImage={campaignImage("wedding-season-mobile", 720)}
+            image={promoImages.get("wedding-season")?.image ?? campaignImage("wedding-season", 1600)}
+            mobileImage={
+              promoImages.get("wedding-season")?.mobileImage ??
+              campaignImage("wedding-season-mobile", 720)
+            }
             overlayClass="bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.88)_44%,transparent_68%)]"
             fullWidth
           >

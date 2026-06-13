@@ -4,8 +4,10 @@ import { getDb } from "@/lib/mongodb";
 import {
   defaultCategoryImages,
   defaultHeroSlides,
+  defaultPromoBanners,
   type CategoryContent,
   type HeroSlide,
+  type PromoContent,
 } from "@/lib/site-content-types";
 
 const COLLECTION = "site_content";
@@ -13,7 +15,7 @@ const DB_FAILURE_COOLDOWN_MS = 60_000;
 
 let skipContentDbUntil = 0;
 
-export type ContentKey = "hero" | "categories";
+export type ContentKey = "hero" | "categories" | "promos";
 
 export function defaultCategoryContent(): CategoryContent[] {
   return categories.map((category) => ({
@@ -66,6 +68,23 @@ export const getCategoryContent = cache(
     });
   },
 );
+
+export const getPromoBanners = cache(async (): Promise<PromoContent[]> => {
+  const stored = await readItems<PromoContent>("promos");
+  if (!stored) return defaultPromoBanners;
+  const overrides = new Map(stored.map((item) => [item.key, item]));
+  return defaultPromoBanners.map((item) => {
+    const override = overrides.get(item.key);
+    return override
+      ? {
+          key: item.key,
+          name: item.name,
+          image: override.image || item.image,
+          mobileImage: override.mobileImage || item.mobileImage,
+        }
+      : item;
+  });
+});
 
 export async function saveContent(key: ContentKey, items: unknown[] | null) {
   const db = await getDb();

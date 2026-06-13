@@ -22,6 +22,13 @@ export type CategoryContent = {
   image: string;
 };
 
+export type PromoContent = {
+  key: "studio-upgrade" | "gifts-for-grads" | "wedding-season";
+  name: string;
+  image: string;
+  mobileImage: string;
+};
+
 const cld = (name: string, width = 1600) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
 
@@ -117,3 +124,24 @@ export const defaultCategoryImages: Record<string, string> = {
   phones: cldSquare("gifts-for-grads"),
   accessories: cldSquare("gifts-for-grads"),
 };
+
+export const defaultPromoBanners: PromoContent[] = [
+  {
+    key: "studio-upgrade",
+    name: "Studio Upgrade Contest",
+    image: cld("studio-upgrade"),
+    mobileImage: cld("studio-upgrade-mobile", 720),
+  },
+  {
+    key: "gifts-for-grads",
+    name: "Gifts for Grads",
+    image: cld("gifts-for-grads"),
+    mobileImage: cld("gifts-for-grads-mobile", 720),
+  },
+  {
+    key: "wedding-season",
+    name: "Wedding Season",
+    image: cld("wedding-season", 1600),
+    mobileImage: cld("wedding-season-mobile", 720),
+  },
+];
