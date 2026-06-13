@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { categories } from "@/lib/catalog";
+import { getCloudinary } from "@/lib/cloudinary";
 import { getDb } from "@/lib/mongodb";
 import {
   defaultCategoryImages,
@@ -17,6 +18,14 @@ let skipContentDbUntil = 0;
 
 export type ContentKey = "hero" | "categories" | "promos";
 
+function cloudinaryContentConfigured() {
+  return Boolean(
+    process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET,
+  );
+}
+
 export function defaultCategoryContent(): CategoryContent[] {
   return categories.map((category) => ({
     slug: category.slug,
@@ -27,22 +36,97 @@ export function defaultCategoryContent(): CategoryContent[] {
 }
 
 async function readItems<T>(key: ContentKey): Promise<T[] | null> {
-  if (!process.env.MONGODB_URI) return null;
-  if (Date.now() < skipContentDbUntil) return null;
+  if (!process.env.MONGODB_URI || Date.now() < skipContentDbUntil) {
+    return readCloudinaryItems<T>(key);
+  }
 
   try {
     const db = await getDb();
     const doc = await db.collection(COLLECTION).findOne({ key });
     const items = doc?.items;
-    return Array.isArray(items) && items.length > 0 ? (items as T[]) : null;
+    return Array.isArray(items) && items.length > 0
+      ? (items as T[])
+      : readCloudinaryItems<T>(key);
   } catch (error) {
     skipContentDbUntil = Date.now() + DB_FAILURE_COOLDOWN_MS;
     console.warn(
       `Failed to load site content "${key}"; using defaults.`,
       error instanceof Error ? error.message : error,
     );
+    return readCloudinaryItems<T>(key);
+  }
+}
+
+async function readCloudinaryItems<T>(key: ContentKey): Promise<T[] | null> {
+  if (!cloudinaryContentConfigured()) return null;
+
+  try {
+    const cloudinary = getCloudinary();
+    const resource = await cloudinary.api.resource(
+      `photo-factory-rwanda/content/${key}`,
+      { resource_type: "raw" },
+    );
+    if (!resource.secure_url) return null;
+    const response = await fetch(resource.secure_url, { cache: "no-store" });
+    if (!response.ok) return null;
+    const body = (await response.json()) as { items?: unknown };
+    return Array.isArray(body.items) && body.items.length > 0
+      ? (body.items as T[])
+      : null;
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof (error as { error?: { message?: unknown } }).error?.message ===
+              "string"
+          ? (error as { error: { message: string } }).error.message
+          : "Unknown Cloudinary error";
+    if (!message.includes("Resource not found")) {
+      console.warn(`Failed to load Cloudinary site content "${key}". ${message}`);
+    }
     return null;
   }
+}
+
+async function saveCloudinaryContent(key: ContentKey, items: unknown[] | null) {
+  if (!cloudinaryContentConfigured()) {
+    throw new Error("Cloudinary is not configured for content backup.");
+  }
+
+  const cloudinary = getCloudinary();
+  if (items === null) {
+    await cloudinary.uploader
+      .destroy(`photo-factory-rwanda/content/${key}`, { resource_type: "raw" })
+      .catch(() => undefined);
+    return;
+  }
+
+  const payload = Buffer.from(
+    JSON.stringify({ key, items, updatedAt: new Date().toISOString() }),
+  );
+
+  await new Promise<void>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: "photo-factory-rwanda/content",
+        public_id: key,
+        overwrite: true,
+        resource_type: "raw",
+        format: "json",
+      },
+      (error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      },
+    );
+    stream.end(payload);
+  });
 }
 
 export const getHeroSlides = cache(async (): Promise<HeroSlide[]> => {
@@ -87,12 +171,20 @@ export const getPromoBanners = cache(async (): Promise<PromoContent[]> => {
 });
 
 export async function saveContent(key: ContentKey, items: unknown[] | null) {
-  const db = await getDb();
-  if (items === null) {
-    await db.collection(COLLECTION).deleteOne({ key });
-  } else {
-    await db
-      .collection(COLLECTION)
-      .replaceOne({ key }, { key, items, updatedAt: new Date() }, { upsert: true });
+  try {
+    const db = await getDb();
+    if (items === null) {
+      await db.collection(COLLECTION).deleteOne({ key });
+    } else {
+      await db
+        .collection(COLLECTION)
+        .replaceOne({ key }, { key, items, updatedAt: new Date() }, { upsert: true });
+    }
+  } catch (error) {
+    console.warn(
+      `MongoDB save failed for site content "${key}"; saving to Cloudinary backup.`,
+      error instanceof Error ? error.message : error,
+    );
+    await saveCloudinaryContent(key, items);
   }
 }
