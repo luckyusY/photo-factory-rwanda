@@ -26,7 +26,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
         }}
         navigation
         pagination={{ clickable: true }}
-        className="h-[clamp(300px,56.25vw,760px)]"
+        className="h-[clamp(300px,32.94vw,450px)]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={`${slide.title}-${index}`}>
@@ -107,7 +107,7 @@ function SlideContent({
         }`}
       />
       <div
-        className={`absolute inset-y-0 hidden w-[48%] sm:block ${
+        className={`absolute inset-y-0 hidden w-[44%] sm:block ${
           slide.copyPosition === "center"
             ? "left-[32%] bg-white/72"
             : dark
@@ -126,10 +126,10 @@ function SlideContent({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.6 }}
           transition={{ duration: 0.55, delay: 0.1, ease: [0.21, 0.65, 0.36, 1] }}
-          className={`max-w-[320px] sm:max-w-[430px] ${
+          className={`max-w-[320px] sm:max-w-[430px] lg:max-w-[460px] ${
             slide.copyPosition === "center"
               ? "flex flex-col items-center px-5 text-center"
-              : "px-5 sm:px-0 sm:pl-[10.5%]"
+              : "px-5 sm:px-0 sm:pl-[10.25%]"
           } ${dark ? "text-white" : "text-black"}`}
         >
           {slide.label && (
@@ -137,10 +137,10 @@ function SlideContent({
               {slide.label}
             </span>
           )}
-          <p className="mt-2 text-lg font-black uppercase tracking-wide sm:mt-4 sm:text-2xl">
+          <p className="mt-2 text-lg font-black uppercase tracking-wide sm:mt-3 sm:text-2xl">
             {slide.brand}
           </p>
-          <h2 className="mt-1 text-[22px] font-black leading-[1.05] sm:mt-2 sm:text-[34px]">
+          <h2 className="mt-1 text-[22px] font-black leading-[1.05] sm:mt-1.5 sm:text-[31px] lg:text-[34px]">
             {slide.title}
           </h2>
           <p
@@ -152,7 +152,7 @@ function SlideContent({
           </p>
           {slide.priceLine && (
             <p
-              className={`mt-1 text-[11px] font-bold sm:mt-2 sm:text-sm ${
+              className={`mt-1 text-[11px] font-bold sm:mt-1.5 sm:text-sm ${
                 dark ? "text-white/84" : "text-black/78"
               }`}
             >
@@ -161,7 +161,7 @@ function SlideContent({
           )}
           <Link
             href={slide.href}
-            className="press mt-3 inline-flex w-fit min-w-28 justify-center rounded-sm bg-[#8b641e] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#8b641e] sm:mt-5 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
+            className="press mt-3 inline-flex w-fit min-w-28 justify-center rounded-sm bg-[#8b641e] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#8b641e] sm:mt-4 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
           >
             {slide.cta}
           </Link>
