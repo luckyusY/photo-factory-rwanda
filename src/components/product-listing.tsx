@@ -16,6 +16,7 @@ export type ListingSearchParams = {
   price?: string;
   rating?: string;
   sort?: string;
+  sub?: string;
 };
 
 const priceRanges = [
@@ -41,6 +42,9 @@ export function applyListingFilters(
   params: ListingSearchParams,
 ) {
   let filtered = list;
+  if (params.sub) {
+    filtered = filtered.filter((p) => p.subcategory === params.sub);
+  }
   const selectedBrands = (params.brand ?? "")
     .split(",")
     .filter(Boolean)

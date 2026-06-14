@@ -106,14 +106,16 @@ export const defaultHeroSlides: HeroSlide[] = [
 export const defaultCategoryImages: Record<string, string> = {
   cameras: cldSquare("camera-shipping"),
   lenses: cldSquare("lens-trade-up"),
-  lighting: cldSquare("studio-upgrade"),
-  tripods: cldSquare("outdoor-gear"),
-  computers: cldSquare("gaming-power"),
-  video: cldSquare("creator-gimbal"),
-  audio: cldSquare("vip-rewards"),
   drones: cldSquare("drone-preorder"),
-  phones: cldSquare("gifts-for-grads"),
+  lighting: cldSquare("studio-upgrade"),
+  audio: cldSquare("vip-rewards"),
+  gimbals: cldSquare("creator-gimbal"),
+  tripods: cldSquare("outdoor-gear"),
+  storage: cldSquare("gifts-for-grads"),
+  bags: cldSquare("outdoor-gear"),
   accessories: cldSquare("gifts-for-grads"),
+  studio: cldSquare("studio-upgrade"),
+  computers: cldSquare("gaming-power"),
 };
 
 export const defaultPromoBanners: PromoContent[] = [

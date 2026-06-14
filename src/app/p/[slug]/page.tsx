@@ -377,7 +377,7 @@ function ProductInfoPanel({
         label="Capacity"
         options={capacityOptions}
         active={
-          product.category === "computers" || product.category === "phones"
+          product.category === "computers" || product.category === "storage"
             ? "256GB"
             : capacityOptions[0]
         }
@@ -385,7 +385,7 @@ function ProductInfoPanel({
       <OptionGroup
         label="Connectivity"
         options={connectivityOptions}
-        active={product.category === "phones" ? "Wi-Fi + Cellular" : "Wi-Fi"}
+        active={product.category === "computers" ? "Wi-Fi + Cellular" : "Wi-Fi"}
       />
       <OptionGroup label="Glass" options={glassOptions} active="Standard Glass" />
 

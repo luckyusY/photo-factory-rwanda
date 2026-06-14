@@ -12,9 +12,12 @@ import {
 import {
   brandsOf,
   byCategory,
+  bySubcategory,
   getCategory,
+  getSubcategory,
   slugify,
   type Product,
+  type Subcategory,
 } from "@/lib/catalog";
 import {
   computerBrandLogos,
@@ -22,7 +25,7 @@ import {
   productBrandLogos,
   type BrandLogo,
 } from "@/lib/brand-logos";
-import { getDepartment, type Department } from "@/lib/department-menu";
+import { getDepartment } from "@/lib/department-menu";
 import { getAllProducts } from "@/lib/products-db";
 import { getCategoryContent } from "@/lib/site-content";
 import { defaultCategoryImages } from "@/lib/site-content-types";
@@ -49,29 +52,75 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const allProducts = await getAllProducts();
   const products = byCategory(allProducts, category.slug);
-  const department =
-    category.slug === "accessories"
-      ? getDepartment("computers")
-      : getDepartment(category.slug);
   const content = (await getCategoryContent()).find(
     (item) => item.slug === category.slug,
   );
-  const displayName =
-    category.slug === "accessories"
-      ? "Computer Accessories"
-      : content?.name ?? category.name;
-  const displayBlurb =
-    category.slug === "accessories"
-      ? "Keyboards, mice, docks, webcams, SSD storage, memory cards, cables, adapters, and creator accessories."
-      : content?.blurb ?? category.blurb;
+  const displayName = content?.name ?? category.name;
+  const displayBlurb = content?.blurb ?? category.blurb;
   const customImage =
     content && content.image !== defaultCategoryImages[category.slug]
       ? content.image
       : undefined;
 
-  // Every category now shares the rich department landing layout that the
-  // Computers page pioneered. Content is generated from each category's
-  // department groups, products, and brands (Computers keeps a curated set).
+  const resolvedParams = await searchParams;
+  const activeSub = resolvedParams.sub
+    ? getSubcategory(category.slug, resolvedParams.sub)
+    : undefined;
+
+  // Sibling subcategory links (with live counts) for the listing sidebar.
+  const subcategoryLinks = category.subcategories
+    .map((s) => ({
+      label: s.name,
+      href: `/c/${category.slug}?sub=${s.slug}`,
+      count: bySubcategory(products, s.slug).length,
+    }))
+    .filter((item) => item.count > 0);
+
+  // A valid ?sub= renders the filterable listing scoped to that subcategory.
+  if (activeSub) {
+    const subProducts = bySubcategory(products, activeSub.slug);
+    return (
+      <main>
+        <section className="border-b border-[#e7ddc7] bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-4">
+            <nav className="text-xs font-semibold text-[#6b7280]">
+              <Link href="/" className="text-[#8b641e] hover:underline">
+                Home
+              </Link>
+              <span className="px-1">/</span>
+              <Link
+                href={`/c/${category.slug}`}
+                className="text-[#8b641e] hover:underline"
+              >
+                {displayName}
+              </Link>
+              <span className="px-1">/</span>
+              <span>{activeSub.name}</span>
+            </nav>
+            <h1 className="mt-4 text-[32px] font-semibold leading-tight text-black">
+              {activeSub.name}
+            </h1>
+          </div>
+        </section>
+        <ProductListing
+          title={activeSub.name}
+          subtitle={`${displayName} - ${activeSub.name}`}
+          basePath={`/c/${category.slug}`}
+          products={subProducts}
+          params={resolvedParams}
+          availableBrands={brandsOf(subProducts)}
+          extraParams={{ sub: activeSub.slug }}
+          categoryLinks={subcategoryLinks}
+        />
+      </main>
+    );
+  }
+
+  const department = getDepartment(category.slug);
+
+  // Every category shares the rich department landing layout. Content is
+  // generated from each category's subcategories, products, and brands
+  // (Computers keeps a curated brand set).
   if (department) {
     return (
       <DepartmentPage
@@ -79,7 +128,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         displayName={displayName}
         displayBlurb={displayBlurb}
         heroImage={customImage ?? department.image ?? category.image}
-        department={department}
+        subcategories={category.subcategories}
         products={products}
         allProducts={allProducts}
       />
@@ -112,79 +161,19 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         subtitle={displayBlurb}
         basePath={`/c/${category.slug}`}
         products={products}
-        params={await searchParams}
+        params={resolvedParams}
         availableBrands={brandsOf(products)}
+        categoryLinks={subcategoryLinks}
       />
     </main>
   );
 }
-
-const productImage = (slug: string) => `/products/${slug}/1.jpg`;
 
 type CategoryCard = {
   title: string;
   image: string;
   bullets: string[];
   href: string;
-};
-
-// Curated overrides keep the original Computers landing page pixel-identical
-// while every other category is generated from its data.
-const curatedCards: Record<string, CategoryCard[]> = {
-  computers: [
-    {
-      title: "Laptops & Notebooks",
-      image: productImage("apple-14-macbook-pro-m5-pro-space-black-1yfy0"),
-      bullets: ["MacBooks", "Notebooks", "Gaming Laptops", "Chromebooks"],
-      href: "/c/computers",
-    },
-    {
-      title: "Desktop Computers",
-      image:
-        "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=240&q=80",
-      bullets: ["Apple Desktops", "Gaming PCs", "All in One PCs", "Workstations"],
-      href: "/c/computers",
-    },
-    {
-      title: "iPads & Notepads",
-      image:
-        "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=240&q=80",
-      bullets: ["iPads", "Tablets", "iPad Cases", "Stylus Pens"],
-      href: "/c/phones",
-    },
-    {
-      title: "Gaming",
-      image:
-        "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=240&q=80",
-      bullets: ["PC Gaming", "Gaming Monitors", "Console Gaming", "Accessories"],
-      href: "/c/computers",
-    },
-    {
-      title: "Computer Components",
-      image:
-        "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=240&q=80",
-      bullets: ["CPUs", "Memory", "Motherboards", "Power Supplies"],
-      href: "/c/accessories",
-    },
-    {
-      title: "Monitors & Mounts",
-      image:
-        "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=240&q=80",
-      bullets: ["4K Monitors", "IPS Monitors", "Mounts & Stands", "Monitor Arms"],
-      href: "/c/computers",
-    },
-    {
-      title: "Drives, SSD & Storage",
-      image: productImage("sandisk-1tb-portable-ssd-18h6i"),
-      bullets: [
-        "Portable Drives",
-        "Hard Disk Drives",
-        "Solid State Drives",
-        "Memory Cards",
-      ],
-      href: "/c/accessories",
-    },
-  ],
 };
 
 const curatedBrands: Record<string, BrandLogo[]> = {
@@ -222,17 +211,23 @@ function brandLogosFor(slug: string, products: Product[]): BrandLogo[] {
 
 function categoryCardsFor(
   slug: string,
-  department: Department,
+  subcategories: Subcategory[],
   products: Product[],
   fallbackImage: string,
 ): CategoryCard[] {
-  if (curatedCards[slug]) return curatedCards[slug];
-  return department.groups.slice(0, 8).map((group, index) => ({
-    title: group.title,
-    bullets: group.links.slice(0, 4),
-    image: products[index % Math.max(products.length, 1)]?.images[0] ?? fallbackImage,
-    href: `/c/${slug}`,
-  }));
+  return subcategories
+    .map((subcat) => {
+      const items = bySubcategory(products, subcat.slug);
+      if (items.length === 0) return null;
+      const brands = [...new Set(items.map((p) => p.brand))].slice(0, 4);
+      return {
+        title: subcat.name,
+        bullets: brands,
+        image: items[0]?.images[0] ?? fallbackImage,
+        href: `/c/${slug}?sub=${subcat.slug}`,
+      };
+    })
+    .filter((card): card is CategoryCard => card !== null);
 }
 
 function DepartmentPage({
@@ -240,7 +235,7 @@ function DepartmentPage({
   displayName,
   displayBlurb,
   heroImage,
-  department,
+  subcategories,
   products,
   allProducts,
 }: {
@@ -248,11 +243,11 @@ function DepartmentPage({
   displayName: string;
   displayBlurb: string;
   heroImage: string;
-  department: Department;
+  subcategories: Subcategory[];
   products: Product[];
   allProducts: Product[];
 }) {
-  const cards = categoryCardsFor(slug, department, products, heroImage);
+  const cards = categoryCardsFor(slug, subcategories, products, heroImage);
   const brands = brandLogosFor(slug, products);
 
   // Rails lead with this category's products, then top up from the rest of the

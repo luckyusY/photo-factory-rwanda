@@ -34,16 +34,16 @@ const services = [
 const mobileCategoryItems = [
   { label: "Cameras", slug: "cameras", imageSlug: "cameras" },
   { label: "Lenses", slug: "lenses", imageSlug: "lenses" },
-  { label: "Lighting & Studio", slug: "lighting", imageSlug: "lighting" },
-  { label: "Computers", slug: "computers", imageSlug: "computers" },
-  { label: "Video", slug: "video", imageSlug: "video" },
-  { label: "Audio", slug: "audio", imageSlug: "audio" },
-  { label: "Home Electronics", slug: "phones", imageSlug: "phones" },
-  { label: "Optics & Binoculars", slug: "tripods", imageSlug: "tripods" },
-  { label: "Photo Accessories", slug: "accessories", imageSlug: "accessories" },
   { label: "Drones", slug: "drones", imageSlug: "drones" },
-  { label: "Gaming", slug: "computers", imageSlug: "computers" },
-  { label: "Music", slug: "audio", imageSlug: "audio" },
+  { label: "Lighting", slug: "lighting", imageSlug: "lighting" },
+  { label: "Audio", slug: "audio", imageSlug: "audio" },
+  { label: "Gimbals", slug: "gimbals", imageSlug: "gimbals" },
+  { label: "Tripods", slug: "tripods", imageSlug: "tripods" },
+  { label: "Memory & Storage", slug: "storage", imageSlug: "storage" },
+  { label: "Bags & Cases", slug: "bags", imageSlug: "bags" },
+  { label: "Accessories", slug: "accessories", imageSlug: "accessories" },
+  { label: "Studio Gear", slug: "studio", imageSlug: "studio" },
+  { label: "Computers", slug: "computers", imageSlug: "computers" },
 ];
 
 const campaignImage = (name: string, width = 1400) =>
@@ -357,7 +357,7 @@ export default async function Home() {
           </p>
         </Link>
         <Link
-          href="/c/phones"
+          href="/c/computers"
           className="rounded bg-[#f6f2ea] p-7 text-[#111827] ring-1 ring-black/10"
         >
           <div className="flex gap-3 text-[#d9a441]">
@@ -367,8 +367,8 @@ export default async function Home() {
           </div>
           <h2 className="mt-5 text-2xl font-black">Electronics</h2>
           <p className="mt-3 text-sm leading-6 text-[#4b5563]">
-            Smartphones, tablets, laptops, power banks, chargers, memory cards,
-            computer accessories, and SSD storage.
+            Laptops, monitors, power banks, chargers, memory cards, computer
+            accessories, and SSD storage.
           </p>
         </Link>
         </Reveal>

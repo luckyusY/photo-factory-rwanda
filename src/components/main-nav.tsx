@@ -140,27 +140,33 @@ export function MainNav() {
                 </Link>
               ))}
             </aside>
-            <div className="grid content-start gap-x-14 gap-y-7 px-6 py-7 md:grid-cols-3">
-              {activeDepartment.groups.map((group) => (
-                <div key={group.title}>
-                  <h3 className="text-[18px] font-medium leading-6 text-black">
-                    {group.title}
-                  </h3>
-                  <ul className="mt-2 space-y-1.5">
-                    {group.links.map((link) => (
-                      <li key={link}>
-                        <Link
-                          href={`/c/${activeDepartment.slug}`}
-                          onClick={close}
-                          className="text-[14px] leading-5 text-[#8b641e] hover:underline"
-                        >
-                          {link}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <div className="content-start px-6 py-7">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-[18px] font-medium leading-6 text-black">
+                  Shop {activeDepartment.label}
+                </h3>
+                <Link
+                  href={`/c/${activeDepartment.slug}`}
+                  onClick={close}
+                  className="text-sm font-bold text-[#8b641e] hover:underline"
+                >
+                  See all
+                </Link>
+              </div>
+              <div className="grid gap-x-10 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                {activeDepartment.groups
+                  .flatMap((group) => group.links)
+                  .map((link) => (
+                    <Link
+                      key={link.sub}
+                      href={`/c/${activeDepartment.slug}?sub=${link.sub}`}
+                      onClick={close}
+                      className="text-[14px] leading-6 text-[#8b641e] hover:underline"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+              </div>
             </div>
             <Link
               href={`/c/${activeDepartment.slug}`}

@@ -33,6 +33,10 @@ export function ProductForm({ product }: Props) {
   const [specs, setSpecs] = useState<SpecRow[]>(
     product?.specs.length ? product.specs : [{ label: "", value: "" }],
   );
+  const [category, setCategory] = useState(product?.category ?? "cameras");
+  const [subcategory, setSubcategory] = useState(product?.subcategory ?? "");
+  const subOptions =
+    categories.find((c) => c.slug === category)?.subcategories ?? [];
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,7 +48,8 @@ export function ProductForm({ product }: Props) {
       originalSlug: product?.slug,
       name: String(form.get("name") ?? ""),
       brand: String(form.get("brand") ?? ""),
-      category: String(form.get("category") ?? ""),
+      category,
+      subcategory: subcategory || null,
       price: Number(form.get("price") ?? 0),
       oldPrice: Number(form.get("oldPrice") ?? 0) || null,
       badge: String(form.get("badge") ?? ""),
@@ -104,12 +109,32 @@ export function ProductForm({ product }: Props) {
                   <select
                     name="category"
                     required
-                    defaultValue={product?.category ?? "cameras"}
+                    value={category}
+                    onChange={(event) => {
+                      setCategory(event.target.value);
+                      setSubcategory("");
+                    }}
                     className={`mt-1 ${inputClass}`}
                   >
-                    {categories.map((category) => (
-                      <option key={category.slug} value={category.slug}>
-                        {category.name}
+                    {categories.map((item) => (
+                      <option key={item.slug} value={item.slug}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="block text-sm font-bold">
+                  Subcategory
+                  <select
+                    name="subcategory"
+                    value={subcategory}
+                    onChange={(event) => setSubcategory(event.target.value)}
+                    className={`mt-1 ${inputClass}`}
+                  >
+                    <option value="">No subcategory</option>
+                    {subOptions.map((option) => (
+                      <option key={option.slug} value={option.slug}>
+                        {option.name}
                       </option>
                     ))}
                   </select>

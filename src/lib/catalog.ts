@@ -1,10 +1,16 @@
 import { localProductSeeds } from "@/lib/local-products";
 
+export type Subcategory = {
+  slug: string;
+  name: string;
+};
+
 export type Category = {
   slug: string;
   name: string;
   blurb: string;
   image: string;
+  subcategories: Subcategory[];
 };
 
 export type ProductCondition = "New" | "Open Box" | "Pre-Owned";
@@ -15,6 +21,7 @@ export type Product = {
   name: string;
   brand: string;
   category: string;
+  subcategory?: string;
   price: number;
   oldPrice?: number;
   rating: number;
@@ -58,66 +65,170 @@ const img = {
   workstation: u("photo-1517336714731-489689fd1ca8"),
 };
 
+const sub = (...items: Array<[slug: string, name: string]>): Subcategory[] =>
+  items.map(([slug, name]) => ({ slug, name }));
+
 export const categories: Category[] = [
   {
     slug: "cameras",
     name: "Cameras",
-    blurb: "Mirrorless, DSLR, compact, and instant cameras for every level.",
+    blurb: "Mirrorless, DSLR, cinema, action, instant, and compact cameras.",
     image: img.cameraTable,
+    subcategories: sub(
+      ["mirrorless", "Mirrorless"],
+      ["dslr", "DSLR"],
+      ["cinema", "Cinema"],
+      ["action", "Action"],
+      ["instant", "Instant"],
+      ["compact", "Compact"],
+      ["camcorders", "Camcorders"],
+    ),
   },
   {
     slug: "lenses",
     name: "Lenses",
-    blurb: "Prime, zoom, macro, and cine glass for all major mounts.",
+    blurb: "Prime, zoom, wide, telephoto, macro, and cine glass for every mount.",
     image: img.lens,
+    subcategories: sub(
+      ["wide-angle", "Wide Angle"],
+      ["standard", "Standard"],
+      ["telephoto", "Telephoto"],
+      ["macro", "Macro"],
+      ["prime", "Prime"],
+      ["zoom", "Zoom"],
+      ["cine", "Cine"],
+    ),
+  },
+  {
+    slug: "drones",
+    name: "Drones",
+    blurb: "Camera drones, FPV, mini drones, batteries, and accessories.",
+    image: img.drone,
+    subcategories: sub(
+      ["camera-drones", "Camera Drones"],
+      ["fpv-drones", "FPV Drones"],
+      ["mini-drones", "Mini Drones"],
+      ["drone-batteries", "Drone Batteries"],
+      ["drone-accessories", "Drone Accessories"],
+    ),
   },
   {
     slug: "lighting",
-    name: "Lighting & Studio",
-    blurb: "LED panels, strobes, softboxes, backdrops, and studio kits.",
+    name: "Lighting",
+    blurb: "Flashes, studio lights, LED panels, softboxes, and stands.",
     image: img.lighting,
+    subcategories: sub(
+      ["flashes", "Flashes"],
+      ["studio-lights", "Studio Lights"],
+      ["led-lights", "LED Lights"],
+      ["softboxes", "Softboxes"],
+      ["reflectors", "Reflectors"],
+      ["light-stands", "Light Stands"],
+    ),
+  },
+  {
+    slug: "audio",
+    name: "Audio",
+    blurb: "Wireless mics, shotgun and lavalier mics, recorders, and headphones.",
+    image: img.mic,
+    subcategories: sub(
+      ["wireless-microphones", "Wireless Microphones"],
+      ["shotgun-mics", "Shotgun Mics"],
+      ["lavalier-mics", "Lavalier Mics"],
+      ["audio-recorders", "Audio Recorders"],
+      ["headphones", "Headphones"],
+    ),
+  },
+  {
+    slug: "gimbals",
+    name: "Gimbals & Stabilizers",
+    blurb: "Camera and phone gimbals, handheld stabilizers, sliders, and rigs.",
+    image: img.videoSet,
+    subcategories: sub(
+      ["camera-gimbals", "Camera Gimbals"],
+      ["phone-gimbals", "Phone Gimbals"],
+      ["handheld-stabilizers", "Handheld Stabilizers"],
+      ["sliders", "Sliders"],
+      ["rigs", "Rigs"],
+    ),
   },
   {
     slug: "tripods",
     name: "Tripods & Support",
-    blurb: "Tripods, monopods, gimbals, sliders, and rigging.",
+    blurb: "Tripods, monopods, light stands, ball heads, and mounts.",
     image: img.tripod,
+    subcategories: sub(
+      ["tripods", "Tripods"],
+      ["monopods", "Monopods"],
+      ["light-stands", "Light Stands"],
+      ["ball-heads", "Ball Heads"],
+      ["mounts", "Mounts"],
+    ),
   },
   {
-    slug: "computers",
-    name: "Computers & Laptops",
-    blurb: "Editing laptops, desktops, monitors, and workstation gear.",
-    image: img.workstation,
+    slug: "storage",
+    name: "Memory & Storage",
+    blurb: "SD and CFexpress cards, SSDs, hard drives, and card readers.",
+    image: img.electronics,
+    subcategories: sub(
+      ["sd-cards", "SD Cards"],
+      ["cfexpress-cards", "CFexpress Cards"],
+      ["ssd-storage", "SSD Storage"],
+      ["hard-drives", "Hard Drives"],
+      ["card-readers", "Card Readers"],
+    ),
   },
   {
-    slug: "video",
-    name: "Video & Cinema",
-    blurb: "Cinema cameras, monitors, recorders, and production tools.",
-    image: img.videoSet,
-  },
-  {
-    slug: "audio",
-    name: "Audio & Microphones",
-    blurb: "Wireless mics, recorders, podcast kits, and headphones.",
-    image: img.mic,
-  },
-  {
-    slug: "drones",
-    name: "Drones & Gimbals",
-    blurb: "Aerial drones, stabilizers, and action cameras.",
-    image: img.drone,
-  },
-  {
-    slug: "phones",
-    name: "Phones & Tablets",
-    blurb: "Smartphones, tablets, and mobile creator accessories.",
-    image: img.phone,
+    slug: "bags",
+    name: "Bags & Cases",
+    blurb: "Camera bags, backpacks, hard cases, and lens pouches.",
+    image: img.cameraGear,
+    subcategories: sub(
+      ["camera-bags", "Camera Bags"],
+      ["backpacks", "Backpacks"],
+      ["hard-cases", "Hard Cases"],
+      ["lens-pouches", "Lens Pouches"],
+    ),
   },
   {
     slug: "accessories",
-    name: "Storage & Accessories",
-    blurb: "Memory cards, SSDs, batteries, bags, chargers, and care kits.",
-    image: img.electronics,
+    name: "Accessories",
+    blurb: "Batteries, chargers, filters, straps, cleaning kits, cables, and adapters.",
+    image: img.cameraFlat,
+    subcategories: sub(
+      ["batteries", "Batteries"],
+      ["chargers", "Chargers"],
+      ["filters", "Filters"],
+      ["camera-straps", "Camera Straps"],
+      ["cleaning-kits", "Cleaning Kits"],
+      ["cables", "Cables"],
+      ["mount-adapters", "Mount Adapters"],
+    ),
+  },
+  {
+    slug: "studio",
+    name: "Studio Gear",
+    blurb: "Backdrops, green screens, background stands, and shooting tables.",
+    image: img.studio,
+    subcategories: sub(
+      ["backdrops", "Backdrops"],
+      ["green-screens", "Green Screens"],
+      ["background-stands", "Background Stands"],
+      ["shooting-tables", "Shooting Tables"],
+    ),
+  },
+  {
+    slug: "computers",
+    name: "Computers & Editing",
+    blurb: "Monitors, laptops, editing keyboards, calibration tools, and storage.",
+    image: img.workstation,
+    subcategories: sub(
+      ["monitors", "Monitors"],
+      ["laptops", "Laptops"],
+      ["editing-keyboards", "Editing Keyboards"],
+      ["color-calibration-tools", "Color Calibration Tools"],
+      ["external-storage", "External Storage"],
+    ),
   },
 ];
 
@@ -978,6 +1089,148 @@ const seeds: Seed[] = [
 
 const allSeeds: Seed[] = [...localProductSeeds, ...seeds];
 
+// Single source of truth for product taxonomy, keyed by exact product name:
+// [mainCategorySlug, subcategorySlug]. This re-tags every seed onto the 12
+// current categories + a subcategory without editing the large/parse-sensitive
+// data literals. An empty subcategory means the item only appears on its
+// category landing (no good subcategory fit). Sub slugs match
+// `slugifyTaxonomy(subName)` from the `categories` definitions above.
+const taxonomyByName: Record<string, [category: string, subcategory: string]> = {
+  // --- Cameras ---
+  "Blackmagic Design Cinema Camera 6K (Leica L)": ["cameras", "cinema"],
+  "Blackmagic Design Cinema Camera 6K and 28-70mm f/2.8 DG DN Lens Kit": ["cameras", "cinema"],
+  "Blackmagic Design Pocket Cinema Camera 6K Pro (Canon EF)": ["cameras", "cinema"],
+  "Blackmagic Design PYXIS 6K Cinema Box Camera (Canon EF)": ["cameras", "cinema"],
+  "Canon EOS 5D Mark IV DSLR Camera (Body Only, Refurbished)": ["cameras", "dslr"],
+  "Canon EOS R Mirrorless Camera with 24-105mm f/4 Lens": ["cameras", "mirrorless"],
+  "Canon EOS R5 Mark II Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon EOS R5 Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon EOS R50 Mirrorless Camera with 18-45mm Lens (Black)": ["cameras", "mirrorless"],
+  "Canon EOS R6 Mark II Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon EOS R6 Mark III Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon EOS R7 Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon EOS R8 Mirrorless Camera": ["cameras", "mirrorless"],
+  "Canon PowerShot G7 X Mark III Digital Camera Kit (30th Anniversary Graphite Limited Edition)": ["cameras", "compact"],
+  "GoPro MAX2 360 Action Camera": ["cameras", "action"],
+  "GoPro MAX2 360 Action Camera (5-Pack)": ["cameras", "action"],
+  "Hasselblad X2D II 100C Medium Format Mirrorless Camera": ["cameras", "mirrorless"],
+  "Nikon D610 DSLR Camera (Body Only)": ["cameras", "dslr"],
+  "Nikon Z6 III Mirrorless Camera": ["cameras", "mirrorless"],
+  "Nikon Z8 Mirrorless Camera": ["cameras", "mirrorless"],
+  "Panasonic LUMIX L10 Digital Camera (Black)": ["cameras", "mirrorless"],
+  "Sony a6400 Mirrorless Camera with 18-135mm f/3.5-5.6 Lens and Basic Bundle": ["cameras", "mirrorless"],
+  "Sony a7 IV Mirrorless Camera": ["cameras", "mirrorless"],
+  "Sony a7R VI Mirrorless Camera": ["cameras", "mirrorless"],
+  "Sony FX3A Full-Frame Cinema Camera": ["cameras", "cinema"],
+  "Sony RX100 VII Digital Camera with Basic Bundle": ["cameras", "compact"],
+  "Canon EOS R6 Mark II Mirrorless Camera Body": ["cameras", "mirrorless"],
+  "Sony Alpha a7 IV Mirrorless Camera Body": ["cameras", "mirrorless"],
+  "Nikon Z6 III Mirrorless Camera Body": ["cameras", "mirrorless"],
+  "Fujifilm X-T5 Mirrorless Camera Body": ["cameras", "mirrorless"],
+  "Canon EOS 250D DSLR with 18-55mm Lens": ["cameras", "dslr"],
+  "Sony ZV-E10 II Vlogging Camera with 16-50mm Lens": ["cameras", "mirrorless"],
+  "Sony FX30 Cinema Line Camera Body": ["cameras", "cinema"],
+  "GoPro HERO13 Black Action Camera": ["cameras", "action"],
+  "Insta360 X4 8K 360 Camera": ["cameras", "action"],
+  "Canon EOS 5D Mark IV DSLR Body (Pre-Owned, Excellent)": ["cameras", "dslr"],
+  // --- Lenses ---
+  "Canon EF 16-35mm f/2.8L III USM Lens v": ["lenses", "wide-angle"],
+  "Canon EF 50mm f/1.8 STM Lens": ["lenses", "prime"],
+  "Canon RF 100-500mm f/4.5-7.1 L IS USM Lens": ["lenses", "telephoto"],
+  "Canon RF 24-105mm f/2.8 L IS USM Z Lens (Canon RF)": ["lenses", "standard"],
+  "Canon RF 24-105mm f/4 L IS USM Lens": ["lenses", "standard"],
+  "Canon RF 24-70mm f/2.8 L IS USM Lens": ["lenses", "standard"],
+  "Canon RF 50mm f/1.8 STM Lens (Canon RF)": ["lenses", "prime"],
+  "Canon RF 70-200mm f/2.8 L IS USM Lens": ["lenses", "telephoto"],
+  "Canon RF 70-200mm f/2.8 L IS USM Z Lens (White)": ["lenses", "telephoto"],
+  "Sigma 18-50mm f/2.8 DC DN Contemporary Lens (Sony E)": ["lenses", "standard"],
+  "Sigma 24-70mm f/2.8 DG DN II Art Lens (Sony E)": ["lenses", "standard"],
+  "Sigma 70-200mm f/2.8 DG DN OS Sports Lens (Sony E)": ["lenses", "telephoto"],
+  "Sony FE 100-400mm f/4.5 GM OSS Lens (Sony E)": ["lenses", "telephoto"],
+  "Sony FE 16-35mm f/2.8 GM II Lens (Sony E)": ["lenses", "wide-angle"],
+  "Sony FE 24-70mm f/2.8 GM II Lens (Sony E)": ["lenses", "standard"],
+  "Sony FE 70-200mm f/2.8 GM OSS II Lens": ["lenses", "telephoto"],
+  "Canon RF 50mm f/1.8 STM Lens": ["lenses", "prime"],
+  "Sony FE 24-70mm f/2.8 GM II Lens": ["lenses", "standard"],
+  "Sigma 18-50mm f/2.8 DC DN Contemporary Lens": ["lenses", "standard"],
+  "Nikon NIKKOR Z 85mm f/1.8 S Lens": ["lenses", "prime"],
+  "Tamron 70-300mm f/4.5-6.3 Di III RXD Lens": ["lenses", "telephoto"],
+  "Sony FE 85mm f/1.8 Lens (Pre-Owned, Like New)": ["lenses", "prime"],
+  // --- Lighting ---
+  "amaran Halo 200x Bi-Color LED Monolight": ["lighting", "led-lights"],
+  "Godox AD600BM II Witstro Manual All-In-One Outdoor Flash": ["lighting", "flashes"],
+  "Godox AD800Pro All-in-One Outdoor Flash": ["lighting", "flashes"],
+  "Godox BFP Flash Projection Attachment for Bowens": ["lighting", "softboxes"],
+  "Godox SK400II-V Studio Flash Monolight": ["lighting", "studio-lights"],
+  "Godox V1 Flash for Canon": ["lighting", "flashes"],
+  "Godox V100 Flash for Canon": ["lighting", "flashes"],
+  "Godox V850III Li-Ion Flash": ["lighting", "flashes"],
+  "Godox X3 C Touchscreen TTL Wireless Flash Trigger for Canon": ["lighting", "flashes"],
+  "Godox X3Pro S Touchscreen TTL Wireless Flash Trigger for Sony": ["lighting", "flashes"],
+  "Godox AD200Pro Pocket Flash Kit": ["lighting", "flashes"],
+  "Aputure Amaran 200d S LED Light": ["lighting", "led-lights"],
+  "Neewer 2-Pack 660 RGB LED Panel Kit with Stands": ["lighting", "led-lights"],
+  "Godox SL-60W II Continuous LED Video Light": ["lighting", "led-lights"],
+  // --- Audio ---
+  "DJI Mic 3 2-Person Compact Wireless Microphone System/Recorder for Camera & Smartphone": ["audio", "wireless-microphones"],
+  "Hollyland LARK M2 DUO 2-Person Wireless Combo Microphone System (2.4 GHz, Shine Charcoal)": ["audio", "wireless-microphones"],
+  "RODE RODECaster Pro II Integrated Audio Production Studio (Black)": ["audio", "audio-recorders"],
+  "RODE Wireless GO II TX Transmitter/Recorder for Wireless GO II System (2.4 GHz, Black)": ["audio", "wireless-microphones"],
+  "RODE Wireless GO III 2-Person Compact Digital Wireless Microphone System/Recorder with Charge Case+ (2.4 GHz, Black)": ["audio", "wireless-microphones"],
+  "Rode Wireless GO III Dual Channel Mic System": ["audio", "wireless-microphones"],
+  "Shure SM7B Studio Vocal Microphone": ["audio", "shotgun-mics"],
+  "Rode VideoMic NTG On-Camera Shotgun Mic": ["audio", "shotgun-mics"],
+  "Zoom H6essential Handy Recorder": ["audio", "audio-recorders"],
+  "Bose QuietComfort Ultra Wireless Headphones": ["audio", "headphones"],
+  // --- Gimbals & Stabilizers ---
+  "DJI Osmo Mobile 6 Smartphone Gimbal (Slate Gray)": ["gimbals", "phone-gimbals"],
+  "DJI Osmo Pocket 3 Creator Combo": ["gimbals", "camera-gimbals"],
+  "DJI RS 3 Mini Gimbal Stabilizer": ["gimbals", "camera-gimbals"],
+  "DJI RS 4 Pro Gimbal Stabilizer Combo": ["gimbals", "camera-gimbals"],
+  "DJI RS 5 Gimbal Combo Kit with AI Tracking Module & Briefcase Handle": ["gimbals", "camera-gimbals"],
+  "Hohem iSteady M7 AI Tracking Smartphone Gimbal Stabilizer": ["gimbals", "phone-gimbals"],
+  "DJI RS 4 Gimbal Stabilizer": ["gimbals", "camera-gimbals"],
+  "Zhiyun Crane M3S Compact Gimbal": ["gimbals", "camera-gimbals"],
+  // --- Tripods & Support ---
+  "Manfrotto MT055 Aluminum Tripod with Ball Head": ["tripods", "tripods"],
+  "Neewer Carbon Fiber Travel Tripod 165cm": ["tripods", "tripods"],
+  // --- Memory & Storage ---
+  "Lexar 128GB Professional 1800x UHS-II SDXC Memory Card (GOLD Series, 2-Pack)": ["storage", "sd-cards"],
+  "Lexar 1TB SL500 USB 3.2 Gen 2x2 Portable SSD": ["storage", "ssd-storage"],
+  "Lexar 256GB Professional 1800x UHS-II SDXC Memory Card (GOLD Series, 2-Pack)": ["storage", "sd-cards"],
+  "Memory": ["storage", "sd-cards"],
+  "SanDisk 128GB Ultra UHS-I microSDXC Memory Card": ["storage", "sd-cards"],
+  "SanDisk 1TB Portable SSD": ["storage", "ssd-storage"],
+  "SanDisk 256GB Ultra UHS-I microSDXC Memory Card": ["storage", "sd-cards"],
+  "SanDisk 32GB Ultra UHS-I microSDHC Memory Card": ["storage", "sd-cards"],
+  "sandisk 4 tb portable ssd": ["storage", "ssd-storage"],
+  "SanDisk 64GB Ultra UHS-I microSDXC Memory Card": ["storage", "sd-cards"],
+  "SanDisk Extreme PRO 128GB SDXC UHS-II Card": ["storage", "sd-cards"],
+  "Samsung T7 Shield 2TB Portable SSD": ["storage", "ssd-storage"],
+  // --- Bags & Cases ---
+  "Lowepro ProTactic 450 AW II Camera Backpack": ["bags", "backpacks"],
+  // --- Accessories ---
+  "Canon LP-E6P Lithium-Ion Battery": ["accessories", "batteries"],
+  "Hollyland Mars 4K Wireless Video Transmission System": ["accessories", "cables"],
+  "Anker 737 PowerCore 24000mAh 140W Power Bank": ["accessories", "chargers"],
+  "Apple iPhone 16 Pro 256GB": ["computers", "laptops"],
+  "Samsung Galaxy S25 Ultra 512GB": ["computers", "laptops"],
+  // --- Computers & Editing ---
+  "Apple 14/ MacBook Pro (M5 Pro, Space Black)": ["computers", "laptops"],
+  "FEELWORLD F7 PLUS Camera Monitor, Subtitle, Ribbon": ["computers", "monitors"],
+  "Apple MacBook Pro 14-inch M4 Pro 24GB/512GB": ["computers", "laptops"],
+  "Dell XPS 15 Creator Laptop i7/32GB/RTX 4060": ["computers", "laptops"],
+  "HP Pavilion 15 Everyday Laptop i5/16GB/512GB": ["computers", "laptops"],
+  "Apple iMac 24-inch M4 16GB/256GB": ["computers", "laptops"],
+  "Atomos Ninja V 5-inch HDR Monitor-Recorder": ["computers", "monitors"],
+  "Apple iPad Air 11-inch M3 128GB": ["computers", "laptops"],
+  "Apple MacBook Air 13 M2 8GB/256GB (Open Box)": ["computers", "laptops"],
+  // --- Drones ---
+  "DJI Mini 4 Pro Drone Fly More Combo": ["drones", "mini-drones"],
+  "DJI Air 3S Drone with RC 2 Controller": ["drones", "camera-drones"],
+  "DJI Mavic 3 Classic Drone (Open Box)": ["drones", "camera-drones"],
+};
+
 let counter = 100;
 const usedSlugs = new Set<string>();
 
@@ -992,12 +1245,16 @@ export const products: Product[] = allSeeds.map((seed) => {
   }
   usedSlugs.add(slug);
 
+  const tax = taxonomyByName[seed.name];
+
   return {
     id: `PF-${counter}`,
     slug,
     rating: seed.rating ?? 4 + ((counter * 7) % 10) / 10,
     reviews: seed.reviews ?? 6 + ((counter * 13) % 140),
     ...seed,
+    category: tax ? tax[0] : seed.category,
+    subcategory: tax && tax[1] ? tax[1] : seed.subcategory,
   };
 });
 
@@ -1009,6 +1266,14 @@ export function formatRWF(amount: number) {
 
 export function getCategory(slug: string) {
   return categories.find((c) => c.slug === slug);
+}
+
+export function getSubcategory(categorySlug: string, subSlug: string) {
+  return getCategory(categorySlug)?.subcategories.find((s) => s.slug === subSlug);
+}
+
+export function bySubcategory(list: Product[], subSlug: string) {
+  return list.filter((p) => p.subcategory === subSlug);
 }
 
 export function brandsOf(list: Product[]) {
@@ -1075,4 +1340,3 @@ export function sortProducts(list: Product[], sort: SortOption) {
       return copy;
   }
 }
-

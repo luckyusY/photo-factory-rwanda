@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin-auth";
-import { type Product, type ProductCondition } from "@/lib/catalog";
+import { getCategory, type Product, type ProductCondition } from "@/lib/catalog";
 import {
   getProductBySlug,
   isDbConfigured,
@@ -16,6 +16,7 @@ type ProductPayload = {
   name?: string;
   brand?: string;
   category?: string;
+  subcategory?: string | null;
   price?: number;
   oldPrice?: number | null;
   badge?: string;
@@ -60,6 +61,13 @@ export async function POST(request: Request) {
     );
   }
 
+  // Only keep a subcategory if it actually belongs to the chosen category.
+  const subInput = (payload.subcategory ?? "").trim();
+  const subcategory =
+    subInput && getCategory(category)?.subcategories.some((s) => s.slug === subInput)
+      ? subInput
+      : undefined;
+
   const existing = payload.originalSlug
     ? await getProductBySlug(payload.originalSlug)
     : undefined;
@@ -81,6 +89,7 @@ export async function POST(request: Request) {
     name,
     brand,
     category,
+    subcategory,
     price,
     oldPrice: Number.isFinite(oldPrice) && oldPrice > price ? oldPrice : undefined,
     rating: Number.isFinite(rating) ? Math.min(5, Math.max(0, rating)) : (existing?.rating ?? 4.5),
