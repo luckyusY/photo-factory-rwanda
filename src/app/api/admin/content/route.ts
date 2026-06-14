@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin-auth";
 import { categories } from "@/lib/catalog";
@@ -6,6 +7,14 @@ import { saveContent, type ContentKey } from "@/lib/site-content";
 import type { CategoryContent, HeroSlide, PromoContent } from "@/lib/site-content-types";
 
 const str = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+
+// Hero slides, promos, and category cards all render on the homepage, which is
+// ISR-cached (revalidate = 300). Without on-demand revalidation, admin edits
+// would not appear there until the cache expired. (Admin and category pages are
+// force-dynamic, so they already render fresh.) Invalidate the homepage now.
+function revalidateContent() {
+  revalidatePath("/");
+}
 
 function sanitizeHero(items: unknown[]): HeroSlide[] {
   return items
@@ -87,6 +96,7 @@ export async function POST(request: Request) {
   try {
     if (payload.items === null) {
       await saveContent(key, null);
+      revalidateContent();
       return NextResponse.json({ ok: true, reset: true });
     }
     if (!Array.isArray(payload.items)) {
@@ -105,6 +115,7 @@ export async function POST(request: Request) {
       );
     }
     await saveContent(key, items);
+    revalidateContent();
     return NextResponse.json({ ok: true, count: items.length });
   } catch (error) {
     console.error("Failed to save site content", error);
