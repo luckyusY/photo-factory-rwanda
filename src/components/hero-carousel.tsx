@@ -26,7 +26,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
         }}
         navigation
         pagination={{ clickable: true }}
-        className="h-[clamp(300px,56vw,760px)]"
+        className="h-[clamp(300px,56.25vw,760px)]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={`${slide.title}-${index}`}>
@@ -52,11 +52,14 @@ function SlideContent({
     : "object-cover object-center";
 
   if (slide.imageOnly) {
+    // Full-artwork banner: show the entire image (object-contain, no crop).
+    // The letterbox color follows the slide tone so it disappears against a
+    // matching banner background (white banners -> white, dark -> black).
     return (
       <Link
         href={slide.href}
         aria-label={slide.title}
-        className="absolute inset-0 block bg-black"
+        className={`absolute inset-0 block ${dark ? "bg-black" : "bg-white"}`}
       >
         <Image
           src={slide.image}

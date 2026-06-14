@@ -6,6 +6,40 @@ export const runtime = "nodejs";
 
 const allowedFolders = new Set(["hero", "promos", "categories", "products"]);
 
+// "fill" crops the image to exactly fill width x height (good for square
+// thumbnails). "fit" scales the whole image to fit inside the box without
+// cropping (good for full-artwork banners that already contain text/layout).
+function buildTransformation(options: {
+  width?: number;
+  height?: number;
+  crop?: "fill" | "fit";
+}) {
+  const crop = options.crop ?? "fill";
+  if (crop === "fit" && options.width) {
+    return [
+      {
+        width: options.width,
+        ...(options.height ? { height: options.height } : {}),
+        crop: "fit" as const,
+        quality: "auto",
+        fetch_format: "auto",
+      },
+    ];
+  }
+  if (options.width && options.height) {
+    return [
+      {
+        width: options.width,
+        height: options.height,
+        crop: "fill" as const,
+        quality: "auto",
+        fetch_format: "auto",
+      },
+    ];
+  }
+  return [{ quality: "auto", fetch_format: "auto" }];
+}
+
 function uploadBuffer(
   buffer: Buffer,
   options: {
@@ -13,6 +47,7 @@ function uploadBuffer(
     publicId?: string;
     width?: number;
     height?: number;
+    crop?: "fill" | "fit";
   },
 ) {
   const cloudinary = getCloudinary();
@@ -23,18 +58,7 @@ function uploadBuffer(
         public_id: options.publicId,
         overwrite: true,
         resource_type: "image",
-        transformation:
-          options.width && options.height
-            ? [
-                {
-                  width: options.width,
-                  height: options.height,
-                  crop: "fill",
-                  quality: "auto",
-                  fetch_format: "auto",
-                },
-              ]
-            : [{ quality: "auto", fetch_format: "auto" }],
+        transformation: buildTransformation(options),
       },
       (error, result) => {
         if (error || !result?.secure_url) {
@@ -69,6 +93,7 @@ export async function POST(request: Request) {
   const publicId = String(formData.get("publicId") ?? "") || undefined;
   const width = Number(formData.get("width") ?? 0) || undefined;
   const height = Number(formData.get("height") ?? 0) || undefined;
+  const crop = formData.get("crop") === "fit" ? "fit" : "fill";
 
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "Choose an image file." }, { status: 400 });
@@ -85,7 +110,7 @@ export async function POST(request: Request) {
 
   try {
     const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadBuffer(buffer, { folder, publicId, width, height });
+    const result = await uploadBuffer(buffer, { folder, publicId, width, height, crop });
     return NextResponse.json({ url: result.secure_url });
   } catch (error) {
     console.error("Cloudinary upload failed", error);

@@ -74,8 +74,10 @@ export function HeroEditor({
           <div>
             <h2 className="text-xl font-black">Homepage Slider</h2>
             <p className="mt-1 text-sm font-semibold text-[#6b7280]">
-              Desktop images work best at 2400 x 670px. Mobile images work best
-              at 720 x 560px.
+              Upload full banners at 16:9 (e.g. 1920 x 1080px). The whole image
+              is shown without cropping, so keep important text and products
+              inside the frame. Tick &ldquo;Image-only slide&rdquo; for finished
+              artwork. Mobile images work best as a taller 4:5 or square crop.
             </p>
           </div>
           <button
@@ -121,12 +123,14 @@ export function HeroEditor({
                   <PreviewBox
                     label="Desktop preview"
                     image={slide.image}
-                    aspect="aspect-[24/7]"
+                    aspect="aspect-[16/9]"
+                    tone={slide.tone}
                   />
                   <PreviewBox
                     label="Mobile preview"
                     image={slide.mobileImage || slide.image}
-                    aspect="aspect-[9/7]"
+                    aspect="aspect-[4/5]"
+                    tone={slide.tone}
                   />
                 </div>
 
@@ -224,7 +228,7 @@ export function HeroEditor({
                     folder="hero"
                     publicId={`slide-${index + 1}-desktop`}
                     width={2400}
-                    height={670}
+                    crop="fit"
                     onChange={(image) => update(index, { image })}
                   />
                   <ImageField
@@ -232,8 +236,8 @@ export function HeroEditor({
                     value={slide.mobileImage ?? ""}
                     folder="hero"
                     publicId={`slide-${index + 1}-mobile`}
-                    width={720}
-                    height={560}
+                    width={1080}
+                    crop="fit"
                     onChange={(mobileImage) => update(index, { mobileImage })}
                   />
                 </div>
@@ -316,6 +320,7 @@ function ImageField({
   publicId,
   width,
   height,
+  crop = "fill",
   onChange,
 }: {
   label: string;
@@ -323,7 +328,8 @@ function ImageField({
   folder: "hero" | "promos" | "categories" | "products";
   publicId: string;
   width: number;
-  height: number;
+  height?: number;
+  crop?: "fill" | "fit";
   onChange: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -337,7 +343,8 @@ function ImageField({
       formData.set("folder", folder);
       formData.set("publicId", publicId);
       formData.set("width", String(width));
-      formData.set("height", String(height));
+      if (height) formData.set("height", String(height));
+      formData.set("crop", crop);
       const res = await fetch("/api/admin/upload", {
         method: "POST",
         body: formData,
@@ -393,19 +400,31 @@ function PreviewBox({
   label,
   image,
   aspect,
+  tone = "dark",
 }: {
   label: string;
   image?: string;
   aspect: string;
+  tone?: "light" | "dark";
 }) {
+  // Match the live carousel: full image shown via object-contain, with the
+  // letterbox color following the slide tone so the preview is accurate.
   return (
     <div>
       <p className="mb-1 text-xs font-black uppercase text-[#6b7280]">{label}</p>
-      <div className={`relative grid ${aspect} place-items-center overflow-hidden rounded bg-[#15110a]`}>
+      <div
+        className={`relative grid ${aspect} place-items-center overflow-hidden rounded ring-1 ring-black/10 ${
+          tone === "light" ? "bg-white" : "bg-[#15110a]"
+        }`}
+      >
         {image ? (
-          <Image src={image} alt="" fill sizes="360px" className="object-cover" />
+          <Image src={image} alt="" fill sizes="360px" className="object-contain" />
         ) : (
-          <span className="grid justify-items-center gap-2 text-xs font-black uppercase text-white/55">
+          <span
+            className={`grid justify-items-center gap-2 text-xs font-black uppercase ${
+              tone === "light" ? "text-black/40" : "text-white/55"
+            }`}
+          >
             <ImageIcon size={26} />
             No image
           </span>
