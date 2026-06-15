@@ -36,7 +36,11 @@ function sanitizeHero(items: unknown[]): HeroSlide[] {
       };
       return slide;
     })
-    .filter((slide) => slide.brand && slide.title && slide.image)
+    // Image-only slides carry finished artwork (text baked in), so they only
+    // need an image. Regular slides still require brand + title + image.
+    .filter((slide) =>
+      slide.imageOnly ? slide.image : slide.brand && slide.title && slide.image,
+    )
     .slice(0, 12);
 }
 
