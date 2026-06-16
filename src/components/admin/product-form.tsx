@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowDown, ArrowUp, ImageIcon, Plus, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, ImageIcon, Loader2, Plus, Trash2, Upload } from "lucide-react";
 import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { categories, type Product } from "@/lib/catalog";
 
 const TINYMCE_API_KEY = "wp1cro1p0yeuzcvdwyejs4pfm061yj4mzoflk6yak9z6obef";
@@ -381,57 +381,21 @@ function ImageManager({
       return next;
     });
   };
+  const remove = (index: number) =>
+    setImages((current) => current.filter((_, i) => i !== index));
 
   return (
     <div className="mt-4 space-y-3">
       {images.map((image, index) => (
-        <div
+        <ImageRow
           key={index}
-          className="grid gap-3 rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]"
-        >
-          <ImagePreview
-            url={image.trim()}
-            label={index === 0 ? "Main image" : `Image ${index + 1}`}
-          />
-          <div className="min-w-0">
-            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <p className="text-sm font-black">
-                {index === 0 ? "Main image" : `Gallery image ${index + 1}`}
-              </p>
-              <div className="flex gap-1">
-                <IconButton
-                  label="Move image up"
-                  disabled={index === 0}
-                  onClick={() => move(index, -1)}
-                >
-                  <ArrowUp size={15} />
-                </IconButton>
-                <IconButton
-                  label="Move image down"
-                  disabled={index === images.length - 1}
-                  onClick={() => move(index, 1)}
-                >
-                  <ArrowDown size={15} />
-                </IconButton>
-                <IconButton
-                  label="Remove image"
-                  disabled={images.length === 1}
-                  onClick={() =>
-                    setImages((current) => current.filter((_, i) => i !== index))
-                  }
-                >
-                  <Trash2 size={15} />
-                </IconButton>
-              </div>
-            </div>
-            <input
-              value={image}
-              onChange={(event) => update(index, event.target.value)}
-              placeholder="https://res.cloudinary.com/... or /products/product-name/1.jpg"
-              className={inputClass}
-            />
-          </div>
-        </div>
+          image={image}
+          index={index}
+          total={images.length}
+          onChange={(value) => update(index, value)}
+          onMove={(direction) => move(index, direction)}
+          onRemove={() => remove(index)}
+        />
       ))}
       <button
         type="button"
@@ -440,6 +404,111 @@ function ImageManager({
       >
         <Plus size={16} /> Add another image
       </button>
+    </div>
+  );
+}
+
+function ImageRow({
+  image,
+  index,
+  total,
+  onChange,
+  onMove,
+  onRemove,
+}: {
+  image: string;
+  index: number;
+  total: number;
+  onChange: (value: string) => void;
+  onMove: (direction: -1 | 1) => void;
+  onRemove: () => void;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // Uploads the chosen file to Cloudinary via the shared admin endpoint and
+  // writes the returned URL into this image slot. crop="fit" preserves the
+  // photo's aspect ratio (no forced square crop), capped at 1200px wide.
+  async function upload(file: File) {
+    setUploading(true);
+    setUploadError(null);
+    try {
+      const formData = new FormData();
+      formData.set("file", file);
+      formData.set("folder", "products");
+      formData.set("width", "1200");
+      formData.set("crop", "fit");
+      const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+      const body = (await res.json().catch(() => null)) as
+        | { url?: string; error?: string }
+        | null;
+      if (!res.ok || !body?.url) throw new Error(body?.error ?? "Upload failed.");
+      onChange(body.url);
+    } catch (err) {
+      setUploadError(err instanceof Error ? err.message : "Upload failed.");
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  }
+
+  return (
+    <div className="grid gap-3 rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]">
+      <ImagePreview
+        url={image.trim()}
+        label={index === 0 ? "Main image" : `Image ${index + 1}`}
+      />
+      <div className="min-w-0">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm font-black">
+            {index === 0 ? "Main image" : `Gallery image ${index + 1}`}
+          </p>
+          <div className="flex gap-1">
+            <IconButton label="Move image up" disabled={index === 0} onClick={() => onMove(-1)}>
+              <ArrowUp size={15} />
+            </IconButton>
+            <IconButton
+              label="Move image down"
+              disabled={index === total - 1}
+              onClick={() => onMove(1)}
+            >
+              <ArrowDown size={15} />
+            </IconButton>
+            <IconButton label="Remove image" disabled={total === 1} onClick={onRemove}>
+              <Trash2 size={15} />
+            </IconButton>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <input
+            value={image}
+            onChange={(event) => onChange(event.target.value)}
+            placeholder="https://res.cloudinary.com/... or /products/product-name/1.jpg"
+            className={inputClass}
+          />
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) void upload(file);
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={uploading}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-sm border border-[#8b641e] px-4 text-sm font-black uppercase text-[#8b641e] hover:bg-[#f6f2ea] disabled:opacity-60"
+          >
+            {uploading ? <Loader2 className="animate-spin" size={16} /> : <Upload size={16} />}
+            Upload
+          </button>
+        </div>
+        {uploadError && <p className="mt-1 text-xs font-bold text-red-600">{uploadError}</p>}
+      </div>
     </div>
   );
 }
