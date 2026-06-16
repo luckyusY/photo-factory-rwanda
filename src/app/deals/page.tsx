@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { CardSwiper } from "@/components/card-swiper";
 import { formatRWF, dealsOf, sortProducts, type Product } from "@/lib/catalog";
 import { CONTACT_PHONE_TEL, MAPS_URL, WHATSAPP_URL } from "@/lib/contact";
 import { getAllProducts } from "@/lib/products-db";
@@ -358,13 +357,11 @@ function DealShelf({
             See All {title} Deals
           </Link>
         </div>
-        <CardSwiper gap={2} gapSm={4}>
+        <div className="grid grid-cols-2 border-l border-t border-[#e4e4e4] sm:grid-cols-3 lg:grid-cols-6">
           {products.map((product) => (
-            <div key={`${title}-${product.slug}`} className="w-[184px] sm:w-[232px] lg:w-[252px] 2xl:w-[268px]">
-              <DealProductCard product={product} compact />
-            </div>
+            <DealProductCard key={`${title}-${product.slug}`} product={product} compact />
           ))}
-        </CardSwiper>
+        </div>
       </div>
     </section>
   );
