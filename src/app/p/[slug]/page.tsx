@@ -22,7 +22,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { BuyBox } from "@/components/buy-box";
-import { CardSwiper } from "@/components/card-swiper";
 import { FrequentlyBought } from "@/components/frequently-bought";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
@@ -185,7 +184,7 @@ function RailCard({
       : "";
 
   return (
-    <article className="relative flex h-full w-[184px] shrink-0 flex-col bg-white px-3 pb-4 pt-6 sm:w-[204px] 2xl:w-[220px]">
+    <article className="relative flex h-full w-full flex-col bg-white px-3 pb-4 pt-6">
       {save > 0 && (
         <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           {saveLabel}
@@ -204,7 +203,7 @@ function RailCard({
           src={product.images[0]}
           alt={product.name}
           fill
-          sizes="(min-width: 1536px) 220px, 204px"
+          sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
           className="object-contain p-2"
         />
       </Link>
@@ -259,7 +258,7 @@ function ProductRail({
             </Link>
           )}
         </div>
-        <CardSwiper gapSm={4} columnGapClassName="gap-1">
+        <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 sm:gap-2 lg:grid-cols-5">
           {products.map((item) => (
             <div key={`${title}-${item.slug}`} className="flex h-full flex-col">
               <RailCard product={item} compact={accessory} removable={removable} />
@@ -273,7 +272,7 @@ function ProductRail({
               )}
             </div>
           ))}
-        </CardSwiper>
+        </div>
       </div>
     </section>
   );
