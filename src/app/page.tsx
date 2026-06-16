@@ -292,12 +292,10 @@ export default async function Home() {
               <span className="hidden sm:inline">Browse All Deals &amp; Specials</span>
             </Link>
           </div>
-          <div className="mt-3 sm:mt-4">
-            <CardSwiper rows={2}>
-              {topDeals.map((product) => (
-                <DealCard key={product.slug} product={product} />
-              ))}
-            </CardSwiper>
+          <div className="mt-3 grid grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 2xl:grid-cols-5">
+            {topDeals.map((product) => (
+              <DealCard key={product.slug} product={product} />
+            ))}
           </div>
         </div>
       </section>
