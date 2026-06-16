@@ -24,7 +24,8 @@
   --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
 }
 
-/* Class-based dark mode — toggled by the theme switcher (see ThemeToggle). */
+/* Class-based dark mode palette. The theme switcher was removed, so the `dark`
+   class is never applied and these overrides stay inert — kept for reference. */
 html.dark {
   --background: #0c0a07;
   --foreground: #ece3d3;

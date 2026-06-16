@@ -11,7 +11,6 @@ import { MobileShopMenu } from "@/components/mobile-shop-menu";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,14 +64,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${dancingScript.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-[#f6f2ea] text-[#111827] antialiased">
-        <script
-          // Apply the saved/preferred theme before paint to avoid a flash.
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();`,
-          }}
-        />
         <SmoothScroll />
-        <ThemeToggle />
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
