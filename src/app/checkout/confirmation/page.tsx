@@ -24,9 +24,8 @@ export default async function ConfirmationPage({
       )}
       <p className="mt-4 leading-7 text-[#4b5563]">
         Our team will contact you shortly on the phone number you provided to
-        confirm payment and arrange delivery or pickup. Keep your phone nearby —
-        if you chose Mobile Money or Airtel Money, a payment prompt is on its
-        way.
+        confirm your order and arrange delivery or pickup. Pay with cash when
+        your order arrives or when you collect it in store.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link

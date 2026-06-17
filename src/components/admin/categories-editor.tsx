@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import {
   adminInput,
+  ImageUploadField,
   useContentSave,
 } from "@/components/admin/content-editor-shared";
 import type { CategoryContent } from "@/lib/site-content-types";
@@ -56,12 +57,14 @@ export function CategoriesEditor({ initial }: { initial: CategoryContent[] }) {
                 rows={2}
                 className={adminInput}
               />
-              <input
+              <ImageUploadField
                 value={item.image}
-                onChange={(e) => update(item.slug, { image: e.target.value })}
-                aria-label={`Image URL for ${item.slug}`}
-                placeholder="https://res.cloudinary.com/... or https://images.unsplash.com/..."
-                className={adminInput}
+                folder="categories"
+                publicId={`category-${item.slug}`}
+                width={640}
+                height={640}
+                ariaLabel={`Image for ${item.slug}`}
+                onChange={(value) => update(item.slug, { image: value })}
               />
             </div>
           </div>

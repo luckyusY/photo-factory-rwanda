@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     orderNumber: makeOrderNumber(),
     customer: payload.customer,
     fulfillment: payload.fulfillment ?? "delivery",
-    payment: payload.payment ?? "momo",
+    payment: payload.payment ?? "cod",
     items,
     subtotal,
     deliveryFee,

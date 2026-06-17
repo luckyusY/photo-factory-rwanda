@@ -14,10 +14,11 @@ const inputClass =
 const KIGALI_DELIVERY_FEE = 3000;
 
 const paymentMethods = [
-  { value: "momo", label: "MTN Mobile Money", hint: "Pay from your MoMo wallet" },
-  { value: "airtel", label: "Airtel Money", hint: "Pay from your Airtel wallet" },
-  { value: "card", label: "Visa / Mastercard", hint: "Debit or credit card" },
-  { value: "pickup", label: "Pay on pickup", hint: "Cash or card in store" },
+  {
+    value: "cod",
+    label: "Cash on delivery",
+    hint: "Pay with cash when your order arrives or at pickup",
+  },
 ];
 
 export function CheckoutForm() {
@@ -25,7 +26,7 @@ export function CheckoutForm() {
   const { clearCart, hydrated } = useStore();
   const lines = useCartLines();
   const [fulfillment, setFulfillment] = useState<"delivery" | "pickup">("delivery");
-  const [payment, setPayment] = useState("momo");
+  const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
 
   const subtotal = lines.reduce(
@@ -166,12 +167,11 @@ export function CheckoutForm() {
               />
             ))}
           </div>
-          {(payment === "momo" || payment === "airtel") && (
-            <p className="mt-4 rounded bg-[#f6f2ea] p-3 text-sm font-semibold text-[#15110a]">
-              After placing your order, you will receive a payment prompt on
-              your phone to confirm the transaction.
-            </p>
-          )}
+          <p className="mt-4 rounded bg-[#f6f2ea] p-3 text-sm font-semibold text-[#15110a]">
+            Pay with cash when your order is delivered or when you pick it up in
+            store. Our team will call to confirm your order and arrange
+            delivery.
+          </p>
         </section>
       </div>
 
