@@ -1,7 +1,6 @@
 import {
   BadgeCheck,
   Building2,
-  CheckCircle2,
   ChevronRight,
   CreditCard,
   Heart,
@@ -54,22 +53,9 @@ const tabs = [
   { label: "About", href: "#about" },
   { label: "Key Features", href: "#features" },
   { label: "Specs", href: "#specs" },
-  { label: "In the Box", href: "#box" },
   { label: "Reviews", href: "#reviews" },
   { label: "Q&A", href: "#qa" },
 ];
-
-const boxItems = [
-  "Main product as described",
-  "Original caps, covers, and protective packaging",
-  "Charger, cable, or battery when applicable",
-  "Photo Factory warranty card",
-  "Printed receipt for service support",
-];
-
-const capacityOptions = ["256GB", "512GB", "1TB", "2TB"];
-const connectivityOptions = ["Wi-Fi", "Wi-Fi + Cellular"];
-const glassOptions = ["Standard Glass", "Nano-Texture Glass"];
 
 const serviceBadges = [
   { label: "Free Kigali pickup", icon: Store },
@@ -131,41 +117,6 @@ function Stars({ rating, size = 15 }: { rating: number; size?: number }) {
         />
       ))}
     </span>
-  );
-}
-
-function OptionGroup({
-  label,
-  options,
-  active,
-}: {
-  label: string;
-  options: string[];
-  active: string;
-}) {
-  return (
-    <div className="border-t border-[#e7ddc7] py-4">
-      <p className="mb-2 text-sm text-[#333]">
-        {label}: <strong className="text-black">{active}</strong>
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {options.map((option) => {
-          const selected = option === active;
-          return (
-            <button
-              key={option}
-              className={`min-w-20 rounded-sm border px-3 py-2 text-sm font-semibold ${
-                selected
-                  ? "border-[#8b641e] bg-[#f6f2ea] text-[#8b641e] ring-1 ring-[#8b641e]"
-                  : "border-[#e7ddc7] bg-white text-black hover:border-[#8b641e]"
-              }`}
-            >
-              {option}
-            </button>
-          );
-        })}
-      </div>
-    </div>
   );
 }
 
@@ -303,13 +254,11 @@ function ProductInfoPanel({
   discount,
   monthlyEstimate,
   rewardPoints,
-  mfr,
 }: {
   product: Product;
   discount: number;
   monthlyEstimate: number;
   rewardPoints: number;
-  mfr: string;
 }) {
   return (
     <section>
@@ -335,9 +284,6 @@ function ProductInfoPanel({
           </a>
           <span>
             SKU: <strong className="text-black">{product.id}</strong>
-          </span>
-          <span>
-            MFR: <strong className="text-black">{mfr}</strong>
           </span>
         </div>
       </div>
@@ -369,28 +315,7 @@ function ProductInfoPanel({
           <Sparkles size={16} /> Earn {rewardPoints.toLocaleString("en-US")} Reward
           Points
         </p>
-        {product.condition === "New" && (
-          <p className="mt-2 text-sm text-[#8b641e]">
-            See all used options from {formatRWF(Math.round(product.price * 0.85))}
-          </p>
-        )}
       </div>
-
-      <OptionGroup
-        label="Capacity"
-        options={capacityOptions}
-        active={
-          product.category === "computers" || product.category === "storage"
-            ? "256GB"
-            : capacityOptions[0]
-        }
-      />
-      <OptionGroup
-        label="Connectivity"
-        options={connectivityOptions}
-        active={product.category === "computers" ? "Wi-Fi + Cellular" : "Wi-Fi"}
-      />
-      <OptionGroup label="Glass" options={glassOptions} active="Standard Glass" />
 
       <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
         <h2 className="text-xl font-semibold">Key Features</h2>
@@ -531,9 +456,6 @@ export default async function ProductPage({ params }: Props) {
   const rewardPoints = Math.max(1, Math.round(product.price / 1000));
   const monthlyEstimate = Math.max(1000, Math.round(product.price / 12 / 1000) * 1000);
   const histogram = ratingHistogram(product.rating, product.reviews);
-  const mfr = `${product.brand.slice(0, 3).toUpperCase()}${
-    product.id.replace(/\D/g, "").slice(-4) || "0001"
-  }`;
   const protectionBase = Math.max(45000, Math.round(product.price * 0.07 / 1000) * 1000);
 
   return (
@@ -574,7 +496,6 @@ export default async function ProductPage({ params }: Props) {
             discount={discount}
             monthlyEstimate={monthlyEstimate}
             rewardPoints={rewardPoints}
-            mfr={mfr}
           />
           <PurchasePanel product={product} protectionBase={protectionBase} />
         </div>
@@ -590,7 +511,6 @@ export default async function ProductPage({ params }: Props) {
                 discount={discount}
                 monthlyEstimate={monthlyEstimate}
                 rewardPoints={rewardPoints}
-                mfr={mfr}
               />
             </div>
             <PurchasePanel product={product} protectionBase={protectionBase} />
@@ -652,41 +572,16 @@ export default async function ProductPage({ params }: Props) {
             About {product.name}
           </h2>
           <ProductDescription value={product.description} />
-          <div className="mt-6 grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <div className="space-y-5 text-[15px] leading-7 text-[#333]">
-              <div>
-                <h3 className="text-xl font-semibold text-black">
-                  Built for creators, studios, and everyday work
-                </h3>
-                <p className="mt-2">
-                  This product is selected for Rwanda-based photographers,
-                  videographers, businesses, and content creators who need
-                  reliable equipment with local support. It pairs performance,
-                  warranty help, and fast delivery from Photo Factory Rwanda.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-black">
-                  Local support after purchase
-                </h3>
-                <p className="mt-2">
-                  Our team can help with setup, compatible accessories, payment
-                  options, pickup, delivery, and after-sales service from our
-                  Kigali branches.
-                </p>
-              </div>
-            </div>
-            <div className="border border-[#e7ddc7] bg-[#f8fafc] p-4">
-              <h3 className="text-lg font-semibold">Product Highlights</h3>
-              <ul className="mt-3 space-y-2 text-sm leading-6">
-                {product.shortSpecs.map((feature) => (
-                  <li key={feature} className="flex gap-2">
-                    <BadgeCheck size={16} className="mt-1 shrink-0 text-[#8b641e]" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div className="mt-6 max-w-5xl border border-[#e7ddc7] bg-[#f8fafc] p-4">
+            <h3 className="text-lg font-semibold">Product Highlights</h3>
+            <ul className="mt-3 grid gap-2 text-sm leading-6 sm:grid-cols-2">
+              {product.shortSpecs.map((feature) => (
+                <li key={feature} className="flex gap-2">
+                  <BadgeCheck size={16} className="mt-1 shrink-0 text-[#8b641e]" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -712,18 +607,6 @@ export default async function ProductPage({ params }: Props) {
               ))}
             </dl>
           </div>
-        </section>
-
-        <section id="box" className="mt-10 scroll-mt-44">
-          <h2 className="text-[26px] font-semibold">What&apos;s in the Box</h2>
-          <ul className="mt-4 max-w-5xl space-y-2 text-sm leading-6 text-[#333]">
-            {boxItems.map((item) => (
-              <li key={item} className="flex gap-2">
-                <CheckCircle2 size={16} className="mt-1 shrink-0 text-[#8b641e]" />
-                {item}
-              </li>
-            ))}
-          </ul>
         </section>
 
         <section id="reviews" className="mt-10 scroll-mt-44">

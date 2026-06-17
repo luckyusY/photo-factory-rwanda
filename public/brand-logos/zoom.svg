@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-labelledby="title">
+  <title id="title">Zoom</title>
+  <rect width="220" height="64" rx="6" fill="#fff"/>
+  <text x="110" y="44" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" font-style="italic" letter-spacing="-2" fill="#1357a6">ZOOM</text>
+</svg>

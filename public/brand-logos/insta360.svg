@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-labelledby="title">
+  <title id="title">Insta360</title>
+  <rect width="220" height="64" rx="6" fill="#fff"/>
+  <path d="M24 36c0-13 20-20 31-11 12 10 2 27-12 23-10-3-11-15-3-20 7-4 15 1 14 8" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+  <text x="139" y="41" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="800" fill="#111">Insta360</text>
+</svg>

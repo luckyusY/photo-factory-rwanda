@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-labelledby="title">
+  <title id="title">Memory</title>
+  <rect width="220" height="64" rx="6" fill="#fff"/>
+  <rect x="20" y="17" width="30" height="30" rx="4" fill="#8b641e"/>
+  <path d="M27 23h16v18H27zM31 27h8v10h-8z" fill="#fff"/>
+  <text x="137" y="41" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="800" letter-spacing="2" fill="#15110a">MEMORY</text>
+</svg>

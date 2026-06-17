@@ -12,7 +12,7 @@ export function ProductRow({ product }: { product: Product }) {
   return (
     <article
       data-product-card
-      className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 transition hover:bg-[#f6f2ea] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5"
+      className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5"
     >
       {/* Image */}
       <Link

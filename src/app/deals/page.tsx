@@ -175,7 +175,7 @@ function DealProductCard({
   return (
     <article
       data-product-card
-      className={`group relative flex min-w-0 flex-col border-r border-[#e4e4e4] bg-white px-2 pb-3 pt-7 sm:px-3 ${
+      className={`group relative flex min-w-0 flex-col bg-white px-2 pb-3 pt-7 sm:px-3 ${
         compact ? "min-h-[284px] sm:min-h-[292px]" : "min-h-[292px] sm:min-h-[330px]"
       }`}
     >
@@ -248,7 +248,7 @@ function TopDealsGrid({ products }: { products: Product[] }) {
             Your Top Deals
           </h2>
         </div>
-        <div className="grid grid-cols-2 border-l border-t border-[#e4e4e4] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-px border border-[#c8c8c8] bg-[#c8c8c8] sm:grid-cols-3 lg:grid-cols-6">
           {products.slice(0, 12).map((product) => (
             <DealProductCard key={product.slug} product={product} />
           ))}
@@ -319,7 +319,7 @@ function DealShelf({
             See All {title} Deals
           </Link>
         </div>
-        <div className="grid grid-cols-2 border-l border-t border-[#e4e4e4] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-px border border-[#c8c8c8] bg-[#c8c8c8] sm:grid-cols-3 lg:grid-cols-6">
           {products.map((product) => (
             <DealProductCard key={`${title}-${product.slug}`} product={product} compact />
           ))}

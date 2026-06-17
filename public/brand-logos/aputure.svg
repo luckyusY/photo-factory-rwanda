@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" role="img" aria-labelledby="title">
+  <title id="title">Aputure</title>
+  <rect width="220" height="64" rx="6" fill="#fff"/>
+  <circle cx="29" cy="32" r="13" fill="none" stroke="#111" stroke-width="5"/>
+  <path d="M29 19v26M16 32h26" stroke="#111" stroke-width="3"/>
+  <text x="128" y="41" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="1" fill="#111">APUTURE</text>
+</svg>
