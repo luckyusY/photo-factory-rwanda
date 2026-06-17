@@ -49,6 +49,7 @@ export default async function AdminDashboard() {
           icon={ShoppingBag}
           label="Recent orders"
           value={String(orders.length)}
+          href="/admin/reports"
         />
         <StatCard
           icon={Repeat}

@@ -28,13 +28,60 @@ export function CheckoutForm() {
   const [fulfillment, setFulfillment] = useState<"delivery" | "pickup">("delivery");
   const [payment, setPayment] = useState("cod");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [promoInput, setPromoInput] = useState("");
+  const [promoStatus, setPromoStatus] = useState<"idle" | "checking">("idle");
+  const [promoError, setPromoError] = useState<string | null>(null);
+  const [appliedPromo, setAppliedPromo] = useState<{
+    code: string;
+    discount: number;
+    description: string;
+  } | null>(null);
 
   const subtotal = lines.reduce(
     (sum, line) => sum + line.product.price * line.qty,
     0,
   );
   const deliveryFee = fulfillment === "delivery" ? KIGALI_DELIVERY_FEE : 0;
-  const total = subtotal + deliveryFee;
+  const discount = appliedPromo
+    ? Math.min(appliedPromo.discount, subtotal)
+    : 0;
+  const total = Math.max(0, subtotal - discount) + deliveryFee;
+
+  async function applyPromo() {
+    const code = promoInput.trim();
+    if (!code) return;
+    setPromoStatus("checking");
+    setPromoError(null);
+    try {
+      const res = await fetch("/api/promo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, subtotal }),
+      });
+      const body = (await res.json().catch(() => null)) as
+        | { code?: string; discount?: number; description?: string; error?: string }
+        | null;
+      if (!res.ok || !body?.code) {
+        throw new Error(body?.error ?? "Could not apply that code.");
+      }
+      setAppliedPromo({
+        code: body.code,
+        discount: Number(body.discount ?? 0),
+        description: body.description ?? "",
+      });
+    } catch (err) {
+      setAppliedPromo(null);
+      setPromoError(err instanceof Error ? err.message : "Could not apply that code.");
+    } finally {
+      setPromoStatus("idle");
+    }
+  }
+
+  function removePromo() {
+    setAppliedPromo(null);
+    setPromoInput("");
+    setPromoError(null);
+  }
 
   if (hydrated && lines.length === 0) {
     return (
@@ -62,6 +109,7 @@ export function CheckoutForm() {
           customer: data,
           fulfillment,
           payment,
+          promoCode: appliedPromo?.code ?? null,
           items: lines.map((line) => ({
             slug: line.product.slug,
             qty: line.qty,
@@ -199,11 +247,63 @@ export function CheckoutForm() {
             </div>
           ))}
         </div>
+        <div className="mt-4 border-t border-[#e5e7eb] pt-4">
+          <label className="block text-xs font-black uppercase tracking-wide text-[#6b7280]">
+            Promo code
+          </label>
+          {appliedPromo ? (
+            <div className="mt-1 flex items-center justify-between gap-2 rounded bg-[#f6f2ea] px-3 py-2">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-black text-[#15110a]">
+                  {appliedPromo.code} applied
+                </p>
+                {appliedPromo.description && (
+                  <p className="truncate text-xs font-semibold text-[#6b7280]">
+                    {appliedPromo.description}
+                  </p>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={removePromo}
+                className="shrink-0 text-xs font-black uppercase text-[#8b641e] hover:underline"
+              >
+                Remove
+              </button>
+            </div>
+          ) : (
+            <div className="mt-1 flex gap-2">
+              <input
+                value={promoInput}
+                onChange={(e) => setPromoInput(e.target.value.toUpperCase())}
+                placeholder="Enter code"
+                className={`${inputClass} uppercase`}
+              />
+              <button
+                type="button"
+                onClick={applyPromo}
+                disabled={promoStatus === "checking" || !promoInput.trim()}
+                className="shrink-0 rounded-sm border-2 border-[#8b641e] px-4 text-xs font-black uppercase text-[#8b641e] hover:bg-[#f6f2ea] disabled:opacity-50"
+              >
+                {promoStatus === "checking" ? "..." : "Apply"}
+              </button>
+            </div>
+          )}
+          {promoError && (
+            <p className="mt-1 text-xs font-bold text-[#b91c1c]">{promoError}</p>
+          )}
+        </div>
         <dl className="mt-4 space-y-2 border-t border-[#e5e7eb] pt-4 text-sm font-semibold">
           <div className="flex justify-between">
             <dt>Subtotal</dt>
             <dd>{formatRWF(subtotal)}</dd>
           </div>
+          {discount > 0 && (
+            <div className="flex justify-between text-[#15803d]">
+              <dt>Discount{appliedPromo ? ` (${appliedPromo.code})` : ""}</dt>
+              <dd>-{formatRWF(discount)}</dd>
+            </div>
+          )}
           <div className="flex justify-between">
             <dt>{fulfillment === "delivery" ? "Kigali delivery" : "Store pickup"}</dt>
             <dd>{deliveryFee === 0 ? "Free" : formatRWF(deliveryFee)}</dd>

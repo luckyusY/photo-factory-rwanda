@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/mongodb";
 import { getAllProducts } from "@/lib/products-db";
+import { applyPromoCode } from "@/lib/promo-codes";
 
 type OrderPayload = {
   customer?: Record<string, string>;
   fulfillment?: string;
   payment?: string;
+  promoCode?: string;
   items?: { slug: string; qty: number }[];
 };
 
@@ -58,6 +60,19 @@ export async function POST(request: Request) {
 
   const subtotal = items.reduce((sum, item) => sum + item.lineTotal, 0);
   const deliveryFee = payload.fulfillment === "delivery" ? KIGALI_DELIVERY_FEE : 0;
+
+  // Re-validate the promo code on the server so the discount can't be forged.
+  let discount = 0;
+  let promoCode: string | null = null;
+  if (payload.promoCode) {
+    const promo = await applyPromoCode(payload.promoCode, subtotal);
+    if (promo.ok) {
+      discount = promo.discount;
+      promoCode = promo.code;
+    }
+  }
+
+  const total = Math.max(0, subtotal - discount) + deliveryFee;
   const order = {
     orderNumber: makeOrderNumber(),
     customer: payload.customer,
@@ -65,8 +80,10 @@ export async function POST(request: Request) {
     payment: payload.payment ?? "cod",
     items,
     subtotal,
+    discount,
+    promoCode,
     deliveryFee,
-    total: subtotal + deliveryFee,
+    total,
     status: "pending",
     createdAt: new Date(),
   };

@@ -82,6 +82,34 @@ export async function saveProduct(product: Product) {
     .replaceOne({ slug: product.slug }, { ...product, deleted: false }, { upsert: true });
 }
 
+// Bulk stock update for the stock-management page. Stock lives on the product
+// doc, so updating a seed product writes a full override (same shape as an edit)
+// while preserving every other field. Returns the number of changed products.
+export async function updateStockLevels(
+  updates: { slug: string; stock: number }[],
+) {
+  const products = await getAllProducts();
+  const bySlug = new Map(products.map((product) => [product.slug, product]));
+  const ops = [];
+  for (const { slug, stock } of updates) {
+    const product = bySlug.get(slug);
+    if (!product) continue;
+    const next = Math.max(0, Math.round(Number(stock)));
+    if (!Number.isFinite(next) || next === product.stock) continue;
+    ops.push({
+      replaceOne: {
+        filter: { slug },
+        replacement: { ...product, stock: next, deleted: false },
+        upsert: true,
+      },
+    });
+  }
+  if (ops.length === 0) return 0;
+  const db = await getDb();
+  await db.collection<OverrideDoc>(COLLECTION).bulkWrite(ops);
+  return ops.length;
+}
+
 export async function removeProduct(slug: string) {
   const db = await getDb();
   if (seedSlugs.has(slug)) {
@@ -123,6 +151,58 @@ export async function listOrders(limit = 20) {
     }));
   } catch (error) {
     console.error("Failed to load orders", error);
+    return [];
+  }
+}
+
+export type DetailedOrder = {
+  orderNumber: string;
+  total: number;
+  subtotal: number;
+  discount: number;
+  deliveryFee: number;
+  payment: string;
+  fulfillment: string;
+  promoCode: string | null;
+  status: string;
+  items: { slug: string; name: string; qty: number; price: number }[];
+  createdAt: string | null;
+};
+
+// Full order docs for the reports page (revenue, units, top products, etc.).
+export async function listOrdersDetailed(limit = 1000): Promise<DetailedOrder[]> {
+  if (!isDbConfigured()) return [];
+  try {
+    const db = await getDb();
+    const docs = await db
+      .collection("orders")
+      .find({})
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .toArray();
+    return docs.map((doc) => ({
+      orderNumber: String(doc.orderNumber ?? ""),
+      total: Number(doc.total ?? 0),
+      subtotal: Number(doc.subtotal ?? 0),
+      discount: Number(doc.discount ?? 0),
+      deliveryFee: Number(doc.deliveryFee ?? 0),
+      payment: String(doc.payment ?? ""),
+      fulfillment: String(doc.fulfillment ?? ""),
+      promoCode: doc.promoCode ? String(doc.promoCode) : null,
+      status: String(doc.status ?? "pending"),
+      items: Array.isArray(doc.items)
+        ? doc.items.map((item) => ({
+            slug: String(item?.slug ?? ""),
+            name: String(item?.name ?? ""),
+            qty: Number(item?.qty ?? 0),
+            price: Number(item?.price ?? 0),
+          }))
+        : [],
+      createdAt:
+        doc.createdAt instanceof Date ? doc.createdAt.toISOString() : null,
+    }));
+  } catch (error) {
+    console.error("Failed to load orders for report", error);
     return [];
   }
 }
