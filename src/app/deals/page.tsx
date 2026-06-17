@@ -402,7 +402,7 @@ function BrowseTiles() {
 
 function SupportStrip() {
   return (
-    <section className="bg-white py-9">
+    <section className="bg-[#F5F5F5] py-9">
       <div className="mx-auto grid max-w-[1120px] gap-7 px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
         {supportCards.map((card) => {
           const Icon = card.icon;

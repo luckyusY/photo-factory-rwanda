@@ -203,7 +203,7 @@ function ProductRail({
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t border-white bg-[#f0f0f0] py-3">
+    <section className="border-t border-white bg-[#F5F5F5] py-3">
       <div className="mx-auto max-w-[1440px] px-2 sm:px-4 2xl:px-6">
         <div className="mb-2 flex items-center justify-between gap-4">
           <h2 className="text-[16px] font-normal uppercase text-black">{title}</h2>

@@ -122,7 +122,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section id="deals" className="bg-[#f6f2ea] py-3 sm:py-5">
+      <section id="deals" className="bg-[#F5F5F5] py-3 sm:py-5">
         <div className="mx-auto max-w-[1368px] px-2 sm:px-4">
           <div className="flex items-center justify-between gap-2">
             <h2 className="flex items-center gap-1.5 text-[24px] font-normal leading-none text-black sm:gap-2.5 sm:text-[28px] sm:font-semibold">
@@ -145,7 +145,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="bg-white py-8" id="services">
+      <section className="bg-[#F5F5F5] py-8" id="services">
         <Reveal className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => (
             <div

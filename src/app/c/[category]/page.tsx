@@ -79,7 +79,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     const subProducts = bySubcategory(products, activeSub.slug);
     return (
       <main>
-        <section className="border-b border-[#e7ddc7] bg-white">
+        <section className="border-b border-[#e7ddc7] bg-[#F5F5F5]">
           <div className="mx-auto max-w-7xl px-4 py-4">
             <nav className="text-xs font-semibold text-[#6b7280]">
               <Link href="/" className="text-[#8b641e] hover:underline">
@@ -137,7 +137,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   // plain filterable listing.
   return (
     <main>
-      <section className="border-b border-[#e7ddc7] bg-white">
+      <section className="border-b border-[#e7ddc7] bg-[#F5F5F5]">
         <div className="mx-auto max-w-7xl px-4 py-4">
           <nav className="text-xs font-semibold text-[#6b7280]">
             <Link href="/" className="text-[#8b641e] hover:underline">
@@ -552,7 +552,7 @@ function SupportStrip() {
     ["Visit Our Stores", "Visit Kacyiru or Kigali City Centre.", "Services, pickup, and more."],
   ];
   return (
-    <section className="bg-white py-10">
+    <section className="bg-[#F5F5F5] py-10">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
         {items.map(([title, body, link]) => (
           <div key={title}>
