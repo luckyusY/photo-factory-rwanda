@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrandLogoTile } from "@/components/brand-logo-tile";
-import { CardSwiper } from "@/components/card-swiper";
 import { DealCard } from "@/components/deal-card";
 import {
   ProductListing,
@@ -250,19 +249,13 @@ function DepartmentPage({
   const cards = categoryCardsFor(slug, subcategories, products, heroImage);
   const brands = brandLogosFor(slug, products);
 
-  // Rails lead with this category's products, then top up from the rest of the
-  // catalog so the carousels always feel full.
-  const fill = (base: Product[]) => {
-    const seen = new Set(base.map((product) => product.slug));
-    const extra = allProducts.filter((product) => !seen.has(product.slug));
-    return [...base, ...extra];
-  };
-  const trending = fill(
-    products.filter((product) => product.oldPrice || product.badge),
-  ).slice(0, 12);
-  const bestSellers = fill(
-    [...products].sort((a, b) => b.reviews - a.reviews),
-  ).slice(0, 12);
+  // Grids show this category's own products only. "Trending Deals" highlights
+  // the on-sale/badged picks; the full grid lists every product in the
+  // category so nothing is hidden behind a carousel.
+  const trending = products.filter(
+    (product) => product.oldPrice || product.badge,
+  );
+  const allInCategory = [...products].sort((a, b) => b.reviews - a.reviews);
 
   const byPrice = [...products].sort((a, b) => b.price - a.price);
   const flagship = byPrice[0] ?? allProducts[0];
@@ -304,11 +297,11 @@ function DepartmentPage({
             Shop Used
           </Link>
         </div>
-        <CardSwiper gap={4} gapSm={8}>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 xl:grid-cols-5">
           {cards.map((card) => (
             <article
               key={card.title}
-              className="w-[175px] bg-white p-3 shadow-sm ring-1 ring-black/5 sm:w-[206px]"
+              className="bg-white p-3 shadow-sm ring-1 ring-black/5"
             >
               <Link href={card.href}>
                 <h3 className="min-h-10 text-[14px] font-black leading-tight">
@@ -337,7 +330,7 @@ function DepartmentPage({
               </Link>
             </article>
           ))}
-        </CardSwiper>
+        </div>
       </section>
 
       <PromoBand
@@ -359,7 +352,7 @@ function DepartmentPage({
       </section>
 
       {popular && <DarkAdBand product={popular} displayName={displayName} />}
-      <Rail title="Best Sellers" products={bestSellers} />
+      <Rail title={`All ${displayName}`} products={allInCategory} />
       {dealProduct && <LightAdBand product={dealProduct} href={`/c/${slug}`} />}
 
       <section className="mx-auto max-w-7xl px-4 py-10 text-[13px] leading-6 text-[#333]">
@@ -421,11 +414,11 @@ function Rail({ title, products }: { title: string; products: Product[] }) {
   return (
     <section className="mx-auto max-w-7xl px-3 py-8 sm:px-4">
       <h2 className="mb-4 text-[17px] font-semibold uppercase">{title}</h2>
-      <CardSwiper gap={4} gapSm={8}>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 lg:grid-cols-4 2xl:grid-cols-5">
         {products.map((product) => (
           <DealCard key={`${title}-${product.slug}`} product={product} />
         ))}
-      </CardSwiper>
+      </div>
     </section>
   );
 }
