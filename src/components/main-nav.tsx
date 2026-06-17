@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -75,14 +75,6 @@ export function MainNav() {
       className="relative hidden border-y border-[#d9a441]/30 bg-[#15110a] text-white md:block"
     >
       <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-4 2xl:px-6">
-        <Link
-          href="/c/cameras"
-          onMouseEnter={close}
-          className="flex shrink-0 items-center gap-2 px-3 py-2 text-sm font-bold"
-        >
-          <Menu aria-hidden size={18} />
-          Departments
-        </Link>
         {navMenus.map((menu) => (
           <Link
             key={menu.label}

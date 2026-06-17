@@ -19,7 +19,6 @@ import {
   type Subcategory,
 } from "@/lib/catalog";
 import {
-  computerBrandLogos,
   featuredBrandLogos,
   productBrandLogos,
   type BrandLogo,
@@ -175,8 +174,45 @@ type CategoryCard = {
   href: string;
 };
 
-const curatedBrands: Record<string, BrandLogo[]> = {
-  computers: computerBrandLogos,
+// The brands we feature on each category landing page. Curated by hand so the
+// "Featured Brands" strip shows the names shoppers expect for that category,
+// regardless of which products are currently in stock.
+const curatedBrandNames: Record<string, string[]> = {
+  cameras: [
+    "Canon",
+    "Sony",
+    "Nikon",
+    "Fujifilm",
+    "Panasonic",
+    "OM System",
+    "Leica",
+    "Hasselblad",
+    "DJI",
+    "GoPro",
+  ],
+  lenses: ["Sigma", "Tamron", "Zeiss", "Samyang", "Viltrox", "Tokina"],
+  lighting: ["Godox", "Profoto", "Aputure", "Nanlite"],
+  tripods: ["Manfrotto", "Benro", "Peak Design", "Zhiyun", "DJI"],
+  gimbals: ["Zhiyun", "DJI", "Hohem", "Manfrotto", "Benro"],
+  storage: ["SanDisk", "Lexar", "Sony", "Samsung"],
+  computers: [
+    "Apple",
+    "Dell",
+    "HP",
+    "Lenovo",
+    "ASUS",
+    "Acer",
+    "MSI",
+    "Razer",
+    "Samsung",
+    "Microsoft",
+    "Intel",
+    "AMD",
+    "NVIDIA",
+    "Kingston",
+    "Crucial",
+    "Corsair",
+  ],
 };
 
 // Brand styling lookup so generated featured-brand tiles inherit the same
@@ -198,7 +234,8 @@ function toBrandLogo(name: string): BrandLogo {
 }
 
 function brandLogosFor(slug: string, products: Product[]): BrandLogo[] {
-  if (curatedBrands[slug]) return curatedBrands[slug];
+  const curated = curatedBrandNames[slug];
+  if (curated) return curated.map(toBrandLogo);
   const own = brandsOf(products).map(toBrandLogo);
   if (own.length >= 5) return own.slice(0, 14);
   const have = new Set(own.map((logo) => logo.name.toLowerCase()));
