@@ -20,7 +20,7 @@ import { ProductCard } from "@/components/product-card";
 import { Reveal } from "@/components/reveal";
 import { dealsOf, sortProducts, usedOf } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
-import { getCategoryContent, getHeroSlides, getPromoBanners } from "@/lib/site-content";
+import { getCategoryContent, getHeroSlides } from "@/lib/site-content";
 
 export const revalidate = 300;
 
@@ -46,62 +46,12 @@ const mobileCategoryItems = [
   { label: "Computers", slug: "computers", imageSlug: "computers" },
 ];
 
-const campaignImage = (name: string, width = 1400) =>
-  `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
-
-const promoButton =
-  "mt-5 inline-flex w-fit min-w-44 justify-center rounded-md bg-[#8b641e] px-7 py-3 text-xs font-black uppercase tracking-wide text-white shadow-[0_3px_0_rgba(0,0,0,0.16)] transition group-hover:bg-[#8b641e]";
-
-function PromoBanner({
-  href,
-  image,
-  mobileImage,
-  overlayClass,
-  fullWidth = false,
-  children,
-}: {
-  href: string;
-  image: string;
-  mobileImage: string;
-  overlayClass: string;
-  fullWidth?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`group relative min-h-[260px] overflow-hidden bg-white md:min-h-[300px] ${
-        fullWidth ? "md:col-span-2" : ""
-      }`}
-    >
-      <Image
-        src={image}
-        alt=""
-        fill
-        sizes={fullWidth ? "100vw" : "(min-width: 768px) 50vw, 100vw"}
-        className="hidden object-cover transition duration-500 group-hover:scale-[1.02] md:block"
-      />
-      <Image
-        src={mobileImage}
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover md:hidden"
-      />
-      <div className={`absolute inset-0 hidden md:block ${overlayClass}`} />
-      {children}
-    </Link>
-  );
-}
-
 export default async function Home() {
-  const [allProducts, heroSlides, categoryContent, promoBanners] = await Promise.all([
+  const [allProducts, heroSlides, categoryContent] = await Promise.all([
     getAllProducts(),
     getHeroSlides(),
     getCategoryContent(),
-    getPromoBanners(),
   ]);
-  const promoImages = new Map(promoBanners.map((promo) => [promo.key, promo]));
   const categoryImages = new Map(
     categoryContent.map((category) => [category.slug, category.image]),
   );
@@ -170,111 +120,6 @@ export default async function Home() {
             ))}
           </CardSwiper>
         </div>
-      </section>
-
-      <section className="border-y-[3px] border-[#d9a441] bg-white">
-        <Reveal>
-        <div className="mx-auto grid max-w-[1368px] gap-[3px] bg-[#d9a441] md:grid-cols-2">
-          {/* Studio upgrade contest — yellow, centered stacked lockup */}
-          <PromoBanner
-            href="/support"
-            image={promoImages.get("studio-upgrade")?.image ?? campaignImage("studio-upgrade")}
-            mobileImage={
-              promoImages.get("studio-upgrade")?.mobileImage ??
-              campaignImage("studio-upgrade-mobile", 720)
-            }
-            overlayClass="bg-[linear-gradient(90deg,rgba(255,205,27,0.97)_0%,rgba(255,205,27,0.94)_52%,transparent_78%)]"
-          >
-            <div className="absolute inset-y-0 left-0 hidden w-[62%] flex-col items-center justify-center px-6 text-center text-[#15110a] md:flex">
-              <p className="text-lg font-extrabold uppercase italic tracking-[0.14em]">
-                Enter to win a
-              </p>
-              <span className="mt-1 flex items-center gap-2.5">
-                <span className="text-[54px] font-black leading-none tracking-tight lg:text-[64px]">
-                  RWF 50M
-                </span>
-                <span className="text-left text-[21px] font-black uppercase leading-[1.02] lg:text-[25px]">
-                  Studio
-                  <br />
-                  Upgrade
-                </span>
-              </span>
-              <p className="mt-1 text-[25px] font-black uppercase leading-none tracking-[0.5em] lg:text-[29px]">
-                Contest
-              </p>
-              <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.08em]">
-                Powered by{" "}
-                <span className="text-[13px] font-black normal-case">
-                  PhotoFactory
-                </span>{" "}
-                Business Solutions
-              </p>
-              <span className={promoButton}>Submit your studio</span>
-            </div>
-          </PromoBanner>
-
-          {/* Gifts for grads — script + giant GRADS */}
-          <PromoBanner
-            href="/deals"
-            image={promoImages.get("gifts-for-grads")?.image ?? campaignImage("gifts-for-grads")}
-            mobileImage={
-              promoImages.get("gifts-for-grads")?.mobileImage ??
-              campaignImage("gifts-for-grads-mobile", 720)
-            }
-            overlayClass="bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.9)_52%,transparent_80%)]"
-          >
-            <div className="absolute inset-y-0 left-0 hidden w-[64%] max-w-[480px] flex-col justify-center px-7 text-black sm:px-10 md:flex">
-              <p className="-mb-3 ml-1 text-[30px] leading-none text-[#8b641e] [font-family:var(--font-dancing-script),cursive]">
-                Gifts for
-              </p>
-              <p className="text-[46px] font-black leading-none tracking-tight">
-                GRADS
-              </p>
-              <h2 className="mt-3 text-[25px] font-extrabold leading-tight">
-                Celebrate Their Next Adventure!
-              </h2>
-              <p className="mt-2 max-w-md text-[15px] font-medium leading-6 text-black/80">
-                Find the best cameras, top audio gear, powerful computers, and
-                video essentials - everything to make their milestone
-                unforgettable!
-              </p>
-              <span className={promoButton}>Shop now</span>
-            </div>
-          </PromoBanner>
-
-          {/* Wedding season — full width, letterspaced + script */}
-          <PromoBanner
-            href="/c/cameras"
-            image={promoImages.get("wedding-season")?.image ?? campaignImage("wedding-season", 1600)}
-            mobileImage={
-              promoImages.get("wedding-season")?.mobileImage ??
-              campaignImage("wedding-season-mobile", 720)
-            }
-            overlayClass="bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.88)_44%,transparent_68%)]"
-            fullWidth
-          >
-            <div className="absolute inset-y-0 left-0 hidden w-[58%] max-w-[620px] flex-col justify-center px-7 text-black sm:px-12 md:flex">
-              <p className="text-[26px] font-extrabold uppercase leading-none tracking-[0.32em] lg:text-[30px]">
-                Wedding Season
-              </p>
-              <p className="mt-1 text-[20px] font-light leading-snug text-[#374151] lg:text-[23px]">
-                Photography &amp; Videography
-              </p>
-              <p className="mt-1 text-[34px] leading-[1.15] text-[#111827] [font-family:var(--font-great-vibes),cursive] lg:text-[40px]">
-                Capture Every Special Moment
-              </p>
-              <p className="mt-2 max-w-md text-[15px] font-medium leading-6 text-black/85 lg:text-[17px]">
-                Enhance your repertoire with the right gear &amp; skills to
-                showcase each couple&apos;s unique story.
-              </p>
-              <span className={promoButton}>Learn more</span>
-              <p className="mt-4 text-xs text-black/55">
-                Image by Photo Factory Studio
-              </p>
-            </div>
-          </PromoBanner>
-        </div>
-        </Reveal>
       </section>
 
       <section id="deals" className="bg-[#f6f2ea] py-3 sm:py-5">
