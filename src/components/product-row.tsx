@@ -12,7 +12,7 @@ export function ProductRow({ product }: { product: Product }) {
   return (
     <article
       data-product-card
-      className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5"
+      className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b-2 border-[#E5E5E5] bg-white p-4 text-[#1A1A1A] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5"
     >
       {/* Image */}
       <Link
@@ -20,7 +20,7 @@ export function ProductRow({ product }: { product: Product }) {
         className="relative h-[150px] w-full sm:h-[170px]"
       >
         {product.badge && (
-          <span className="absolute left-0 top-0 z-10 bg-[#8b641e] px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
+          <span className="absolute left-0 top-0 z-10 bg-[#C89B3C] px-1.5 py-0.5 text-[10px] font-black uppercase text-white">
             {product.badge}
           </span>
         )}
@@ -36,7 +36,7 @@ export function ProductRow({ product }: { product: Product }) {
       {/* Details */}
       <div className="min-w-0">
         <Link href={`/p/${product.slug}`}>
-          <h3 className="text-[15px] font-medium leading-snug text-[#8b641e] hover:underline sm:text-base">
+          <h3 className="text-[15px] font-medium leading-snug text-[#C89B3C] hover:underline sm:text-base">
             {product.name}
           </h3>
         </Link>
@@ -65,7 +65,7 @@ export function ProductRow({ product }: { product: Product }) {
         </ul>
         {/* Mobile price (inline) */}
         <div className="mt-2 flex items-baseline gap-2 sm:hidden">
-          <span className="text-[18px] font-bold text-[#15110a]">
+          <span className="text-[18px] font-bold text-[#1A1A1A]">
             {formatRWF(product.price)}
           </span>
           {product.oldPrice && (
@@ -79,7 +79,7 @@ export function ProductRow({ product }: { product: Product }) {
 
       {/* Price + actions (desktop column) */}
       <div className="hidden flex-col items-end text-right sm:flex">
-        <p className="text-[24px] font-bold leading-none text-[#15110a]">
+        <p className="text-[24px] font-bold leading-none text-[#1A1A1A]">
           {formatRWF(product.price)}
         </p>
         {product.oldPrice && (
@@ -88,12 +88,12 @@ export function ProductRow({ product }: { product: Product }) {
           </p>
         )}
         {save > 0 && (
-          <p className="mt-0.5 text-xs font-black text-[#8b641e]">
+          <p className="mt-0.5 text-xs font-black text-[#C89B3C]">
             Save {formatRWF(save)}
           </p>
         )}
         <p className="mt-2 text-[11px] leading-4 text-[#374151]">
-          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>/mo with{" "}
+          <strong className="text-[#C89B3C]">{formatRWF(monthly)}</strong>/mo with{" "}
           {months}-mo financing
         </p>
         <AddToCartButton
@@ -102,7 +102,7 @@ export function ProductRow({ product }: { product: Product }) {
           className="mt-3 w-full"
         />
         <div className="mt-2 flex items-center gap-3">
-          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#8b641e]">
+          <span className="inline-flex items-center gap-1 text-xs font-bold text-[#C89B3C]">
             <WishlistButton slug={product.slug} className="h-7 w-7 shadow-none ring-0" />
             Wish List
           </span>

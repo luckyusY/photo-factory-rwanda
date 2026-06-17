@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { BrandLogoTile } from "@/components/brand-logo-tile";
+import { findBrandLogo } from "@/lib/brand-logos";
 import { brandsOf, byBrand } from "@/lib/catalog";
 import { getAllProducts } from "@/lib/products-db";
 
@@ -24,21 +25,17 @@ export default async function BrandsPage() {
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {brandsOf(allProducts).map((brand) => {
           const count = byBrand(allProducts, brand).length;
+          const registeredBrand = findBrandLogo(brand);
           return (
-            <Link
+            <BrandLogoTile
               key={brand}
-              href={`/brands/${brand.toLowerCase()}`}
-              className="group grid min-h-32 place-items-center rounded bg-white p-6 text-center shadow-sm ring-1 ring-black/10 transition hover:ring-[#8b641e]"
-            >
-              <span>
-                <span className="block text-2xl font-black group-hover:text-[#8b641e]">
-                  {brand}
-                </span>
-                <span className="mt-1 block text-xs font-bold text-[#6b7280]">
-                  {count} {count === 1 ? "product" : "products"}
-                </span>
-              </span>
-            </Link>
+              brand={{
+                ...registeredBrand,
+                name: brand,
+                href: `/brands/${encodeURIComponent(brand.toLowerCase())}`,
+              }}
+              subtitle={`${count} ${count === 1 ? "product" : "products"}`}
+            />
           );
         })}
       </div>

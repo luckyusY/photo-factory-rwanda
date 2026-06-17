@@ -11,7 +11,7 @@ export function ProductResults({ products }: { products: Product[] }) {
 
   if (products.length === 0) {
     return (
-      <div className="border border-[#e7ddc7] bg-white p-10 text-center">
+      <div className="border-2 border-[#E5E5E5] bg-white p-10 text-center">
         <p className="text-lg font-black">No products match these filters.</p>
         <p className="mt-2 text-sm text-[#6b7280]">
           Try removing a filter, or contact us - we can source most gear on
@@ -39,8 +39,8 @@ export function ProductResults({ products }: { products: Product[] }) {
             onClick={() => setView("list")}
             className={`grid h-8 w-8 place-items-center rounded border ${
               view === "list"
-                ? "border-[#8b641e] bg-[#fff5da] text-[#8b641e]"
-                : "border-[#e7ddc7] text-[#6b7280] hover:border-[#d9a441]"
+                ? "border-[#C89B3C] bg-[#F5F5F5] text-[#C89B3C]"
+                : "border-[#E5E5E5] text-[#6b7280] hover:border-[#C89B3C]"
             }`}
           >
             <List size={16} />
@@ -50,15 +50,15 @@ export function ProductResults({ products }: { products: Product[] }) {
             onClick={() => setView("grid")}
             className={`grid h-8 w-8 place-items-center rounded border ${
               view === "grid"
-                ? "border-[#8b641e] bg-[#fff5da] text-[#8b641e]"
-                : "border-[#e7ddc7] text-[#6b7280] hover:border-[#d9a441]"
+                ? "border-[#C89B3C] bg-[#F5F5F5] text-[#C89B3C]"
+                : "border-[#E5E5E5] text-[#6b7280] hover:border-[#C89B3C]"
             }`}
           >
             <LayoutGrid size={16} />
           </button>
         </div>
         {view === "list" ? (
-          <div className="border-t border-[#e7ddc7] bg-white">
+          <div className="border-x-2 border-t-2 border-[#E5E5E5] bg-white">
             {products.map((product) => (
               <ProductRow key={product.slug} product={product} />
             ))}

@@ -128,8 +128,8 @@ export function ProductListing({
   };
 
   return (
-    <div className="mx-auto max-w-[1440px] px-2 py-4 sm:px-4 sm:py-6 2xl:px-6">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b border-[#e7ddc7] bg-white p-4 ring-1 ring-black/5">
+    <div className="mx-auto max-w-[1440px] bg-[#F5F5F5] px-2 py-4 text-[#1A1A1A] sm:px-4 sm:py-6 2xl:px-6">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b-2 border-[#E5E5E5] bg-white p-4 ring-1 ring-black/5">
         <div>
           <h1 className="text-2xl font-semibold text-black">{title}</h1>
           {subtitle && (
@@ -141,18 +141,18 @@ export function ProductListing({
         </div>
         <SortSelect />
       </div>
-      <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)] 2xl:gap-6">
+      <div className="grid gap-4 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-0 xl:grid-cols-[250px_minmax(0,1fr)]">
         <FilterPanel active={hasFilters}>
           {hasFilters && (
             <Link
               href={buildHref(basePath, {}, {}, extraParams)}
-              className="inline-block rounded bg-[#8b641e] px-3 py-2 text-xs font-black uppercase text-white"
+              className="inline-block rounded bg-[#C89B3C] px-3 py-2 text-xs font-black uppercase text-white"
             >
               Clear all filters
             </Link>
           )}
           {categoryLinks.length > 0 && (
-            <div className="border border-[#e7ddc7] bg-white p-4">
+            <div className="border-2 border-[#E5E5E5] bg-white p-4">
               <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
                 Categories
               </h2>
@@ -161,7 +161,7 @@ export function ProductListing({
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="flex items-center justify-between py-1.5 text-[14px] font-medium text-[#8b641e] hover:underline"
+                    className="flex items-center justify-between py-1.5 text-[14px] font-medium text-[#C89B3C] hover:underline"
                   >
                     <span>{item.label}</span>
                     {typeof item.count === "number" && (
@@ -257,7 +257,7 @@ function FilterGroup({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border border-[#e7ddc7] bg-white p-4">
+    <div className="border-2 border-[#E5E5E5] bg-white p-4">
       <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
         {title}
       </h2>
@@ -279,12 +279,12 @@ function FilterLink({
     <Link
       href={href}
       className={`flex items-center gap-2 px-1 py-1.5 text-[14px] font-medium ${
-        active ? "bg-[#fff5da] text-[#8b641e]" : "hover:bg-[#fbf7ef]"
+        active ? "bg-[#F5F5F5] text-[#C89B3C]" : "hover:bg-[#F5F5F5]"
       }`}
     >
       <span
         className={`grid h-4 w-4 place-items-center rounded-sm border ${
-          active ? "border-[#8b641e] bg-[#d9a441] text-black" : "border-[#9ca3af]"
+          active ? "border-[#C89B3C] bg-[#C89B3C] text-[#1A1A1A]" : "border-[#9ca3af]"
         }`}
       >
         {active && <Check size={12} strokeWidth={3} />}

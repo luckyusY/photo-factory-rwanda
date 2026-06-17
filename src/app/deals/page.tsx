@@ -143,9 +143,9 @@ function imageForCategory(products: Product[], slug: string) {
 
 function DealsHero() {
   return (
-    <section className="relative overflow-hidden bg-[#8b641e] text-white">
+    <section className="relative overflow-hidden bg-[#C89B3C] text-white">
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#15110a] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#1A1A1A] to-transparent" />
       <div className="relative mx-auto flex min-h-[210px] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center 2xl:px-6">
         <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
           Photo Factory Rwanda
@@ -175,12 +175,12 @@ function DealProductCard({
   return (
     <article
       data-product-card
-      className={`group relative flex min-w-0 flex-col bg-white px-2 pb-3 pt-7 sm:px-3 ${
+      className={`group relative flex min-w-0 flex-col bg-white px-2 pb-3 pt-7 text-[#1A1A1A] sm:px-3 ${
         compact ? "min-h-[284px] sm:min-h-[292px]" : "min-h-[292px] sm:min-h-[330px]"
       }`}
     >
       {save > 0 && (
-        <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+        <span className="absolute left-0 top-2 z-10 bg-[#C89B3C] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           Save {formatRWF(save)}
         </span>
       )}
@@ -199,7 +199,7 @@ function DealProductCard({
         />
       </Link>
       <Link href={`/p/${product.slug}`} className="mt-2 block">
-        <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-normal leading-[18px] text-black hover:text-[#8b641e] hover:underline">
+        <h3 className="line-clamp-3 min-h-[54px] text-[13px] font-normal leading-[18px] text-[#1A1A1A] hover:text-[#C89B3C] hover:underline">
           {product.name}
         </h3>
       </Link>
@@ -227,9 +227,9 @@ function DealProductCard({
       </div>
       {!compact && (
         <p className="mt-1.5 text-[11px] leading-4 text-black">
-          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>
+          <strong className="text-[#C89B3C]">{formatRWF(monthly)}</strong>
           /mo suggested payments with {months}-month special financing.{" "}
-          <Link href="/support" className="text-[#8b641e] hover:underline">
+          <Link href="/support" className="text-[#C89B3C] hover:underline">
             Learn how.
           </Link>
         </p>
@@ -240,15 +240,15 @@ function DealProductCard({
 
 function TopDealsGrid({ products }: { products: Product[] }) {
   return (
-    <section className="bg-[#eeeeee] py-2">
+    <section className="bg-[#F5F5F5] py-2">
       <div className="mx-auto max-w-[1440px] px-1 sm:px-2 2xl:px-4">
         <div className="mb-1 flex items-center justify-center gap-2 text-center text-white">
-          <Trophy size={20} className="text-[#15110a]" />
-          <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#15110a]">
+          <Trophy size={20} className="text-[#1A1A1A]" />
+          <h2 className="text-[22px] font-semibold uppercase tracking-wide text-[#1A1A1A]">
             Your Top Deals
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-px border border-[#c8c8c8] bg-[#c8c8c8] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#E5E5E5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
           {products.slice(0, 12).map((product) => (
             <DealProductCard key={product.slug} product={product} />
           ))}
@@ -262,7 +262,7 @@ function CategoryStrip({ products }: { products: Product[] }) {
   return (
     <section className="bg-[#050505]">
       <div className="mx-auto max-w-[1440px] overflow-x-auto px-1 py-2 2xl:px-4">
-        <div className="flex min-w-max">
+        <div className="mx-auto flex w-max min-w-max">
           {categories.map((category) => {
             const Icon = category.icon;
             const image = imageForCategory(products, category.slug);
@@ -270,9 +270,9 @@ function CategoryStrip({ products }: { products: Product[] }) {
               <Link
                 key={`${category.slug}-${category.label}`}
                 href={`/c/${category.slug}`}
-                className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#8b641e]"
+                className="grid w-[94px] shrink-0 justify-items-center gap-1 border-r border-white/20 px-2 py-1 text-center text-[11px] font-bold leading-3 text-white hover:bg-[#C89B3C]"
               >
-                <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#8b641e]">
+                <span className="relative grid h-12 w-14 place-items-center overflow-hidden rounded-sm bg-white text-[#C89B3C]">
                   <Image
                     src={image}
                     alt=""
@@ -280,7 +280,7 @@ function CategoryStrip({ products }: { products: Product[] }) {
                     sizes="56px"
                     className="object-contain p-1"
                   />
-                  <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#8b641e]">
+                  <span className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-br bg-white/90 text-[#C89B3C]">
                     <Icon size={13} strokeWidth={2} />
                   </span>
                 </span>
@@ -308,18 +308,18 @@ function DealShelf({
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t border-[#dedede] bg-[#f1f1f1] py-3">
+    <section className="border-t-2 border-[#E5E5E5] bg-[#F5F5F5] py-3">
       <div className="mx-auto max-w-[1440px] px-1 sm:px-2 2xl:px-4">
         <div className="mb-2 flex items-center justify-between gap-2 px-1">
           <h2 className="flex items-center gap-2 text-[17px] font-normal text-black">
             <Icon size={18} strokeWidth={1.8} className="text-[#444]" />
             {title}
           </h2>
-          <Link href={href} className="text-xs font-medium text-[#8b641e] hover:underline">
+          <Link href={href} className="text-xs font-medium text-[#C89B3C] hover:underline">
             See All {title} Deals
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-px border border-[#c8c8c8] bg-[#c8c8c8] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#E5E5E5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
           {products.map((product) => (
             <DealProductCard key={`${title}-${product.slug}`} product={product} compact />
           ))}
@@ -331,33 +331,33 @@ function DealShelf({
 
 function SandiskBanner({ image }: { image: string }) {
   return (
-    <section className="bg-[#f6f2ea]">
+    <section className="bg-[#F5F5F5]">
       <Link
         href="/c/storage"
         data-product-card
-        className="mx-auto grid max-w-[1440px] overflow-hidden bg-[#f6f2ea] md:h-[180px] md:grid-cols-[330px_minmax(0,1fr)_210px]"
+        className="mx-auto grid max-w-[1440px] overflow-hidden border-y-2 border-[#E5E5E5] bg-[#F5F5F5] md:h-[180px] md:grid-cols-[330px_minmax(0,1fr)_210px]"
       >
         <div className="flex flex-col justify-center bg-white px-6 py-6">
-          <p className="text-4xl font-black uppercase tracking-wide text-[#8b641e]">
+          <p className="text-4xl font-black uppercase tracking-wide text-[#C89B3C]">
             SanDisk
           </p>
-          <p className="mt-2 text-xl font-black text-[#8b641e]">
+          <p className="mt-2 text-xl font-black text-[#C89B3C]">
             More Space to Create
           </p>
           <p className="text-sm font-semibold text-[#333]">
             Get more out of your devices with memory upgrades
           </p>
         </div>
-        <div className="relative min-h-[180px] bg-gradient-to-r from-white via-white to-[#f6f2ea]">
+        <div className="relative min-h-[180px] bg-white">
           <SafeProductImage
             src={image}
             alt="SanDisk memory cards and storage"
             fill
             sizes="(min-width: 768px) 60vw, 100vw"
-            className="object-contain p-5"
+            className="object-contain object-center p-5"
           />
         </div>
-        <div className="flex items-center justify-center bg-[#8b641e] px-5 py-5 text-sm font-black uppercase text-white">
+        <div className="flex items-center justify-center bg-[#C89B3C] px-5 py-5 text-sm font-black uppercase text-white">
           Shop Now
         </div>
       </Link>
@@ -367,7 +367,7 @@ function SandiskBanner({ image }: { image: string }) {
 
 function BrowseTiles() {
   return (
-    <section className="bg-[#eeeeee] py-5">
+    <section className="bg-[#F5F5F5] py-5">
       <div className="mx-auto max-w-[1440px] px-2 2xl:px-4">
         <h2 className="mb-2 text-[14px] font-bold uppercase text-[#333]">
           Browse Deals By Type
@@ -379,7 +379,7 @@ function BrowseTiles() {
               <Link
                 key={tile.title}
                 href={tile.href}
-                className="group relative min-h-[110px] overflow-hidden bg-[#8b641e] p-5 text-white"
+                className="group relative min-h-[110px] overflow-hidden bg-[#C89B3C] p-5 text-white"
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,.22),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(255,222,89,.22),transparent_30%)]" />
                 <div className="relative flex h-full items-center justify-center gap-3 text-center">
@@ -409,10 +409,10 @@ function SupportStrip() {
           const external = card.href.startsWith("http");
           const content = (
             <>
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#dec083] text-[#8b641e] transition group-hover:border-[#d9a441]">
+              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#E5E5E5] text-[#C89B3C] transition group-hover:border-[#C89B3C]">
                 <Icon size={28} strokeWidth={1.7} />
               </span>
-              <span className="mt-3 block text-xl font-normal text-[#15110a]">
+              <span className="mt-3 block text-xl font-normal text-[#1A1A1A]">
                 {card.title}
               </span>
               <span className="mt-1 block text-sm leading-5 text-black">
@@ -456,7 +456,7 @@ export default async function DealsPage() {
     cld("gifts-for-grads", 1000);
 
   return (
-    <main className="min-h-screen bg-[#eeeeee] text-black">
+    <main className="min-h-screen bg-[#F5F5F5] text-[#1A1A1A]">
       <DealsHero />
 
       <TopDealsGrid products={topDeals} />

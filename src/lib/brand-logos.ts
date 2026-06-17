@@ -62,3 +62,10 @@ export const productBrandLogos: BrandLogo[] = [
   { name: "Zhiyun", href: "/brands/zhiyun", logo: "/brand-logos/zhiyun.svg" },
   { name: "Zoom", href: "/brands/zoom", logo: "/brand-logos/zoom.svg" },
 ];
+
+export function findBrandLogo(name: string) {
+  const normalizedName = name.trim().toLowerCase();
+  return productBrandLogos.find(
+    (brand) => brand.name.trim().toLowerCase() === normalizedName,
+  );
+}
