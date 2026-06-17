@@ -1,6 +1,13 @@
 import { cache } from "react";
 import { getDb } from "@/lib/mongodb";
 import { products as seedProducts, slugify, type Product } from "@/lib/catalog";
+import {
+  ORDER_STATUSES,
+  STOCK_DEDUCT_STATUS,
+  type OrderStatus,
+} from "@/lib/order-status";
+
+export { ORDER_STATUSES, STOCK_DEDUCT_STATUS, type OrderStatus };
 
 // Admin changes live in the `product_overrides` collection, keyed by slug.
 // A doc with `deleted: true` hides a seed product; otherwise the doc replaces
@@ -155,8 +162,17 @@ export async function listOrders(limit = 20) {
   }
 }
 
+export type OrderItem = {
+  slug: string;
+  name: string;
+  qty: number;
+  price: number;
+};
+
 export type DetailedOrder = {
   orderNumber: string;
+  customerName: string;
+  phone: string;
   total: number;
   subtotal: number;
   discount: number;
@@ -165,11 +181,27 @@ export type DetailedOrder = {
   fulfillment: string;
   promoCode: string | null;
   status: string;
-  items: { slug: string; name: string; qty: number; price: number }[];
+  items: OrderItem[];
   createdAt: string | null;
 };
 
-// Full order docs for the reports page (revenue, units, top products, etc.).
+export type AdminOrder = DetailedOrder & {
+  customer: Record<string, string>;
+  stockDeducted: boolean;
+};
+
+function readOrderItems(raw: unknown): OrderItem[] {
+  return Array.isArray(raw)
+    ? raw.map((item) => ({
+        slug: String((item as OrderItem)?.slug ?? ""),
+        name: String((item as OrderItem)?.name ?? ""),
+        qty: Number((item as OrderItem)?.qty ?? 0),
+        price: Number((item as OrderItem)?.price ?? 0),
+      }))
+    : [];
+}
+
+// Full order docs for the reports and orders pages.
 export async function listOrdersDetailed(limit = 1000): Promise<DetailedOrder[]> {
   if (!isDbConfigured()) return [];
   try {
@@ -182,6 +214,8 @@ export async function listOrdersDetailed(limit = 1000): Promise<DetailedOrder[]>
       .toArray();
     return docs.map((doc) => ({
       orderNumber: String(doc.orderNumber ?? ""),
+      customerName: String(doc.customer?.name ?? ""),
+      phone: String(doc.customer?.phone ?? ""),
       total: Number(doc.total ?? 0),
       subtotal: Number(doc.subtotal ?? 0),
       discount: Number(doc.discount ?? 0),
@@ -190,14 +224,7 @@ export async function listOrdersDetailed(limit = 1000): Promise<DetailedOrder[]>
       fulfillment: String(doc.fulfillment ?? ""),
       promoCode: doc.promoCode ? String(doc.promoCode) : null,
       status: String(doc.status ?? "pending"),
-      items: Array.isArray(doc.items)
-        ? doc.items.map((item) => ({
-            slug: String(item?.slug ?? ""),
-            name: String(item?.name ?? ""),
-            qty: Number(item?.qty ?? 0),
-            price: Number(item?.price ?? 0),
-          }))
-        : [],
+      items: readOrderItems(doc.items),
       createdAt:
         doc.createdAt instanceof Date ? doc.createdAt.toISOString() : null,
     }));
@@ -205,6 +232,98 @@ export async function listOrdersDetailed(limit = 1000): Promise<DetailedOrder[]>
     console.error("Failed to load orders for report", error);
     return [];
   }
+}
+
+export async function getOrderByNumber(
+  orderNumber: string,
+): Promise<AdminOrder | null> {
+  if (!isDbConfigured()) return null;
+  try {
+    const db = await getDb();
+    const doc = await db.collection("orders").findOne({ orderNumber });
+    if (!doc) return null;
+    return {
+      orderNumber: String(doc.orderNumber ?? ""),
+      customer: (doc.customer ?? {}) as Record<string, string>,
+      customerName: String(doc.customer?.name ?? ""),
+      phone: String(doc.customer?.phone ?? ""),
+      total: Number(doc.total ?? 0),
+      subtotal: Number(doc.subtotal ?? 0),
+      discount: Number(doc.discount ?? 0),
+      deliveryFee: Number(doc.deliveryFee ?? 0),
+      payment: String(doc.payment ?? ""),
+      fulfillment: String(doc.fulfillment ?? ""),
+      promoCode: doc.promoCode ? String(doc.promoCode) : null,
+      status: String(doc.status ?? "pending"),
+      stockDeducted: doc.stockDeducted === true,
+      items: readOrderItems(doc.items),
+      createdAt:
+        doc.createdAt instanceof Date ? doc.createdAt.toISOString() : null,
+    };
+  } catch (error) {
+    console.error("Failed to load order", error);
+    return null;
+  }
+}
+
+// Adds (direction +1) or removes (direction -1) ordered quantities from stock.
+async function adjustStockForItems(
+  items: { slug: string; qty: number }[],
+  direction: -1 | 1,
+) {
+  const products = await getAllProducts();
+  const bySlug = new Map(products.map((product) => [product.slug, product]));
+  const ops = [];
+  for (const { slug, qty } of items) {
+    const product = bySlug.get(slug);
+    if (!product) continue;
+    const delta = direction * Math.max(0, Math.round(Number(qty) || 0));
+    if (delta === 0) continue;
+    const next = Math.max(0, product.stock + delta);
+    ops.push({
+      replaceOne: {
+        filter: { slug },
+        replacement: { ...product, stock: next, deleted: false },
+        upsert: true,
+      },
+    });
+  }
+  if (ops.length === 0) return;
+  const db = await getDb();
+  await db.collection<OverrideDoc>(COLLECTION).bulkWrite(ops);
+}
+
+// Updates an order's status. Moving to the deduct status removes the ordered
+// quantities from stock (once); cancelling a deducted order restocks them.
+export async function updateOrderStatus(
+  orderNumber: string,
+  status: OrderStatus,
+): Promise<
+  | { ok: true; status: OrderStatus; stockDeducted: boolean }
+  | { ok: false; error: string }
+> {
+  const db = await getDb();
+  const doc = await db.collection("orders").findOne({ orderNumber });
+  if (!doc) return { ok: false, error: "Order not found." };
+
+  const items = readOrderItems(doc.items).map((item) => ({
+    slug: item.slug,
+    qty: item.qty,
+  }));
+  let stockDeducted = doc.stockDeducted === true;
+
+  if (status === STOCK_DEDUCT_STATUS && !stockDeducted) {
+    await adjustStockForItems(items, -1);
+    stockDeducted = true;
+  } else if (status === "cancelled" && stockDeducted) {
+    await adjustStockForItems(items, 1);
+    stockDeducted = false;
+  }
+
+  await db
+    .collection("orders")
+    .updateOne({ orderNumber }, { $set: { status, stockDeducted } });
+  return { ok: true, status, stockDeducted };
 }
 
 export async function listTradeIns(limit = 20) {

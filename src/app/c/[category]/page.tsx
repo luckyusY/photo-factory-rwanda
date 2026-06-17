@@ -106,7 +106,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           basePath={`/c/${category.slug}`}
           products={subProducts}
           params={resolvedParams}
-          availableBrands={brandsOf(subProducts)}
+          availableBrands={facetBrands(category.slug, subProducts)}
           extraParams={{ sub: activeSub.slug }}
           categoryLinks={subcategoryLinks}
         />
@@ -160,7 +160,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         basePath={`/c/${category.slug}`}
         products={products}
         params={resolvedParams}
-        availableBrands={brandsOf(products)}
+        availableBrands={facetBrands(category.slug, products)}
         categoryLinks={subcategoryLinks}
       />
     </main>
@@ -243,6 +243,29 @@ function brandLogosFor(slug: string, products: Product[]): BrandLogo[] {
     (logo) => !have.has(logo.name.toLowerCase()),
   );
   return [...own, ...padding].slice(0, 7);
+}
+
+// Brand-filter facet ordered to match the curated list for the category: the
+// curated brands that actually have products come first, then any remaining
+// in-stock brands. Only brands with products are included so no filter is dead.
+function facetBrands(slug: string, products: Product[]): string[] {
+  const actual = brandsOf(products);
+  const curated = curatedBrandNames[slug];
+  if (!curated) return actual;
+  const byLower = new Map(actual.map((brand) => [brand.toLowerCase(), brand]));
+  const ordered: string[] = [];
+  const used = new Set<string>();
+  for (const name of curated) {
+    const match = byLower.get(name.toLowerCase());
+    if (match && !used.has(match.toLowerCase())) {
+      ordered.push(match);
+      used.add(match.toLowerCase());
+    }
+  }
+  for (const brand of actual) {
+    if (!used.has(brand.toLowerCase())) ordered.push(brand);
+  }
+  return ordered;
 }
 
 function categoryCardsFor(

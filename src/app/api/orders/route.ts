@@ -85,6 +85,7 @@ export async function POST(request: Request) {
     deliveryFee,
     total,
     status: "pending",
+    stockDeducted: false,
     createdAt: new Date(),
   };
 

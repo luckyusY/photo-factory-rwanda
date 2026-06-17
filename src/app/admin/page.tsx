@@ -49,7 +49,7 @@ export default async function AdminDashboard() {
           icon={ShoppingBag}
           label="Recent orders"
           value={String(orders.length)}
-          href="/admin/reports"
+          href="/admin/orders"
         />
         <StatCard
           icon={Repeat}
@@ -82,7 +82,12 @@ export default async function AdminDashboard() {
                 {orders.map((order) => (
                   <tr key={order.orderNumber}>
                     <td className="px-4 py-3 font-black text-[#8b641e]">
-                      {order.orderNumber}
+                      <Link
+                        href={`/admin/orders/${encodeURIComponent(order.orderNumber)}`}
+                        className="hover:underline"
+                      >
+                        {order.orderNumber}
+                      </Link>
                     </td>
                     <td className="px-4 py-3">{order.customerName}</td>
                     <td className="px-4 py-3">{order.phone}</td>
