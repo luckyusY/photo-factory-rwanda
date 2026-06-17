@@ -163,9 +163,10 @@ export default async function AdminReportsPage() {
           {topProducts.length === 0 ? (
             <Empty>No sales recorded yet.</Empty>
           ) : (
-            <Table head={["Product", "Units", "Revenue"]}>
-              {topProducts.map((product) => (
+            <Table head={["#", "Product", "Units", "Revenue"]}>
+              {topProducts.map((product, index) => (
                 <tr key={product.name}>
+                  <RowNumber value={index + 1} />
                   <td className="px-4 py-2.5 font-black">
                     <span className="block max-w-80 truncate">{product.name}</span>
                   </td>
@@ -183,9 +184,10 @@ export default async function AdminReportsPage() {
           {paymentRows.length === 0 ? (
             <Empty>No sales recorded yet.</Empty>
           ) : (
-            <Table head={["Method", "Orders", "Revenue"]}>
-              {paymentRows.map(([key, entry]) => (
+            <Table head={["#", "Method", "Orders", "Revenue"]}>
+              {paymentRows.map(([key, entry], index) => (
                 <tr key={key}>
+                  <RowNumber value={index + 1} />
                   <td className="px-4 py-2.5 font-black">
                     {paymentLabels[key] ?? key}
                   </td>
@@ -213,9 +215,10 @@ export default async function AdminReportsPage() {
           {promoRows.length === 0 ? (
             <Empty>No promo codes have been redeemed yet.</Empty>
           ) : (
-            <Table head={["Code", "Uses", "Total discount"]}>
-              {promoRows.map(([code, entry]) => (
+            <Table head={["#", "Code", "Uses", "Total discount"]}>
+              {promoRows.map(([code, entry], index) => (
                 <tr key={code}>
+                  <RowNumber value={index + 1} />
                   <td className="px-4 py-2.5 font-mono font-black">{code}</td>
                   <td className="px-4 py-2.5 text-right">{entry.count}</td>
                   <td className="px-4 py-2.5 text-right font-black">
@@ -231,9 +234,10 @@ export default async function AdminReportsPage() {
           {lowStock.length === 0 ? (
             <Empty>Every product is well stocked.</Empty>
           ) : (
-            <Table head={["Product", "Stock"]}>
-              {lowStock.slice(0, 12).map((product) => (
+            <Table head={["#", "Product", "Stock"]}>
+              {lowStock.slice(0, 12).map((product, index) => (
                 <tr key={product.slug}>
+                  <RowNumber value={index + 1} />
                   <td className="px-4 py-2.5 font-black">
                     <span className="block max-w-80 truncate">{product.name}</span>
                   </td>
@@ -311,7 +315,9 @@ function Table({
             {head.map((label, index) => (
               <th
                 key={label}
-                className={`px-4 py-2.5 ${index === 0 ? "" : "text-right"}`}
+                className={`px-4 py-2.5 ${
+                  index === 0 ? "w-12 text-right" : index === 1 ? "" : "text-right"
+                }`}
               >
                 {label}
               </th>
@@ -323,6 +329,14 @@ function Table({
         </tbody>
       </table>
     </div>
+  );
+}
+
+function RowNumber({ value }: { value: number }) {
+  return (
+    <td className="w-12 px-4 py-2.5 text-right text-xs font-black text-[#6b7280]">
+      {value}
+    </td>
   );
 }
 

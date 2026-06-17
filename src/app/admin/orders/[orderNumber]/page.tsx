@@ -120,6 +120,7 @@ export default async function OrderDetailPage({ params }: Props) {
           <table className="w-full min-w-[560px] text-left text-sm">
             <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
               <tr>
+                <th className="w-12 px-4 py-3 text-right">#</th>
                 <th className="px-5 py-3">Product</th>
                 <th className="px-4 py-3 text-right">Unit price</th>
                 <th className="px-4 py-3 text-center">Qty</th>
@@ -127,10 +128,13 @@ export default async function OrderDetailPage({ params }: Props) {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#f6f2ea] font-semibold">
-              {order.items.map((item) => {
+              {order.items.map((item, index) => {
                 const image = imageBySlug.get(item.slug);
                 return (
                   <tr key={item.slug}>
+                    <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
+                      {index + 1}
+                    </td>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">

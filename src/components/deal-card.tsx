@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { SafeProductImage } from "@/components/safe-product-image";
 import { formatRWF, type Product } from "@/lib/catalog";
 
 export function DealCard({ product }: { product: Product }) {
@@ -12,7 +12,10 @@ export function DealCard({ product }: { product: Product }) {
   );
 
   return (
-    <article className="group relative flex w-full flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:px-3 sm:pb-4 sm:pt-9 lg:px-4">
+    <article
+      data-product-card
+      className="group relative flex w-full flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:px-3 sm:pb-4 sm:pt-9 lg:px-4"
+    >
       {save > 0 && (
         <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
@@ -22,7 +25,7 @@ export function DealCard({ product }: { product: Product }) {
         href={`/p/${product.slug}`}
         className="relative block h-[118px] w-full overflow-hidden sm:h-36 2xl:h-40"
       >
-        <Image
+        <SafeProductImage
           src={product.images[0]}
           alt={product.name}
           fill

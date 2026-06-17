@@ -1,7 +1,7 @@
 import { Star } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton, WishlistButton } from "@/components/add-to-cart-button";
+import { SafeProductImage } from "@/components/safe-product-image";
 import { formatRWF, type Product } from "@/lib/catalog";
 
 export function ProductRow({ product }: { product: Product }) {
@@ -10,7 +10,10 @@ export function ProductRow({ product }: { product: Product }) {
   const monthly = Math.max(1000, Math.round(product.price / months / 1000) * 1000);
 
   return (
-    <article className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 transition hover:bg-[#f6f2ea] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5">
+    <article
+      data-product-card
+      className="group grid grid-cols-[150px_minmax(0,1fr)] gap-4 border-b border-[#e7ddc7] bg-white p-4 transition hover:bg-[#f6f2ea] sm:grid-cols-[180px_minmax(0,1fr)_220px] sm:gap-5"
+    >
       {/* Image */}
       <Link
         href={`/p/${product.slug}`}
@@ -21,7 +24,7 @@ export function ProductRow({ product }: { product: Product }) {
             {product.badge}
           </span>
         )}
-        <Image
+        <SafeProductImage
           src={product.images[0]}
           alt={product.name}
           fill

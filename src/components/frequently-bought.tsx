@@ -1,9 +1,9 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { SafeProductImage } from "@/components/safe-product-image";
 import { useStore } from "@/components/store-context";
 import { formatRWF, type Product } from "@/lib/catalog";
 
@@ -25,7 +25,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_260px]">
       <div className="flex flex-wrap items-center gap-3">
         {items.map((product, index) => (
-          <div key={product.slug} className="flex items-center gap-3">
+          <div key={product.slug} data-product-card className="flex items-center gap-3">
             {index > 0 && <Plus size={22} className="shrink-0 text-[#9ca3af]" />}
             <Link
               href={`/p/${product.slug}`}
@@ -35,7 +35,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
                   : "border-[#e7ddc7] opacity-40"
               }`}
             >
-              <Image
+              <SafeProductImage
                 src={product.images[0]}
                 alt={product.name}
                 fill

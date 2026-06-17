@@ -25,6 +25,7 @@ import { BuyBox } from "@/components/buy-box";
 import { FrequentlyBought } from "@/components/frequently-bought";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
+import { SafeProductImage } from "@/components/safe-product-image";
 import { ProductStickyBar } from "@/components/product-sticky-bar";
 import {
   formatRWF,
@@ -184,7 +185,10 @@ function RailCard({
       : "";
 
   return (
-    <article className="relative flex h-full w-full flex-col bg-white px-3 pb-4 pt-6">
+    <article
+      data-product-card
+      className="relative flex h-full w-full flex-col bg-white px-3 pb-4 pt-6"
+    >
       {save > 0 && (
         <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           {saveLabel}
@@ -199,7 +203,7 @@ function RailCard({
         href={`/p/${product.slug}`}
         className="relative mx-auto grid h-[150px] w-full place-items-center overflow-hidden bg-white"
       >
-        <Image
+        <SafeProductImage
           src={product.images[0]}
           alt={product.name}
           fill

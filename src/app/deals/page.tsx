@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { SafeProductImage } from "@/components/safe-product-image";
 import { formatRWF, dealsOf, sortProducts, type Product } from "@/lib/catalog";
 import { CONTACT_PHONE_TEL, MAPS_URL, WHATSAPP_URL } from "@/lib/contact";
 import { getAllProducts } from "@/lib/products-db";
@@ -140,61 +141,21 @@ function imageForCategory(products: Product[], slug: string) {
   );
 }
 
-function DealsHero({ products }: { products: Product[] }) {
-  const heroProducts = products.slice(0, 5);
-
+function DealsHero() {
   return (
     <section className="relative overflow-hidden bg-[#8b641e] text-white">
-      <Image
-        src={cld("gaming-power", 1800)}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-18"
-      />
-      <div className="absolute inset-0 bg-[#8b641e]/88" />
       <div className="absolute inset-0 opacity-35 [background-image:radial-gradient(circle_at_8px_8px,#fff_1px,transparent_1.5px)] [background-size:18px_18px]" />
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#15110a] to-transparent" />
-      <div className="relative mx-auto grid min-h-[270px] max-w-[1440px] items-center gap-5 px-4 py-8 md:grid-cols-[minmax(0,1fr)_460px] 2xl:px-6">
-        <div className="text-center md:text-left">
-          <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
-            Photo Factory Rwanda
-          </p>
-          <h1 className="mt-3 text-[42px] font-normal leading-none sm:text-[64px]">
-            Deals &amp; Specials
-          </h1>
-          <p className="mt-3 max-w-3xl text-xs font-bold uppercase tracking-[0.22em] text-white/85 md:max-w-xl">
-            Score exclusive savings with our amazing deals
-          </p>
-        </div>
-        <div className="relative hidden min-h-[210px] md:block">
-          {heroProducts.map((product, index) => (
-            <Link
-              key={product.slug}
-              href={`/p/${product.slug}`}
-              className={`absolute grid place-items-center rounded-sm bg-white shadow-2xl ring-1 ring-white/30 ${
-                index === 0
-                  ? "left-20 top-0 z-30 h-44 w-56"
-                  : index === 1
-                    ? "right-8 top-10 z-20 h-36 w-44 rotate-3"
-                    : index === 2
-                      ? "left-0 bottom-2 z-20 h-32 w-44 -rotate-3"
-                      : index === 3
-                        ? "right-32 bottom-0 z-10 h-28 w-36"
-                        : "right-0 bottom-4 z-0 h-24 w-32"
-              }`}
-            >
-              <Image
-                src={product.images[0]}
-                alt={product.name}
-                fill
-                sizes="260px"
-                className="object-contain p-4"
-              />
-            </Link>
-          ))}
-        </div>
+      <div className="relative mx-auto flex min-h-[210px] max-w-[1440px] flex-col items-center justify-center px-4 py-10 text-center 2xl:px-6">
+        <p className="text-[11px] font-black uppercase tracking-[0.38em] text-[#ffde59]">
+          Photo Factory Rwanda
+        </p>
+        <h1 className="mt-3 text-[42px] font-normal leading-none sm:text-[64px]">
+          Deals &amp; Specials
+        </h1>
+        <p className="mt-3 max-w-3xl text-xs font-bold uppercase tracking-[0.22em] text-white/85">
+          Score exclusive savings with our amazing deals
+        </p>
       </div>
     </section>
   );
@@ -213,6 +174,7 @@ function DealProductCard({
 
   return (
     <article
+      data-product-card
       className={`group relative flex min-w-0 flex-col border-r border-[#e4e4e4] bg-white px-2 pb-3 pt-7 sm:px-3 ${
         compact ? "min-h-[284px] sm:min-h-[292px]" : "min-h-[292px] sm:min-h-[330px]"
       }`}
@@ -228,7 +190,7 @@ function DealProductCard({
           compact ? "h-[118px] sm:h-[126px]" : "h-[124px] sm:h-[150px]"
         }`}
       >
-        <Image
+        <SafeProductImage
           src={product.images[0]}
           alt={product.name}
           fill
@@ -367,31 +329,32 @@ function DealShelf({
   );
 }
 
-function SandiskBanner() {
+function SandiskBanner({ image }: { image: string }) {
   return (
     <section className="bg-[#f6f2ea]">
       <Link
-        href="/c/accessories"
-        className="mx-auto grid max-w-[1440px] overflow-hidden bg-[#f6f2ea] md:grid-cols-[310px_minmax(0,1fr)_210px]"
+        href="/c/storage"
+        data-product-card
+        className="mx-auto grid max-w-[1440px] overflow-hidden bg-[#f6f2ea] md:h-[180px] md:grid-cols-[330px_minmax(0,1fr)_210px]"
       >
-        <div className="flex flex-col justify-center bg-white px-6 py-5">
-          <p className="text-3xl font-black uppercase tracking-wide text-[#8b641e]">
+        <div className="flex flex-col justify-center bg-white px-6 py-6">
+          <p className="text-4xl font-black uppercase tracking-wide text-[#8b641e]">
             SanDisk
           </p>
-          <p className="mt-2 text-lg font-black text-[#8b641e]">
+          <p className="mt-2 text-xl font-black text-[#8b641e]">
             More Space to Create
           </p>
           <p className="text-sm font-semibold text-[#333]">
             Get more out of your devices with memory upgrades
           </p>
         </div>
-        <div className="relative min-h-[118px]">
-          <Image
-            src={cld("gifts-for-grads", 1000)}
-            alt="Storage and creator essentials"
+        <div className="relative min-h-[180px] bg-gradient-to-r from-white via-white to-[#f6f2ea]">
+          <SafeProductImage
+            src={image}
+            alt="SanDisk memory cards and storage"
             fill
             sizes="(min-width: 768px) 60vw, 100vw"
-            className="object-cover"
+            className="object-contain p-5"
           />
         </div>
         <div className="flex items-center justify-center bg-[#8b641e] px-5 py-5 text-sm font-black uppercase text-white">
@@ -485,10 +448,16 @@ export default async function DealsPage() {
   const allProducts = await getAllProducts();
   const actualDeals = dealsOf(allProducts).sort((a, b) => savings(b) - savings(a));
   const topDeals = uniqueProducts([...actualDeals, ...sortProducts(allProducts, "rating")]);
+  const sandiskImage =
+    allProducts.find(
+      (product) => product.category === "storage" && /sandisk/i.test(product.brand),
+    )?.images[0] ??
+    allProducts.find((product) => product.category === "storage")?.images[0] ??
+    cld("gifts-for-grads", 1000);
 
   return (
     <main className="min-h-screen bg-[#eeeeee] text-black">
-      <DealsHero products={topDeals} />
+      <DealsHero />
 
       <TopDealsGrid products={topDeals} />
       <CategoryStrip products={allProducts} />
@@ -503,7 +472,7 @@ export default async function DealsPage() {
         />
       ))}
 
-      <SandiskBanner />
+      <SandiskBanner image={sandiskImage} />
 
       {shelfConfig.slice(5).map((shelf) => (
         <DealShelf

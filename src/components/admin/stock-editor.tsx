@@ -120,6 +120,7 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
             <tr>
+              <th className="w-12 px-4 py-3 text-right">#</th>
               <th className="px-4 py-3">Product</th>
               <th className="px-4 py-3">Brand</th>
               <th className="px-4 py-3 text-right">Price</th>
@@ -127,10 +128,13 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#f6f2ea] font-semibold">
-            {rows.map((row) => {
+            {rows.map((row, index) => {
               const value = levels[row.slug];
               return (
                 <tr key={row.slug}>
+                  <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
+                    {index + 1}
+                  </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       <div className="relative h-11 w-12 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">

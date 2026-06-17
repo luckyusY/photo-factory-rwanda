@@ -5,7 +5,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { brands } from "@/lib/catalog";
+import { productBrandLogos } from "@/lib/brand-logos";
 import { departments } from "@/lib/department-menu";
+
+type NavColumn = {
+  label: string;
+  href: string;
+  logo?: string;
+};
+
+const brandLogoByName = new Map(
+  productBrandLogos.map((brand) => [
+    brand.name.toLowerCase().replace(/[^a-z0-9]/g, ""),
+    brand.logo,
+  ]),
+);
+
+function brandHref(brand: string) {
+  return `/brands/${encodeURIComponent(brand.toLowerCase())}`;
+}
+
+function brandLogo(brand: string) {
+  return brandLogoByName.get(brand.toLowerCase().replace(/[^a-z0-9]/g, ""));
+}
 
 const navMenus = [
   {
@@ -21,9 +43,10 @@ const navMenus = [
   {
     label: "Brands",
     href: "/brands",
-    columns: brands.slice(0, 12).map((b) => ({
-      label: b,
-      href: `/brands/${b.toLowerCase()}`,
+    columns: brands.slice(0, 16).map((brand) => ({
+      label: brand,
+      href: brandHref(brand),
+      logo: brandLogo(brand),
     })),
     promo: {
       eyebrow: "Authorized retailer",
@@ -194,13 +217,23 @@ export function MainNav() {
                 </Link>
               </div>
               <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-                {active.columns.map((item) => (
+                {(active.columns as NavColumn[]).map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 text-sm font-bold hover:border-[#d9a441]"
+                    className="flex min-h-16 items-center justify-center rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 text-center text-sm font-bold hover:border-[#d9a441]"
                   >
-                    {item.label}
+                    {active.label === "Brands" && item.logo ? (
+                      <Image
+                        src={item.logo}
+                        alt={item.label}
+                        width={112}
+                        height={34}
+                        className="max-h-8 w-auto object-contain"
+                      />
+                    ) : (
+                      item.label
+                    )}
                   </Link>
                 ))}
               </div>

@@ -69,6 +69,7 @@ export default async function AdminDashboard() {
             <table className="w-full min-w-[760px] text-left text-sm">
               <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
                 <tr>
+                  <th className="w-12 px-4 py-3 text-right">#</th>
                   <th className="px-4 py-3">Order</th>
                   <th className="px-4 py-3">Customer</th>
                   <th className="px-4 py-3">Phone</th>
@@ -79,8 +80,11 @@ export default async function AdminDashboard() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#f6f2ea] font-semibold">
-                {orders.map((order) => (
+                {orders.map((order, index) => (
                   <tr key={order.orderNumber}>
+                    <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
+                      {index + 1}
+                    </td>
                     <td className="px-4 py-3 font-black text-[#8b641e]">
                       <Link
                         href={`/admin/orders/${encodeURIComponent(order.orderNumber)}`}
@@ -117,6 +121,7 @@ export default async function AdminDashboard() {
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead className="bg-[#f6f2ea] text-xs font-black uppercase tracking-wide text-[#8b641e]">
                 <tr>
+                  <th className="w-12 px-4 py-3 text-right">#</th>
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Phone</th>
                   <th className="px-4 py-3">Item</th>
@@ -127,6 +132,9 @@ export default async function AdminDashboard() {
               <tbody className="divide-y divide-[#f6f2ea] font-semibold">
                 {tradeIns.map((tradeIn, index) => (
                   <tr key={`${tradeIn.phone}-${index}`}>
+                    <td className="px-4 py-3 text-right text-xs font-black text-[#6b7280]">
+                      {index + 1}
+                    </td>
                     <td className="px-4 py-3">{tradeIn.name}</td>
                     <td className="px-4 py-3">{tradeIn.phone}</td>
                     <td className="px-4 py-3">{tradeIn.item}</td>
