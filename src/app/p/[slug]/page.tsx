@@ -459,7 +459,7 @@ export default async function ProductPage({ params }: Props) {
   const protectionBase = Math.max(45000, Math.round(product.price * 0.07 / 1000) * 1000);
 
   return (
-    <main className="bg-white pb-20 text-black">
+    <main className="bg-[#F5F5F5] pb-20 text-black">
       <ProductStickyBar
         slug={product.slug}
         name={product.name}

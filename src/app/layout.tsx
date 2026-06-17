@@ -63,7 +63,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} ${dancingScript.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col bg-[#f6f2ea] text-[#111827] antialiased">
+      <body className="flex min-h-full flex-col bg-[#F5F5F5] text-[#111827] antialiased">
         <SmoothScroll />
         <SiteHeader />
         <div className="flex-1">{children}</div>

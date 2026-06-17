@@ -325,7 +325,7 @@ function DepartmentPage({
     [...products].sort((a, b) => b.reviews - a.reviews)[0] ?? flagship;
 
   return (
-    <main className="bg-[#f1f1f1] text-black">
+    <main className="bg-[#F5F5F5] text-black">
       <section className="relative h-[190px] overflow-hidden border-b border-[#e7ddc7] bg-black md:h-[250px]">
         <Image
           src={heroImage}

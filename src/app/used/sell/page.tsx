@@ -72,7 +72,7 @@ const buyLists = [
 
 export default function SellPage() {
   return (
-    <main className="bg-[#f6f2ea]">
+    <main className="bg-[#F5F5F5]">
       <section className="bg-[#15110a] text-white">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-center">
           <div>

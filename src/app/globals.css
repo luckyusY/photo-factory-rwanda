@@ -8,10 +8,10 @@
   --brand-gold-bright: #d9a441;
   --brand-gold-light: #ffcf57;
 
-  --background: #f6f2ea;
+  --background: #f5f5f5;
   --foreground: #15110a;
   --surface: #ffffff;
-  --rail-fade: #f6f2ea;
+  --rail-fade: #f5f5f5;
 }
 
 @theme inline {
