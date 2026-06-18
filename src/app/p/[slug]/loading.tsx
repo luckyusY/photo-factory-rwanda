@@ -15,7 +15,7 @@ export default function Loading() {
           </div>
           <Skeleton className="aspect-square flex-1 rounded-sm" />
         </div>
-        <div className="rounded-sm border border-[#e7ddc7] p-4">
+        <div className="rounded-sm border border-[#e5e5e5] p-4">
           <Skeleton className="h-5 w-24" />
           <Skeleton className="mt-3 h-9 w-40" />
           <Skeleton className="mt-4 h-12 w-full rounded-sm" />

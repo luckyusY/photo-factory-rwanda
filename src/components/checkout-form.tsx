@@ -9,7 +9,7 @@ import { useStore } from "@/components/store-context";
 import { formatRWF } from "@/lib/catalog";
 
 const inputClass =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 const KIGALI_DELIVERY_FEE = 3000;
 
@@ -89,7 +89,7 @@ export function CheckoutForm() {
         <p className="text-xl font-black">Your cart is empty.</p>
         <Link
           href="/deals"
-          className="mt-5 inline-block rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
+          className="mt-5 inline-block rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Shop deals
         </Link>
@@ -215,7 +215,7 @@ export function CheckoutForm() {
               />
             ))}
           </div>
-          <p className="mt-4 rounded bg-[#f6f2ea] p-3 text-sm font-semibold text-[#15110a]">
+          <p className="mt-4 rounded bg-[#f6f2ea] p-3 text-sm font-semibold text-[#1a1a1a]">
             Pay with cash when your order is delivered or when you pick it up in
             store. Our team will call to confirm your order and arrange
             delivery.
@@ -247,14 +247,14 @@ export function CheckoutForm() {
             </div>
           ))}
         </div>
-        <div className="mt-4 border-t border-[#e5e7eb] pt-4">
+        <div className="mt-4 border-t border-[#e5e5e5] pt-4">
           <label className="block text-xs font-black uppercase tracking-wide text-[#6b7280]">
             Promo code
           </label>
           {appliedPromo ? (
             <div className="mt-1 flex items-center justify-between gap-2 rounded bg-[#f6f2ea] px-3 py-2">
               <div className="min-w-0">
-                <p className="truncate text-sm font-black text-[#15110a]">
+                <p className="truncate text-sm font-black text-[#1a1a1a]">
                   {appliedPromo.code} applied
                 </p>
                 {appliedPromo.description && (
@@ -293,7 +293,7 @@ export function CheckoutForm() {
             <p className="mt-1 text-xs font-bold text-[#b91c1c]">{promoError}</p>
           )}
         </div>
-        <dl className="mt-4 space-y-2 border-t border-[#e5e7eb] pt-4 text-sm font-semibold">
+        <dl className="mt-4 space-y-2 border-t border-[#e5e5e5] pt-4 text-sm font-semibold">
           <div className="flex justify-between">
             <dt>Subtotal</dt>
             <dd>{formatRWF(subtotal)}</dd>
@@ -309,19 +309,19 @@ export function CheckoutForm() {
             <dd>{deliveryFee === 0 ? "Free" : formatRWF(deliveryFee)}</dd>
           </div>
         </dl>
-        <div className="mt-3 flex justify-between border-t border-[#e5e7eb] pt-3 text-lg font-black">
+        <div className="mt-3 flex justify-between border-t border-[#e5e5e5] pt-3 text-lg font-black">
           <span>Total</span>
-          <span className="text-[#15110a]">{formatRWF(total)}</span>
+          <span className="text-[#1a1a1a]">{formatRWF(total)}</span>
         </div>
         {status === "error" && (
-          <p className="mt-3 text-sm font-bold text-[#15110a]">
+          <p className="mt-3 text-sm font-bold text-[#1a1a1a]">
             We couldn&apos;t place your order. Please try again or call us.
           </p>
         )}
         <button
           type="submit"
           disabled={status === "sending" || !hydrated}
-          className="mt-5 w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
+          className="mt-5 w-full rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#C89B3C] disabled:opacity-60"
         >
           {status === "sending" ? "Placing order..." : "Place order"}
         </button>
@@ -352,7 +352,7 @@ function OptionCard({
       className={`rounded border-2 p-3 text-left transition ${
         active
           ? "border-[#8b641e] bg-[#f6f2ea]"
-          : "border-[#e7ddc7] hover:border-[#e7ddc7]"
+          : "border-[#e5e5e5] hover:border-[#e5e5e5]"
       }`}
     >
       <p className="text-sm font-black">{title}</p>

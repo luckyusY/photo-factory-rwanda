@@ -13,7 +13,7 @@ export default function NotFound() {
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
           href="/"
-          className="rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
+          className="rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Back to home
         </Link>

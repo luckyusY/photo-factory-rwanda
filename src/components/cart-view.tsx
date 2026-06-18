@@ -45,7 +45,7 @@ export function CartView() {
         <div className="mt-5 flex justify-center gap-3">
           <Link
             href="/deals"
-            className="rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
+            className="rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white"
           >
             Shop deals
           </Link>
@@ -91,7 +91,7 @@ export function CartView() {
                 {product.brand} • {product.condition}
               </p>
               <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3">
-                <div className="flex items-center rounded border border-[#e7ddc7]">
+                <div className="flex items-center rounded border border-[#e5e5e5]">
                   <button
                     aria-label="Decrease quantity"
                     onClick={() => setQty(product.slug, qty - 1)}
@@ -111,7 +111,7 @@ export function CartView() {
                   </button>
                 </div>
                 <div className="flex items-center gap-3">
-                  <p className="font-black text-[#15110a]">
+                  <p className="font-black text-[#1a1a1a]">
                     {formatRWF(product.price * qty)}
                   </p>
                   <button
@@ -139,13 +139,13 @@ export function CartView() {
             <dd>Calculated at checkout</dd>
           </div>
         </dl>
-        <div className="mt-4 flex justify-between border-t border-[#e5e7eb] pt-4 text-lg font-black">
+        <div className="mt-4 flex justify-between border-t border-[#e5e5e5] pt-4 text-lg font-black">
           <span>Total</span>
-          <span className="text-[#15110a]">{formatRWF(subtotal)}</span>
+          <span className="text-[#1a1a1a]">{formatRWF(subtotal)}</span>
         </div>
         <Link
           href="/checkout"
-          className="mt-5 block rounded-sm bg-[#8b641e] px-6 py-3 text-center text-sm font-black uppercase text-white hover:bg-[#8b641e]"
+          className="mt-5 block rounded-sm bg-[#C89B3C] px-6 py-3 text-center text-sm font-black uppercase text-white hover:bg-[#C89B3C]"
         >
           Proceed to checkout
         </Link>

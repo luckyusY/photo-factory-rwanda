@@ -54,7 +54,7 @@ export function OrderStatusControl({
       <select
         value={value}
         onChange={(e) => setValue(e.target.value as OrderStatus)}
-        className="rounded border border-[#e7ddc7] bg-white px-3 py-2 text-sm font-bold capitalize outline-none focus:border-[#8b641e]"
+        className="rounded border border-[#e5e5e5] bg-white px-3 py-2 text-sm font-bold capitalize outline-none focus:border-[#8b641e]"
       >
         {ORDER_STATUSES.map((option) => (
           <option key={option} value={option} className="capitalize">
@@ -65,7 +65,7 @@ export function OrderStatusControl({
       <button
         onClick={save}
         disabled={saving || value === status}
-        className="rounded-sm bg-[#8b641e] px-6 py-2 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+        className="rounded-sm bg-[#C89B3C] px-6 py-2 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
       >
         {saving ? "Saving..." : "Update status"}
       </button>

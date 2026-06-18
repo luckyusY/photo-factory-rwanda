@@ -133,7 +133,7 @@ function SlideContent({
           } ${dark ? "text-white" : "text-black"}`}
         >
           {slide.label && (
-            <span className="inline-block w-fit bg-[#8b641e] px-4 py-1 text-[11px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,84%_50%,100%_100%,0_100%)] sm:px-5 sm:py-1.5">
+            <span className="inline-block w-fit bg-[#C89B3C] px-4 py-1 text-[11px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,84%_50%,100%_100%,0_100%)] sm:px-5 sm:py-1.5">
               {slide.label}
             </span>
           )}
@@ -161,7 +161,7 @@ function SlideContent({
           )}
           <Link
             href={slide.href}
-            className="press mt-3 inline-flex w-fit min-w-28 justify-center rounded-sm bg-[#8b641e] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#8b641e] sm:mt-4 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
+            className="press mt-3 inline-flex w-fit min-w-28 justify-center rounded-sm bg-[#C89B3C] px-5 py-2.5 text-[11px] font-black uppercase text-white shadow-[0_3px_0_rgba(0,0,0,0.18)] hover:bg-[#C89B3C] sm:mt-4 sm:min-w-52 sm:px-8 sm:py-3 sm:text-xs"
           >
             {slide.cta}
           </Link>

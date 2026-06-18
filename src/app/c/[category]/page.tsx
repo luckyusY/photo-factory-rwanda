@@ -79,7 +79,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
     const subProducts = bySubcategory(products, activeSub.slug);
     return (
       <main>
-        <section className="border-b border-[#e7ddc7] bg-[#F5F5F5]">
+        <section className="border-b border-[#e5e5e5] bg-[#F5F5F5]">
           <div className="mx-auto max-w-7xl px-4 py-4">
             <nav className="text-xs font-semibold text-[#6b7280]">
               <Link href="/" className="text-[#8b641e] hover:underline">
@@ -137,7 +137,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   // plain filterable listing.
   return (
     <main>
-      <section className="border-b border-[#e7ddc7] bg-[#F5F5F5]">
+      <section className="border-b border-[#e5e5e5] bg-[#F5F5F5]">
         <div className="mx-auto max-w-7xl px-4 py-4">
           <nav className="text-xs font-semibold text-[#6b7280]">
             <Link href="/" className="text-[#8b641e] hover:underline">
@@ -326,7 +326,7 @@ function DepartmentPage({
 
   return (
     <main className="bg-[#F5F5F5] text-black">
-      <section className="relative h-[190px] overflow-hidden border-b border-[#e7ddc7] bg-black md:h-[250px]">
+      <section className="relative h-[190px] overflow-hidden border-b border-[#e5e5e5] bg-black md:h-[250px]">
         <Image
           src={heroImage}
           alt={displayName}
@@ -459,7 +459,7 @@ function PromoBand({
           <p className="mt-2 text-sm">{body}</p>
           <Link
             href={href}
-            className="mt-4 inline-flex bg-[#8b641e] px-10 py-2 text-xs font-black uppercase text-white shadow"
+            className="mt-4 inline-flex bg-[#C89B3C] px-10 py-2 text-xs font-black uppercase text-white shadow"
           >
             Shop Now
           </Link>
@@ -503,7 +503,7 @@ function DarkAdBand({
           </p>
           <Link
             href={`/p/${product.slug}`}
-            className="mt-4 inline-flex bg-[#8b641e] px-9 py-2 text-xs font-black uppercase text-white shadow"
+            className="mt-4 inline-flex bg-[#C89B3C] px-9 py-2 text-xs font-black uppercase text-white shadow"
           >
             Shop Now
           </Link>
@@ -525,7 +525,7 @@ function LightAdBand({ product, href }: { product: Product; href: string }) {
     <section className="mx-auto max-w-7xl px-3 pb-10 sm:px-4">
       <div className="relative min-h-[120px] overflow-hidden bg-[#f6f2ea] px-8 py-7">
         <div className="relative z-10 max-w-md">
-          <p className="text-3xl font-black uppercase text-[#15110a]">
+          <p className="text-3xl font-black uppercase text-[#1a1a1a]">
             {product.brand}
           </p>
           <h2 className="text-xl font-black">More to Explore</h2>
@@ -535,7 +535,7 @@ function LightAdBand({ product, href }: { product: Product; href: string }) {
         </div>
         <Link
           href={href}
-          className="relative z-10 mt-5 inline-flex bg-[#8b641e] px-9 py-2 text-xs font-black uppercase text-white shadow"
+          className="relative z-10 mt-5 inline-flex bg-[#C89B3C] px-9 py-2 text-xs font-black uppercase text-white shadow"
         >
           Shop Now
         </Link>
@@ -556,10 +556,10 @@ function SupportStrip() {
       <div className="mx-auto grid max-w-7xl gap-8 px-4 text-center sm:grid-cols-2 lg:grid-cols-4">
         {items.map(([title, body, link]) => (
           <div key={title}>
-            <div className="mx-auto mb-4 grid h-24 w-24 place-items-center rounded-full border-2 border-[#e7ddc7] text-3xl text-[#8b641e]">
+            <div className="mx-auto mb-4 grid h-24 w-24 place-items-center rounded-full border-2 border-[#e5e5e5] text-3xl text-[#8b641e]">
               {title[0]}
             </div>
-            <h3 className="text-2xl font-light text-[#15110a]">{title}</h3>
+            <h3 className="text-2xl font-light text-[#1a1a1a]">{title}</h3>
             <p className="mt-1 text-sm leading-5 text-black">{body}</p>
             <p className="text-sm text-[#8b641e]">{link}</p>
           </div>

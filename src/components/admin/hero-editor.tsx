@@ -92,7 +92,7 @@ export function HeroEditor({
         <div className="space-y-4">
           {slides.map((slide, index) => (
             <div key={index} className="rounded bg-white p-4 ring-1 ring-black/10">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e5e7eb] pb-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e5e5e5] pb-3">
                 <p className="text-sm font-black">
                   Slide {index + 1}
                   {slide.title ? ` - ${slide.title}` : ""}
@@ -212,7 +212,7 @@ export function HeroEditor({
                       <option value="center">Center</option>
                     </select>
                   </Field>
-                  <label className="flex items-center gap-2 rounded border border-[#e7ddc7] bg-[#f8fafc] px-3 py-2 text-xs font-bold text-[#374151] sm:col-span-2">
+                  <label className="flex items-center gap-2 rounded border border-[#e5e5e5] bg-[#f8fafc] px-3 py-2 text-xs font-bold text-[#374151] sm:col-span-2">
                     <input
                       type="checkbox"
                       checked={slide.imageOnly === true}
@@ -446,11 +446,11 @@ function SaveBar({
   note: string;
 }) {
   return (
-    <div className="sticky bottom-0 z-20 mt-5 flex flex-wrap gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea]/95 py-4 backdrop-blur">
+    <div className="sticky bottom-0 z-20 mt-5 flex flex-wrap gap-3 border-t border-[#e5e5e5] bg-[#f6f2ea]/95 py-4 backdrop-blur">
       <button
         onClick={onSave}
         disabled={saving}
-        className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+        className="press rounded-sm bg-[#C89B3C] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
       >
         {saving ? "Saving..." : "Save changes"}
       </button>
@@ -506,8 +506,8 @@ function IconButton({
       disabled={disabled}
       className={`grid h-8 w-8 place-items-center rounded border disabled:opacity-30 ${
         danger
-          ? "border-[#fca5a5] text-[#15110a] hover:bg-[#fef2f2]"
-          : "border-[#e7ddc7] text-[#374151] hover:bg-[#f6f2ea]"
+          ? "border-[#fca5a5] text-[#1a1a1a] hover:bg-[#fef2f2]"
+          : "border-[#e5e5e5] text-[#374151] hover:bg-[#f6f2ea]"
       }`}
     >
       {children}

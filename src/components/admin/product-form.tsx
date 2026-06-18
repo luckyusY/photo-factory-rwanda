@@ -9,7 +9,7 @@ import { categories, type Product } from "@/lib/catalog";
 const TINYMCE_API_KEY = "wp1cro1p0yeuzcvdwyejs4pfm061yj4mzoflk6yak9z6obef";
 
 const inputClass =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 const panelClass = "rounded bg-white p-5 ring-1 ring-black/10";
 
@@ -266,13 +266,13 @@ export function ProductForm({ product }: Props) {
               title="Preview"
               description="This is the main product card image customers will see first."
             />
-            <div className="mt-4 overflow-hidden rounded border border-[#e7ddc7] bg-white">
+            <div className="mt-4 overflow-hidden rounded border border-[#e5e5e5] bg-white">
               <ImagePreview
                 url={images.map((image) => image.trim()).filter(Boolean)[0]}
                 label="Main product image"
                 large
               />
-              <div className="border-t border-[#e5e7eb] p-3">
+              <div className="border-t border-[#e5e5e5] p-3">
                 <p className="line-clamp-2 text-sm font-bold">
                   {String(product?.name ?? "Product name")}
                 </p>
@@ -284,11 +284,11 @@ export function ProductForm({ product }: Props) {
             </div>
           </section>
 
-          {error && <p className="text-sm font-bold text-[#15110a]">{error}</p>}
+          {error && <p className="text-sm font-bold text-[#1a1a1a]">{error}</p>}
           <button
             type="submit"
             disabled={sending}
-            className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
+            className="w-full rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#C89B3C] disabled:opacity-60"
           >
             {sending ? "Saving..." : product ? "Save changes" : "Add product"}
           </button>
@@ -323,7 +323,7 @@ function RichTextEditor({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="mt-1 overflow-hidden rounded border border-[#e7ddc7] bg-white">
+    <div className="mt-1 overflow-hidden rounded border border-[#e5e5e5] bg-white">
       <Editor
         apiKey={TINYMCE_API_KEY}
         value={value}
@@ -454,7 +454,7 @@ function ImageRow({
   }
 
   return (
-    <div className="grid gap-3 rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]">
+    <div className="grid gap-3 rounded border border-[#e5e5e5] bg-[#f8fafc] p-3 md:grid-cols-[132px_minmax(0,1fr)]">
       <ImagePreview
         url={image.trim()}
         label={index === 0 ? "Main image" : `Image ${index + 1}`}
@@ -526,7 +526,7 @@ function ImagePreview({
 
   return (
     <div
-      className={`relative grid place-items-center overflow-hidden rounded border border-[#e7ddc7] bg-white ${
+      className={`relative grid place-items-center overflow-hidden rounded border border-[#e5e5e5] bg-white ${
         large ? "aspect-[4/3]" : "h-[112px] md:h-[118px]"
       }`}
     >
@@ -670,7 +670,7 @@ function IconButton({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-[#e7ddc7] bg-white text-[#8b641e] transition hover:border-[#8b641e] hover:bg-[#f6f2ea] disabled:cursor-not-allowed disabled:opacity-40"
+      className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-[#e5e5e5] bg-white text-[#8b641e] transition hover:border-[#8b641e] hover:bg-[#f6f2ea] disabled:cursor-not-allowed disabled:opacity-40"
     >
       {children}
     </button>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const inputClass =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function TradeInForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
@@ -40,7 +40,7 @@ export function TradeInForm() {
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-5 rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white"
+          className="mt-5 rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white"
         >
           Submit another item
         </button>
@@ -106,14 +106,14 @@ export function TradeInForm() {
         </select>
       </label>
       {status === "error" && (
-        <p className="text-sm font-bold text-[#15110a]">
+        <p className="text-sm font-bold text-[#1a1a1a]">
           Something went wrong. Please try again or WhatsApp us directly.
         </p>
       )}
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e] disabled:opacity-60"
+        className="w-full rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#C89B3C] disabled:opacity-60"
       >
         {status === "sending" ? "Sending..." : "Request my quote"}
       </button>

@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 export const adminInput =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 /**
  * Image URL input paired with a "Upload" button that sends a file to

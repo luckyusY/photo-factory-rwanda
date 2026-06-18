@@ -70,11 +70,11 @@ export function CategoriesEditor({ initial }: { initial: CategoryContent[] }) {
           </div>
         ))}
       </div>
-      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea] py-4">
+      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e5e5e5] bg-[#f6f2ea] py-4">
         <button
           onClick={() => save(items)}
           disabled={saving}
-          className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+          className="press rounded-sm bg-[#C89B3C] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save changes"}
         </button>

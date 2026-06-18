@@ -14,14 +14,14 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article
       data-product-card
-      className="group relative flex h-full min-w-0 flex-col border border-[#e2e2e2] bg-white px-2 pb-3 pt-7 sm:px-4 sm:pb-4 sm:pt-9"
+      className="group relative flex h-full min-w-0 flex-col border border-[#e5e5e5] bg-white px-2 pb-3 pt-7 sm:px-4 sm:pb-4 sm:pt-9"
     >
       {save > 0 ? (
-        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#C89B3C] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
         </span>
       ) : product.badge ? (
-        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#C89B3C] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           {product.badge}
         </span>
       ) : null}

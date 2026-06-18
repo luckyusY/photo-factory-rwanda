@@ -37,7 +37,7 @@ export default async function UsedPage({
           </div>
           <Link
             href="/used/sell"
-            className="rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase hover:bg-[#8b641e]"
+            className="rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase hover:bg-[#C89B3C]"
           >
             Sell or trade your gear
           </Link>

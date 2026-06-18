@@ -31,8 +31,8 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
               href={`/p/${product.slug}`}
               className={`relative block h-28 w-28 overflow-hidden rounded-sm border bg-white sm:h-36 sm:w-36 ${
                 checked.includes(product.slug)
-                  ? "border-[#e7ddc7]"
-                  : "border-[#e7ddc7] opacity-40"
+                  ? "border-[#e5e5e5]"
+                  : "border-[#e5e5e5] opacity-40"
               }`}
             >
               <SafeProductImage
@@ -59,7 +59,7 @@ export function FrequentlyBought({ items }: { items: Product[] }) {
           }}
           disabled={selected.length === 0}
           className={`mt-3 w-full rounded-sm px-4 py-3 text-sm font-black text-white transition disabled:opacity-50 ${
-            added ? "bg-[#8b641e]" : "bg-[#8b641e] hover:bg-[#8b641e]"
+            added ? "bg-[#C89B3C]" : "bg-[#C89B3C] hover:bg-[#C89B3C]"
           }`}
         >
           {added

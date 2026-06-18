@@ -45,7 +45,7 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
           setTimeout(() => setAdded(false), 1500);
         }}
         className={`press flex w-full items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-[15px] font-black text-white transition ${
-          added ? "bg-[#8b641e]" : "bg-[#8b641e] hover:bg-[#8b641e]"
+          added ? "bg-[#C89B3C]" : "bg-[#C89B3C] hover:bg-[#C89B3C]"
         }`}
       >
         {added ? (
@@ -63,7 +63,7 @@ export function BuyBox({ slug, stock }: { slug: string; stock: number }) {
           addToCart(slug, qty);
           router.push("/checkout");
         }}
-        className="press w-full rounded-sm bg-[#8b641e] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
+        className="press w-full rounded-sm bg-[#C89B3C] px-4 py-3 text-sm font-black uppercase text-white hover:bg-[#C89B3C]"
       >
         Buy now
       </button>

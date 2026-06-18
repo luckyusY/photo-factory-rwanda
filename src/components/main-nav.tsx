@@ -125,7 +125,7 @@ export function MainNav() {
       {active?.label === "Products" && (
         <div className="absolute left-1/2 top-full z-[90] w-[min(1440px,calc(100vw-24px))] -translate-x-1/2 bg-white text-[#111827] shadow-2xl ring-1 ring-black/10">
           <div className="grid min-h-[560px] grid-cols-[220px_minmax(0,1fr)_240px] 2xl:grid-cols-[240px_minmax(0,1fr)_260px]">
-            <aside className="border-r border-[#e7ddc7] px-3 py-5">
+            <aside className="border-r border-[#e5e5e5] px-3 py-5">
               {departments.map((department) => (
                 <Link
                   key={department.slug}
@@ -143,7 +143,7 @@ export function MainNav() {
                   <ChevronDown className="-rotate-90" size={18} />
                 </Link>
               ))}
-              <div className="mx-5 my-5 h-px bg-[#e7ddc7]" />
+              <div className="mx-5 my-5 h-px bg-[#e5e5e5]" />
               {["New Arrivals", "Pre Order", "Gift Cards", "Gift Ideas"].map((item) => (
                 <Link
                   key={item}
@@ -221,7 +221,7 @@ export function MainNav() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="flex min-h-16 items-center justify-center rounded border border-[#e7ddc7] bg-[#f8fafc] p-3 text-center text-sm font-bold hover:border-[#d9a441]"
+                    className="flex min-h-16 items-center justify-center rounded border border-[#e5e5e5] bg-[#f8fafc] p-3 text-center text-sm font-bold hover:border-[#d9a441]"
                   >
                     {active.label === "Brands" && item.logo ? (
                       <Image

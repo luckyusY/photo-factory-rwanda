@@ -129,7 +129,7 @@ export function ProductListing({
 
   return (
     <div className="mx-auto max-w-[1440px] bg-[#F5F5F5] px-2 py-4 text-[#1A1A1A] sm:px-4 sm:py-6 2xl:px-6">
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b-2 border-[#E5E5E5] bg-white p-4 ring-1 ring-black/5">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-4 border-b-2 border-[#e5e5e5] bg-white p-4 ring-1 ring-black/5">
         <div>
           <h1 className="text-2xl font-semibold text-black">{title}</h1>
           {subtitle && (
@@ -152,7 +152,7 @@ export function ProductListing({
             </Link>
           )}
           {categoryLinks.length > 0 && (
-            <div className="border-2 border-[#E5E5E5] bg-white p-4">
+            <div className="border-2 border-[#e5e5e5] bg-white p-4">
               <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
                 Categories
               </h2>
@@ -257,7 +257,7 @@ function FilterGroup({
   children: React.ReactNode;
 }) {
   return (
-    <div className="border-2 border-[#E5E5E5] bg-white p-4">
+    <div className="border-2 border-[#e5e5e5] bg-white p-4">
       <h2 className="text-[13px] font-black uppercase tracking-wider text-black">
         {title}
       </h2>

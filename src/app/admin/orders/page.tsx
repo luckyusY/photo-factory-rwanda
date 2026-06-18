@@ -85,7 +85,7 @@ export default async function AdminOrdersPage() {
                   <td className="px-4 py-3 text-right">
                     <Link
                       href={`/admin/orders/${encodeURIComponent(order.orderNumber)}`}
-                      className="rounded bg-[#8b641e] px-3 py-1.5 text-xs font-black uppercase text-white"
+                      className="rounded bg-[#C89B3C] px-3 py-1.5 text-xs font-black uppercase text-white"
                     >
                       View
                     </Link>

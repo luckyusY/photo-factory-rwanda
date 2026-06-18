@@ -36,7 +36,7 @@ export function DeleteProductButton({
     <button
       onClick={handleDelete}
       disabled={busy}
-      className="rounded bg-[#8b641e] px-3 py-1.5 text-xs font-black uppercase text-white disabled:opacity-60"
+      className="rounded bg-[#C89B3C] px-3 py-1.5 text-xs font-black uppercase text-white disabled:opacity-60"
     >
       {busy ? "..." : "Delete"}
     </button>

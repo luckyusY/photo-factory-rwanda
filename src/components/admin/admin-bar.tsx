@@ -33,7 +33,7 @@ export function AdminBar() {
           key={link.href}
           href={link.href}
           className={`rounded px-4 py-2 text-sm font-black ${
-            pathname === link.href ? "bg-white text-[#15110a]" : "hover:bg-white/15"
+            pathname === link.href ? "bg-white text-[#1a1a1a]" : "hover:bg-white/15"
           }`}
         >
           {link.label}

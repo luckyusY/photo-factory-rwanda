@@ -101,13 +101,13 @@ export default function SellPage() {
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href="#quote"
-                className="bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
+                className="bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#C89B3C]"
               >
                 Get my quote
               </a>
               <Link
                 href="/used"
-                className="border border-white/50 px-6 py-3 text-sm font-black uppercase text-white hover:bg-white hover:text-[#15110a]"
+                className="border border-white/50 px-6 py-3 text-sm font-black uppercase text-white hover:bg-white hover:text-[#1a1a1a]"
               >
                 Shop pre-owned
               </Link>
@@ -139,9 +139,9 @@ export default function SellPage() {
       <section className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid gap-4 md:grid-cols-3">
           {steps.map((step, index) => (
-            <div key={step.title} className="border border-[#e7ddc7] bg-white p-5">
+            <div key={step.title} className="border border-[#e5e5e5] bg-white p-5">
               <div className="flex items-center gap-3">
-                <span className="grid h-9 w-9 place-items-center bg-[#8b641e] text-sm font-black text-white">
+                <span className="grid h-9 w-9 place-items-center bg-[#C89B3C] text-sm font-black text-white">
                   {index + 1}
                 </span>
                 <step.icon className="text-[#8b641e]" size={26} />
@@ -153,7 +153,7 @@ export default function SellPage() {
         </div>
 
         <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_390px]">
-          <section className="border border-[#e7ddc7] bg-white p-6">
+          <section className="border border-[#e5e5e5] bg-white p-6">
             <p className="text-sm font-black uppercase tracking-wider text-[#8b641e]">
               What we buy
             </p>
@@ -179,7 +179,7 @@ export default function SellPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-7 border-t border-[#e7ddc7] pt-5 text-sm leading-6 text-[#4b5563]">
+            <div className="mt-7 border-t border-[#e5e5e5] pt-5 text-sm leading-6 text-[#4b5563]">
               Items must power on and function. Bring original boxes,
               batteries, chargers, invoices, and accessories for the strongest
               offer. Condition, market demand, and completeness affect the final
@@ -187,7 +187,7 @@ export default function SellPage() {
             </div>
           </section>
 
-          <aside className="h-fit border border-[#e7ddc7] bg-white p-6">
+          <aside className="h-fit border border-[#e5e5e5] bg-white p-6">
             <p className="text-sm font-black uppercase tracking-wider text-[#8b641e]">
               Local support
             </p>

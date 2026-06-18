@@ -227,7 +227,7 @@ export function MobileShopMenu() {
             <span className="relative">
               <ShoppingCart size={24} />
               {cartCount > 0 && (
-                <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[#8b641e] px-0.5 text-[9px] font-black">
+                <span className="absolute -right-2 -top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-[#C89B3C] px-0.5 text-[9px] font-black">
                   {cartCount}
                 </span>
               )}
@@ -243,7 +243,7 @@ export function MobileShopMenu() {
           onClick={close}
         >
           <div
-            className="sheet-panel absolute inset-x-2 bottom-14 top-14 overflow-hidden rounded-t-xl bg-[#f2f2f2] shadow-2xl"
+            className="sheet-panel absolute inset-x-2 bottom-14 top-14 overflow-hidden rounded-t-xl bg-[#f5f5f5] shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="absolute inset-x-0 top-1.5 z-10 mx-auto h-1 w-10 rounded-full bg-white/50" />
@@ -261,7 +261,7 @@ export function MobileShopMenu() {
                   onClick={() => selectTab(tab)}
                   className={`shrink-0 rounded-t px-4 py-3 text-lg font-bold ${
                     activeTab === tab
-                      ? "bg-white text-[#15110a]"
+                      ? "bg-white text-[#1a1a1a]"
                       : "bg-[#15110a] text-white"
                   }`}
                 >
@@ -324,7 +324,7 @@ export function MobileShopMenu() {
                   <MenuRow key={item.label} item={item} boxed onNavigate={close} />
                 ))}
               <div className="mt-8 space-y-4 bg-white p-4 text-sm text-[#111827] shadow-sm">
-                <p className="text-lg font-bold text-[#15110a]">Photo Factory Rewards</p>
+                <p className="text-lg font-bold text-[#1a1a1a]">Photo Factory Rewards</p>
                 <p className="font-medium">Ask about bulk supply, creator bundles, and same-day Kigali delivery.</p>
               </div>
             </div>

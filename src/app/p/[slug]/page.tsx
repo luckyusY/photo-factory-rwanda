@@ -141,7 +141,7 @@ function RailCard({
       className="relative flex h-full w-full flex-col bg-white px-3 pb-4 pt-6"
     >
       {save > 0 && (
-        <span className="absolute left-0 top-2 z-10 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
+        <span className="absolute left-0 top-2 z-10 bg-[#C89B3C] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)]">
           {saveLabel}
         </span>
       )}
@@ -239,7 +239,7 @@ function ProductMediaPanel({ product }: { product: Product }) {
       <ProductGallery images={product.images} name={product.name} />
       <div className="mt-5 hidden grid-cols-3 gap-2 text-center text-xs font-semibold text-[#374151] sm:grid">
         {serviceBadges.map(({ label, icon: Icon }) => (
-          <div key={label} className="border border-[#e7ddc7] p-3">
+          <div key={label} className="border border-[#e5e5e5] p-3">
             <Icon className="mx-auto mb-1 text-[#8b641e]" size={20} />
             {label}
           </div>
@@ -262,7 +262,7 @@ function ProductInfoPanel({
 }) {
   return (
     <section>
-      <div className="border-b border-[#e7ddc7] pb-4">
+      <div className="border-b border-[#e5e5e5] pb-4">
         {product.badge && (
           <span className="mb-2 inline-block bg-[#ffe25a] px-2 py-1 text-[11px] font-black uppercase text-[#3b2f00]">
             {product.badge}
@@ -288,7 +288,7 @@ function ProductInfoPanel({
         </div>
       </div>
 
-      <div className="border-b border-[#e7ddc7] py-4">
+      <div className="border-b border-[#e5e5e5] py-4">
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
           <p className="text-[38px] font-bold leading-none text-black">
             {formatRWF(product.price)}
@@ -317,7 +317,7 @@ function ProductInfoPanel({
         </p>
       </div>
 
-      <section id="features" className="scroll-mt-44 border-t border-[#e7ddc7] py-5">
+      <section id="features" className="scroll-mt-44 border-t border-[#e5e5e5] py-5">
         <h2 className="text-xl font-semibold">Key Features</h2>
         <ul className="mt-3 grid gap-2 text-sm leading-6 text-[#333]">
           {[
@@ -352,7 +352,7 @@ function PurchasePanel({
 }) {
   return (
     <aside className="no-scrollbar sticky top-[72px] z-20 self-start overflow-y-auto bg-white md:top-32 md:max-h-[calc(100vh-8.5rem)]">
-      <div className="border border-[#e7ddc7] bg-white p-3 shadow-sm">
+      <div className="border border-[#e5e5e5] bg-white p-3 shadow-sm">
         <div className="mb-3 flex items-center gap-2 text-sm text-[#333]">
           <Truck size={18} className="text-[#8b641e]" />
           Calculate Shipping -{" "}
@@ -361,17 +361,17 @@ function PurchasePanel({
           </Link>
         </div>
         <BuyBox slug={product.slug} stock={product.stock} />
-        <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#e7ddc7] pt-3 text-xs font-semibold">
-          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
+        <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[#e5e5e5] pt-3 text-xs font-semibold">
+          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e5e5e5] py-2 text-[#8b641e]">
             <Heart size={14} /> Add to List
           </button>
-          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e7ddc7] py-2 text-[#8b641e]">
+          <button className="inline-flex items-center justify-center gap-1 rounded-sm border border-[#e5e5e5] py-2 text-[#8b641e]">
             <Mail size={14} /> Sale Alert
           </button>
         </div>
         <Link
           href="/support"
-          className="mt-4 flex items-center gap-3 border-y border-[#e7ddc7] bg-[#f6f2ea] p-3 text-sm"
+          className="mt-4 flex items-center gap-3 border-y border-[#e5e5e5] bg-[#f6f2ea] p-3 text-sm"
         >
           <CreditCard size={28} className="text-[#8b641e]" />
           <span>
@@ -406,7 +406,7 @@ function PurchasePanel({
 
       <Link
         href="/used/sell"
-        className="mt-3 flex items-center gap-3 border border-[#e7ddc7] bg-[#f8fafc] p-3 text-sm hover:border-[#8b641e]"
+        className="mt-3 flex items-center gap-3 border border-[#e5e5e5] bg-[#f8fafc] p-3 text-sm hover:border-[#8b641e]"
       >
         <Repeat size={24} className="shrink-0 text-[#8b641e]" />
         <span>
@@ -503,7 +503,7 @@ export default async function ProductPage({ params }: Props) {
         <div className="mt-4 xl:hidden">
           <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_310px] md:items-start">
             <div>
-              <div className="sticky top-[62px] z-20 border-b border-[#e7ddc7] bg-white pb-2 md:top-32">
+              <div className="sticky top-[62px] z-20 border-b border-[#e5e5e5] bg-white pb-2 md:top-32">
                 <ProductMediaPanel product={product} />
               </div>
               <ProductInfoPanel
@@ -517,13 +517,13 @@ export default async function ProductPage({ params }: Props) {
           </div>
         </div>
 
-        <nav className="sticky top-[72px] z-40 mt-8 border-y border-[#e7ddc7] bg-white shadow-sm md:top-32">
+        <nav className="sticky top-[72px] z-40 mt-8 border-y border-[#e5e5e5] bg-white shadow-sm md:top-32">
           <div className="no-scrollbar flex overflow-x-auto">
             {tabs.map((tab) => (
               <a
                 key={tab.href}
                 href={tab.href}
-                className="shrink-0 border-r border-[#e7ddc7] px-5 py-3 text-sm font-bold text-[#8b641e] hover:bg-[#f6f2ea]"
+                className="shrink-0 border-r border-[#e5e5e5] px-5 py-3 text-sm font-bold text-[#8b641e] hover:bg-[#f6f2ea]"
               >
                 {tab.label}
               </a>
@@ -557,7 +557,7 @@ export default async function ProductPage({ params }: Props) {
         </div>
 
         {bundle.length > 1 && (
-          <section className="mt-8 border border-[#e7ddc7] p-5">
+          <section className="mt-8 border border-[#e5e5e5] p-5">
             <h2 className="text-xl font-semibold text-black">
               Frequently Bought Together
             </h2>
@@ -572,7 +572,7 @@ export default async function ProductPage({ params }: Props) {
             About {product.name}
           </h2>
           <ProductDescription value={product.description} />
-          <div className="mt-6 max-w-5xl border border-[#e7ddc7] bg-[#f8fafc] p-4">
+          <div className="mt-6 max-w-5xl border border-[#e5e5e5] bg-[#f8fafc] p-4">
             <h3 className="text-lg font-semibold">Product Highlights</h3>
             <ul className="mt-3 grid gap-2 text-sm leading-6 sm:grid-cols-2">
               {product.shortSpecs.map((feature) => (
@@ -587,8 +587,8 @@ export default async function ProductPage({ params }: Props) {
 
         <section id="specs" className="mt-10 scroll-mt-44">
           <h2 className="text-[26px] font-semibold">{product.name} Specs</h2>
-          <div className="mt-4 max-w-5xl border border-[#e7ddc7]">
-            <dl className="divide-y divide-[#e7ddc7] text-sm">
+          <div className="mt-4 max-w-5xl border border-[#e5e5e5]">
+            <dl className="divide-y divide-[#e5e5e5] text-sm">
               {[
                 ["Brand", product.brand],
                 ["Condition", product.condition],
@@ -636,7 +636,7 @@ export default async function ProductPage({ params }: Props) {
                       className="flex items-center gap-2 text-xs font-semibold text-[#374151]"
                     >
                       <span className="w-10">{row.stars} star</span>
-                      <span className="h-3 flex-1 overflow-hidden bg-[#e5e7eb]">
+                      <span className="h-3 flex-1 overflow-hidden bg-[#e5e5e5]">
                         <span className="block h-full bg-[#f5a623]" style={{ width: `${pct}%` }} />
                       </span>
                       <span className="w-8 text-right">{pct}%</span>
@@ -703,7 +703,7 @@ export default async function ProductPage({ params }: Props) {
         </section>
 
         {alsoViewed.slice(0, 4).length > 0 && (
-          <section className="mt-12 border-t border-[#e5e7eb] pb-12 pt-8">
+          <section className="mt-12 border-t border-[#e5e5e5] pb-12 pt-8">
             <h2 className="text-2xl font-semibold text-black">
               More Products To Compare
             </h2>
@@ -724,7 +724,7 @@ export default async function ProductPage({ params }: Props) {
                 <span className="mx-auto grid h-24 w-24 place-items-center rounded-full border-2 border-[#dec083] bg-white text-[#8b641e] transition group-hover:border-[#d9a441]">
                   <Icon size={40} strokeWidth={1.7} />
                 </span>
-                <span className="mt-4 block text-[26px] font-normal leading-tight text-[#15110a]">
+                <span className="mt-4 block text-[26px] font-normal leading-tight text-[#1a1a1a]">
                   {title}
                 </span>
                 <span className="mx-auto mt-2 block max-w-[260px] text-[16px] leading-5 text-black">

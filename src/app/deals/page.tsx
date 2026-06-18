@@ -248,7 +248,7 @@ function TopDealsGrid({ products }: { products: Product[] }) {
             Your Top Deals
           </h2>
         </div>
-        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#E5E5E5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#e5e5e5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
           {products.slice(0, 12).map((product) => (
             <DealProductCard key={product.slug} product={product} />
           ))}
@@ -308,7 +308,7 @@ function DealShelf({
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t-2 border-[#E5E5E5] bg-[#F5F5F5] py-3">
+    <section className="border-t-2 border-[#e5e5e5] bg-[#F5F5F5] py-3">
       <div className="mx-auto max-w-[1440px] px-1 sm:px-2 2xl:px-4">
         <div className="mb-2 flex items-center justify-between gap-2 px-1">
           <h2 className="flex items-center gap-2 text-[17px] font-normal text-black">
@@ -319,7 +319,7 @@ function DealShelf({
             See All {title} Deals
           </Link>
         </div>
-        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#E5E5E5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-[2px] border-2 border-[#e5e5e5] bg-[#E5E5E5] sm:grid-cols-3 lg:grid-cols-6">
           {products.map((product) => (
             <DealProductCard key={`${title}-${product.slug}`} product={product} compact />
           ))}
@@ -335,7 +335,7 @@ function SandiskBanner({ image }: { image: string }) {
       <Link
         href="/c/storage"
         data-product-card
-        className="mx-auto grid max-w-[1440px] overflow-hidden border-y-2 border-[#E5E5E5] bg-[#F5F5F5] md:h-[180px] md:grid-cols-[330px_minmax(0,1fr)_210px]"
+        className="mx-auto grid max-w-[1440px] overflow-hidden border-y-2 border-[#e5e5e5] bg-[#F5F5F5] md:h-[180px] md:grid-cols-[330px_minmax(0,1fr)_210px]"
       >
         <div className="flex flex-col justify-center bg-white px-6 py-6">
           <p className="text-4xl font-black uppercase tracking-wide text-[#C89B3C]">
@@ -409,7 +409,7 @@ function SupportStrip() {
           const external = card.href.startsWith("http");
           const content = (
             <>
-              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#E5E5E5] text-[#C89B3C] transition group-hover:border-[#C89B3C]">
+              <span className="mx-auto grid h-16 w-16 place-items-center rounded-full border-2 border-[#e5e5e5] text-[#C89B3C] transition group-hover:border-[#C89B3C]">
                 <Icon size={28} strokeWidth={1.7} />
               </span>
               <span className="mt-3 block text-xl font-normal text-[#1A1A1A]">

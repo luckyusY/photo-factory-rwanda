@@ -26,7 +26,7 @@ export default async function AdminProductsPage() {
         <h1 className="text-3xl font-black">Products ({products.length})</h1>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 rounded-sm bg-[#8b641e] px-5 py-2.5 text-sm font-black uppercase text-white hover:bg-[#8b641e]"
+          className="flex items-center gap-2 rounded-sm bg-[#C89B3C] px-5 py-2.5 text-sm font-black uppercase text-white hover:bg-[#C89B3C]"
         >
           <Plus size={16} />
           Add product
@@ -54,7 +54,7 @@ export default async function AdminProductsPage() {
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">
+                    <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e5e5e5] bg-white">
                       <Image
                         src={product.images[0]}
                         alt=""
@@ -84,7 +84,7 @@ export default async function AdminProductsPage() {
                   <div className="flex justify-end gap-2">
                     <Link
                       href={`/admin/products/edit?slug=${encodeURIComponent(product.slug)}`}
-                      className="rounded bg-[#8b641e] px-3 py-1.5 text-xs font-black uppercase text-white"
+                      className="rounded bg-[#C89B3C] px-3 py-1.5 text-xs font-black uppercase text-white"
                     >
                       Edit
                     </Link>

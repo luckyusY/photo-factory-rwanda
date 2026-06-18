@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const inputClass =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function AdminLoginForm() {
   const router = useRouter();
@@ -51,11 +51,11 @@ export function AdminLoginForm() {
           className={`mt-1 ${inputClass}`}
         />
       </label>
-      {error && <p className="text-sm font-bold text-[#15110a]">{error}</p>}
+      {error && <p className="text-sm font-bold text-[#1a1a1a]">{error}</p>}
       <button
         type="submit"
         disabled={sending}
-        className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+        className="w-full rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
       >
         {sending ? "Signing in..." : "Sign in"}
       </button>

@@ -42,7 +42,7 @@ export function ProductGallery({
                 className={`relative h-[58px] w-[58px] shrink-0 overflow-hidden rounded-sm border bg-white transition sm:h-[66px] sm:w-[66px] ${
                   index === active
                     ? "border-[#8b641e] ring-1 ring-[#8b641e]"
-                    : "border-[#e7ddc7] hover:border-[#e7ddc7]"
+                    : "border-[#e5e5e5] hover:border-[#e5e5e5]"
                 }`}
               >
                 <Image

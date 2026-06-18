@@ -17,7 +17,7 @@ export function BrandLogoTile({
     <Link
       href={brand.href}
       onClick={onClick}
-      className={`grid place-items-center border border-[#d9d9d9] bg-white text-center text-black transition hover:border-black ${
+      className={`grid place-items-center border border-[#e5e5e5] bg-white text-center text-black transition hover:border-black ${
         compact ? "h-28 px-2" : "h-24 px-4 sm:h-28"
       }`}
     >

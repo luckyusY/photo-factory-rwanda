@@ -17,7 +17,7 @@ export function DealCard({ product }: { product: Product }) {
       className="group relative flex w-full flex-col bg-white px-2 pb-3 pt-7 transition duration-200 hover:shadow-md sm:px-3 sm:pb-4 sm:pt-9 lg:px-4"
     >
       {save > 0 && (
-        <span className="absolute left-0 top-2 bg-[#8b641e] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
+        <span className="absolute left-0 top-2 bg-[#C89B3C] py-0.5 pl-2 pr-4 text-[10px] font-black uppercase tracking-wide text-white [clip-path:polygon(0_0,100%_0,calc(100%-8px)_50%,100%_100%,0_100%)] sm:top-3 sm:py-1 sm:pl-3 sm:pr-5 sm:text-[11px]">
           Save {formatRWF(save)}
         </span>
       )}

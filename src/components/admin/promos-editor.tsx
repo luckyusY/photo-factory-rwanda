@@ -153,7 +153,7 @@ export function PromosEditor({ initial }: { initial: PromoCode[] }) {
                 onClick={() =>
                   setItems((prev) => prev.filter((_, i) => i !== index))
                 }
-                className="grid h-10 w-10 place-items-center rounded-sm border border-[#e7ddc7] bg-white text-[#8b641e] hover:border-[#8b641e] hover:bg-[#f6f2ea]"
+                className="grid h-10 w-10 place-items-center rounded-sm border border-[#e5e5e5] bg-white text-[#8b641e] hover:border-[#8b641e] hover:bg-[#f6f2ea]"
               >
                 <Trash2 size={15} />
               </button>
@@ -170,11 +170,11 @@ export function PromosEditor({ initial }: { initial: PromoCode[] }) {
         <Plus size={16} /> Add promo code
       </button>
 
-      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea] py-4">
+      <div className="sticky bottom-0 mt-5 flex flex-wrap gap-3 border-t border-[#e5e5e5] bg-[#f6f2ea] py-4">
         <button
           onClick={save}
           disabled={saving}
-          className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+          className="press rounded-sm bg-[#C89B3C] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save changes"}
         </button>

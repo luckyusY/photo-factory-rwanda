@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useStore, type Profile } from "@/components/store-context";
 
 const inputClass =
-  "w-full rounded border border-[#e7ddc7] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
+  "w-full rounded border border-[#e5e5e5] bg-white px-3 py-2.5 text-sm font-semibold outline-none transition focus:border-[#8b641e]";
 
 export function AccountPanel() {
   const [mode, setMode] = useState<"signin" | "register">("signin");
@@ -86,7 +86,7 @@ export function AccountPanel() {
               key={tab}
               onClick={() => setMode(tab)}
               className={`flex-1 rounded px-4 py-2 text-sm font-black uppercase ${
-                mode === tab ? "bg-[#8b641e] text-white" : "text-[#4b5563]"
+                mode === tab ? "bg-[#C89B3C] text-white" : "text-[#4b5563]"
               }`}
             >
               {tab === "signin" ? "Sign in" : "Create account"}
@@ -132,7 +132,7 @@ export function AccountPanel() {
           </label>
           <button
             type="submit"
-            className="w-full rounded-sm bg-[#8b641e] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a]"
+            className="w-full rounded-sm bg-[#C89B3C] px-6 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a]"
           >
             {mode === "signin" ? "Sign in" : "Create account"}
           </button>

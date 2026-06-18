@@ -102,7 +102,7 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search by name, brand, category"
-            className="w-full rounded border border-[#e7ddc7] bg-white py-2 pl-9 pr-3 text-sm font-semibold outline-none focus:border-[#8b641e]"
+            className="w-full rounded border border-[#e5e5e5] bg-white py-2 pl-9 pr-3 text-sm font-semibold outline-none focus:border-[#8b641e]"
           />
         </div>
         <label className="flex items-center gap-2 text-sm font-bold">
@@ -137,7 +137,7 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="relative h-11 w-12 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">
+                      <div className="relative h-11 w-12 shrink-0 overflow-hidden rounded border border-[#e5e5e5] bg-white">
                         <Image
                           src={row.image}
                           alt=""
@@ -178,7 +178,7 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
                             ? "border-[#fca5a5] bg-[#fef2f2]"
                             : value <= LOW_STOCK
                               ? "border-[#fcd34d] bg-[#fffbeb]"
-                              : "border-[#e7ddc7] bg-white"
+                              : "border-[#e5e5e5] bg-white"
                         }`}
                       />
                       <StepButton
@@ -196,11 +196,11 @@ export function StockEditor({ initial }: { initial: StockRow[] }) {
         </table>
       </div>
 
-      <div className="sticky bottom-0 mt-5 flex flex-wrap items-center gap-3 border-t border-[#e7ddc7] bg-[#f6f2ea] py-4">
+      <div className="sticky bottom-0 mt-5 flex flex-wrap items-center gap-3 border-t border-[#e5e5e5] bg-[#f6f2ea] py-4">
         <button
           onClick={save}
           disabled={saving || !dirty}
-          className="press rounded-sm bg-[#8b641e] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
+          className="press rounded-sm bg-[#C89B3C] px-8 py-3 text-sm font-black uppercase text-white hover:bg-[#15110a] disabled:opacity-60"
         >
           {saving ? "Saving..." : "Save stock"}
         </button>
@@ -253,7 +253,7 @@ function StepButton({
       type="button"
       aria-label={label}
       onClick={onClick}
-      className="grid h-8 w-8 shrink-0 place-items-center rounded-sm border border-[#e7ddc7] bg-white text-[#8b641e] hover:border-[#8b641e] hover:bg-[#f6f2ea]"
+      className="grid h-8 w-8 shrink-0 place-items-center rounded-sm border border-[#e5e5e5] bg-white text-[#8b641e] hover:border-[#8b641e] hover:bg-[#f6f2ea]"
     >
       {children}
     </button>

@@ -137,7 +137,7 @@ export default async function OrderDetailPage({ params }: Props) {
                     </td>
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e7ddc7] bg-white">
+                        <div className="relative h-12 w-14 shrink-0 overflow-hidden rounded border border-[#e5e5e5] bg-white">
                           {image ? (
                             <Image
                               src={image}
@@ -169,7 +169,7 @@ export default async function OrderDetailPage({ params }: Props) {
             </tbody>
           </table>
         </div>
-        <dl className="space-y-2 border-t border-[#e7ddc7] px-5 py-4 text-sm font-semibold">
+        <dl className="space-y-2 border-t border-[#e5e5e5] px-5 py-4 text-sm font-semibold">
           <div className="flex justify-between">
             <dt>Subtotal</dt>
             <dd>{formatRWF(order.subtotal)}</dd>
@@ -184,7 +184,7 @@ export default async function OrderDetailPage({ params }: Props) {
             <dt>{order.fulfillment === "delivery" ? "Delivery" : "Pickup"}</dt>
             <dd>{order.deliveryFee === 0 ? "Free" : formatRWF(order.deliveryFee)}</dd>
           </div>
-          <div className="flex justify-between border-t border-[#e7ddc7] pt-2 text-lg font-black">
+          <div className="flex justify-between border-t border-[#e5e5e5] pt-2 text-lg font-black">
             <dt>Total</dt>
             <dd>{formatRWF(order.total)}</dd>
           </div>

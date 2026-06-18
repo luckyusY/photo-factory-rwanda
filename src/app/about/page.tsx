@@ -88,7 +88,7 @@ export default function AboutPage() {
           <div className="flex flex-col justify-center gap-3 sm:flex-row lg:justify-end">
             <Link
               href="/support"
-              className="rounded-sm bg-[#8b641e] px-6 py-3 text-center text-sm font-black uppercase hover:bg-[#8b641e]"
+              className="rounded-sm bg-[#C89B3C] px-6 py-3 text-center text-sm font-black uppercase hover:bg-[#C89B3C]"
             >
               Contact our team
             </Link>

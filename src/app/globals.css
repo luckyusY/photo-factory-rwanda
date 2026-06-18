@@ -9,7 +9,7 @@
   --brand-gold-light: #ffcf57;
 
   --background: #f5f5f5;
-  --foreground: #15110a;
+  --foreground: #1a1a1a;
   --surface: #ffffff;
   --rail-fade: #f5f5f5;
 }
@@ -174,7 +174,7 @@ a:active {
   background: #ffffff;
   color: #8b641e;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
-  border: 1px solid #e7ddc7;
+  border: 1px solid #e5e5e5;
   transition: background 0.15s ease, transform 0.15s ease, opacity 0.2s ease;
 }
 .card-swiper .swiper-button-prev:hover,
@@ -234,7 +234,7 @@ a:active {
   border-collapse: collapse;
 }
 .product-rich-text :where(th, td) {
-  border: 1px solid #e7ddc7;
+  border: 1px solid #e5e5e5;
   padding: 0.65rem;
   text-align: left;
 }
@@ -244,7 +244,7 @@ a:active {
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: #e7ddc7;
+  background: #e5e5e5;
 }
 .skeleton::after {
   content: "";

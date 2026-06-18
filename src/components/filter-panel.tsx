@@ -18,7 +18,7 @@ export function FilterPanel({
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between rounded border border-[#e7ddc7] bg-white px-4 py-2.5 text-sm font-black lg:hidden"
+        className="flex w-full items-center justify-between rounded border border-[#e5e5e5] bg-white px-4 py-2.5 text-sm font-black lg:hidden"
       >
         <span className="flex items-center gap-2">
           <SlidersHorizontal size={16} />
