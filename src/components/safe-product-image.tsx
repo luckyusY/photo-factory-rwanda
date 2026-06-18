@@ -8,10 +8,11 @@ import Image, { type ImageProps } from "next/image";
  * never show a product with a missing picture. The card must carry the
  * `data-product-card` attribute; if none is found the image is just hidden.
  */
-export function SafeProductImage(props: ImageProps) {
+export function SafeProductImage({ alt, ...props }: ImageProps) {
   return (
     <Image
       {...props}
+      alt={alt}
       onError={(event) => {
         const el = event.currentTarget as HTMLElement;
         const card = el.closest("[data-product-card]");
