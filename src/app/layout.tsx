@@ -11,6 +11,7 @@ import { MobileShopMenu } from "@/components/mobile-shop-menu";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { siteUrl } from "@/lib/site-url";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ const dancingScript = Dancing_Script({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Photo Factory Rwanda | Electronics & Photography Store in Kigali",
     template: "%s | Photo Factory Rwanda",
