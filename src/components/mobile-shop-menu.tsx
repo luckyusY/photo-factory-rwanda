@@ -12,7 +12,6 @@ import {
   Laptop,
   Menu,
   Monitor,
-  Music,
   Package,
   Search,
   ShoppingCart,
@@ -31,6 +30,7 @@ import { useEffect, useState } from "react";
 import { BrandLogoTile } from "@/components/brand-logo-tile";
 import { useStore } from "@/components/store-context";
 import { featuredBrandLogos } from "@/lib/brand-logos";
+import type { Department } from "@/lib/department-menu";
 
 const tabs = ["Products", "Brands", "Used", "Deals"] as const;
 
@@ -161,12 +161,34 @@ const dealRows = [
   { label: "Featured Deals", href: "/deals", icon: BadgePercent, image: img.lighting },
 ];
 
-export function MobileShopMenu() {
+export function MobileShopMenu({ departments = [] }: { departments?: Department[] }) {
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<(typeof tabs)[number]>("Products");
   const [activeDepartment, setActiveDepartment] = useState<MenuItem | null>(null);
   const { cart, hydrated } = useStore();
   const cartCount = hydrated ? cart.reduce((sum, item) => sum + item.qty, 0) : 0;
+  const knownCategorySlugs = new Set(
+    productRows.map((row) => row.href.match(/^\/c\/([^?]+)/)?.[1]).filter(Boolean),
+  );
+  const menuProductRows = [
+    ...productRows,
+    ...departments
+      .filter((department) => !knownCategorySlugs.has(department.slug))
+      .map((department): MenuItem => ({
+        label: department.label,
+        href: `/c/${department.slug}`,
+        icon: Package,
+        image: department.image,
+        children: department.groups
+          .flatMap((group) => group.links)
+          .map((link) => ({
+            label: link.label,
+            href: `/c/${department.slug}?sub=${link.sub}`,
+            icon: Package,
+            image: department.image,
+          })),
+      })),
+  ];
   const close = () => {
     setOpen(false);
     setActiveDepartment(null);
@@ -283,7 +305,7 @@ export function MobileShopMenu() {
                   ) : (
                     <>
                       <ShortcutPills onNavigate={close} />
-                      {productRows.map((item) => (
+                {menuProductRows.map((item) => (
                         <MenuRow
                           key={item.label}
                           item={item}

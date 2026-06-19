@@ -1,4 +1,9 @@
-import { categories } from "@/lib/catalog";
+import {
+  categories,
+  categoryOptionsFrom,
+  getCategory,
+  type Product,
+} from "@/lib/catalog";
 
 // The mega-menu is derived from the single source of truth (`categories` in
 // catalog.ts). Each subcategory link carries its `sub` slug so the menu can
@@ -31,6 +36,34 @@ export const departments: Department[] = categories.map((category) => ({
     },
   ],
 }));
+
+export function departmentsFromProducts(products: Product[]): Department[] {
+  const { categories: options, subByCategory } = categoryOptionsFrom(products);
+
+  return options.map((option) => {
+    const curated = getCategory(option.slug);
+    const categoryProducts = products.filter(
+      (product) => product.category === option.slug,
+    );
+    const links = subByCategory[option.slug] ?? [];
+
+    return {
+      slug: option.slug,
+      label: option.name,
+      image: curated?.image ?? categoryProducts[0]?.images[0] ?? "/logo.png",
+      imageLabel: option.name.toUpperCase(),
+      groups: [
+        {
+          title: option.name,
+          links: links.map((subcategory) => ({
+            label: subcategory.name,
+            sub: subcategory.slug,
+          })),
+        },
+      ],
+    };
+  });
+}
 
 export function getDepartment(slug: string) {
   return departments.find((department) => department.slug === slug);

@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { HeaderActions } from "@/components/header-actions";
 import { MainNav } from "@/components/main-nav";
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_TEL, WHATSAPP_URL } from "@/lib/contact";
+import type { Department } from "@/lib/department-menu";
 
-export function SiteHeader() {
+export function SiteHeader({ departments }: { departments?: Department[] }) {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -114,7 +115,7 @@ export function SiteHeader() {
           </div>
         </div>
       </div>
-      <MainNav />
+      <MainNav departments={departments} />
     </header>
   );
 }

@@ -12,6 +12,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { siteUrl } from "@/lib/site-url";
+import { departmentsFromProducts } from "@/lib/department-menu";
+import { getAllProducts } from "@/lib/products-db";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,11 +56,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const departments = departmentsFromProducts(await getAllProducts());
+
   return (
     <html
       lang="en"
@@ -67,14 +71,14 @@ export default function RootLayout({
     >
       <body className="flex min-h-full flex-col bg-[#F5F5F5] text-[#111827] antialiased">
         <SmoothScroll />
-        <SiteHeader />
+        <SiteHeader departments={departments} />
         {/* overflow-x-clip prevents any page's content from creating a
             horizontal scroll / empty strip on mobile. `clip` (not `hidden`)
             is used so it doesn't break the sticky header or sticky elements
             inside pages. */}
         <div className="flex-1 overflow-x-clip">{children}</div>
         <SiteFooter />
-        <MobileShopMenu />
+        <MobileShopMenu departments={departments} />
         <Toaster
           position="top-center"
           richColors

@@ -6,7 +6,10 @@ import Link from "next/link";
 import { useState } from "react";
 import { brands } from "@/lib/catalog";
 import { productBrandLogos } from "@/lib/brand-logos";
-import { departments } from "@/lib/department-menu";
+import {
+  departments as defaultDepartments,
+  type Department,
+} from "@/lib/department-menu";
 
 type NavColumn = {
   label: string;
@@ -29,7 +32,8 @@ function brandLogo(brand: string) {
   return brandLogoByName.get(brand.toLowerCase().replace(/[^a-z0-9]/g, ""));
 }
 
-const navMenus = [
+function navMenus(departments: Department[]) {
+  return [
   {
     label: "Products",
     href: "/c/cameras",
@@ -84,12 +88,14 @@ const navMenus = [
       body: "Bundle cameras with lenses, lighting, and storage for the best package pricing in Kigali.",
     },
   },
-];
+  ];
+}
 
-export function MainNav() {
+export function MainNav({ departments = defaultDepartments }: { departments?: Department[] }) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [activeDepartment, setActiveDepartment] = useState(departments[0]);
-  const active = navMenus.find((menu) => menu.label === openMenu);
+  const menus = navMenus(departments);
+  const active = menus.find((menu) => menu.label === openMenu);
   const close = () => setOpenMenu(null);
 
   return (
@@ -98,7 +104,7 @@ export function MainNav() {
       className="relative hidden border-y border-[#d9a441]/30 bg-[#15110a] text-white md:block"
     >
       <div className="mx-auto flex max-w-[1440px] items-center gap-2 px-4 2xl:px-6">
-        {navMenus.map((menu) => (
+        {menus.map((menu) => (
           <Link
             key={menu.label}
             href={menu.href}
