@@ -15,6 +15,11 @@ import { siteUrl } from "@/lib/site-url";
 import { departmentsFromProducts } from "@/lib/department-menu";
 import { getAllProducts } from "@/lib/products-db";
 
+// Navigation categories come from MongoDB and can change from the admin area.
+// Render the shared layout per request so newly created categories are not
+// frozen into Vercel's deployment-time HTML.
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
