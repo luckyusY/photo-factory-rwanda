@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin-auth";
-import { getCategory, type Product, type ProductCondition } from "@/lib/catalog";
+import { slugify, type Product, type ProductCondition } from "@/lib/catalog";
 import {
   getProductBySlug,
   isDbConfigured,
@@ -52,7 +52,10 @@ export async function POST(request: Request) {
 
   const name = (payload.name ?? "").trim();
   const brand = (payload.brand ?? "").trim();
-  const category = (payload.category ?? "").trim();
+  // Accept any category — admins can create new ones from the product form.
+  // Slugify so new names ("Printers & Ink") become clean slugs ("printers-ink")
+  // that work as /c/[category] URLs; existing slugs pass through unchanged.
+  const category = slugify((payload.category ?? "").trim());
   const price = Math.round(Number(payload.price));
   if (!name || !brand || !category || !Number.isFinite(price) || price <= 0) {
     return NextResponse.json(
@@ -61,12 +64,8 @@ export async function POST(request: Request) {
     );
   }
 
-  // Only keep a subcategory if it actually belongs to the chosen category.
-  const subInput = (payload.subcategory ?? "").trim();
-  const subcategory =
-    subInput && getCategory(category)?.subcategories.some((s) => s.slug === subInput)
-      ? subInput
-      : undefined;
+  // Keep any non-empty subcategory (new or existing), slugified to match.
+  const subcategory = slugify((payload.subcategory ?? "").trim()) || undefined;
 
   const existing = payload.originalSlug
     ? await getProductBySlug(payload.originalSlug)

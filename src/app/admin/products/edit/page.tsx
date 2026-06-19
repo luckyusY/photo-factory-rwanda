@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { AdminBar } from "@/components/admin/admin-bar";
 import { ProductForm } from "@/components/admin/product-form";
 import { requireAdmin } from "@/lib/admin-auth";
-import { getProductBySlug } from "@/lib/products-db";
+import { categoryOptionsFrom } from "@/lib/catalog";
+import { getAllProducts, getProductBySlug } from "@/lib/products-db";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,9 @@ export default async function EditProductPage({
   if (!slug) notFound();
   const product = await getProductBySlug(slug);
   if (!product) notFound();
+  const { categories: categoryOptions, subByCategory } = categoryOptionsFrom(
+    await getAllProducts(),
+  );
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
@@ -31,7 +35,11 @@ export default async function EditProductPage({
         Editing a seed product creates a MongoDB override. Deleting a seed
         product hides it from the storefront.
       </p>
-      <ProductForm product={product} />
+      <ProductForm
+        product={product}
+        categoryOptions={categoryOptions}
+        subByCategory={subByCategory}
+      />
     </main>
   );
 }

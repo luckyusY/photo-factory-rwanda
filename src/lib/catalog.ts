@@ -243,6 +243,49 @@ export const slugify = (name: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+// Turn a slug back into a readable label, e.g. "photo-printers" -> "Photo
+// Printers". Used to display admin-created categories/subcategories that only
+// exist as slugs on products (no curated name in the static `categories`).
+export const humanizeSlug = (slug: string) =>
+  slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .trim();
+
+export type CategoryOption = { slug: string; name: string };
+
+// Merge the curated static categories with any extra categories/subcategories
+// that already exist on saved products. Powers the Add/Edit Product dropdowns
+// so admins see (and can reuse) categories they created earlier, not just the
+// built-in set.
+export function categoryOptionsFrom(products: Product[]): {
+  categories: CategoryOption[];
+  subByCategory: Record<string, CategoryOption[]>;
+} {
+  const cats = new Map<string, string>();
+  const subByCategory: Record<string, CategoryOption[]> = {};
+
+  for (const c of categories) {
+    cats.set(c.slug, c.name);
+    subByCategory[c.slug] = c.subcategories.map((s) => ({ slug: s.slug, name: s.name }));
+  }
+
+  for (const p of products) {
+    if (p.category && !cats.has(p.category)) cats.set(p.category, humanizeSlug(p.category));
+    if (p.category && p.subcategory) {
+      const list = (subByCategory[p.category] ??= []);
+      if (!list.some((s) => s.slug === p.subcategory)) {
+        list.push({ slug: p.subcategory, name: humanizeSlug(p.subcategory) });
+      }
+    }
+  }
+
+  return {
+    categories: [...cats].map(([slug, name]) => ({ slug, name })),
+    subByCategory,
+  };
+}
+
 const seeds: Seed[] = [
   // Cameras
   {

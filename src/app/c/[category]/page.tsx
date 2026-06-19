@@ -13,8 +13,9 @@ import {
   byCategory,
   bySubcategory,
   getCategory,
-  getSubcategory,
+  humanizeSlug,
   slugify,
+  type Category,
   type Product,
   type Subcategory,
 } from "@/lib/catalog";
@@ -36,19 +37,37 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const category = getCategory((await params).category);
-  if (!category) return {};
+  const slug = (await params).category;
+  const category = getCategory(slug);
+  if (category) return { title: category.name, description: category.blurb };
+  return { title: humanizeSlug(slug) };
+}
+
+// Build a category object for an admin-created category that exists only on
+// products (not in the curated static list). Returns null if no such products.
+function dynamicCategory(slug: string, allProducts: Product[]): Category | null {
+  const inCat = byCategory(allProducts, slug);
+  if (inCat.length === 0) return null;
+  const subSlugs = [
+    ...new Set(
+      inCat.map((p) => p.subcategory).filter((s): s is string => Boolean(s)),
+    ),
+  ];
   return {
-    title: category.name,
-    description: category.blurb,
+    slug,
+    name: humanizeSlug(slug),
+    blurb: `Shop ${humanizeSlug(slug)} at Photo Factory Rwanda.`,
+    image: inCat[0]?.images[0] ?? "",
+    subcategories: subSlugs.map((s) => ({ slug: s, name: humanizeSlug(s) })),
   };
 }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
-  const category = getCategory((await params).category);
+  const slug = (await params).category;
+  const allProducts = await getAllProducts();
+  const category = getCategory(slug) ?? dynamicCategory(slug, allProducts);
   if (!category) notFound();
 
-  const allProducts = await getAllProducts();
   const products = byCategory(allProducts, category.slug);
   const content = (await getCategoryContent()).find(
     (item) => item.slug === category.slug,
@@ -62,7 +81,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   const resolvedParams = await searchParams;
   const activeSub = resolvedParams.sub
-    ? getSubcategory(category.slug, resolvedParams.sub)
+    ? category.subcategories.find((s) => s.slug === resolvedParams.sub)
     : undefined;
 
   // Sibling subcategory links (with live counts) for the listing sidebar.

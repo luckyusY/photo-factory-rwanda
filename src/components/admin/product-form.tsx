@@ -4,7 +4,12 @@ import { ArrowDown, ArrowUp, ImageIcon, Loader2, Plus, Trash2, Upload } from "lu
 import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { categories, type Product } from "@/lib/catalog";
+import {
+  categoryOptionsFrom,
+  slugify,
+  type CategoryOption,
+  type Product,
+} from "@/lib/catalog";
 
 const TINYMCE_API_KEY = "wp1cro1p0yeuzcvdwyejs4pfm061yj4mzoflk6yak9z6obef";
 
@@ -15,12 +20,22 @@ const panelClass = "rounded bg-white p-5 ring-1 ring-black/10";
 
 type Props = {
   product?: Product;
+  categoryOptions?: CategoryOption[];
+  subByCategory?: Record<string, CategoryOption[]>;
 };
 
 type SpecRow = { label: string; value: string };
 
-export function ProductForm({ product }: Props) {
+// Sentinel select value that switches a dropdown into "type a new one" mode.
+const NEW = "__new__";
+
+export function ProductForm({ product, categoryOptions, subByCategory }: Props) {
   const router = useRouter();
+  // Fall back to the built-in catalog if options weren't passed in.
+  const fallback = categoryOptionsFrom([]);
+  const catOptions = categoryOptions ?? fallback.categories;
+  const subMap = subByCategory ?? fallback.subByCategory;
+
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [images, setImages] = useState<string[]>(
@@ -33,23 +48,37 @@ export function ProductForm({ product }: Props) {
   const [specs, setSpecs] = useState<SpecRow[]>(
     product?.specs.length ? product.specs : [{ label: "", value: "" }],
   );
-  const [category, setCategory] = useState(product?.category ?? "cameras");
+  const [category, setCategory] = useState(
+    product?.category ?? catOptions[0]?.slug ?? "cameras",
+  );
+  const [newCategory, setNewCategory] = useState("");
   const [subcategory, setSubcategory] = useState(product?.subcategory ?? "");
-  const subOptions =
-    categories.find((c) => c.slug === category)?.subcategories ?? [];
+  const [newSub, setNewSub] = useState("");
+
+  const addingCategory = category === NEW;
+  const effectiveCategory = addingCategory ? slugify(newCategory) : category;
+  const addingSub = subcategory === NEW;
+  const effectiveSub = addingSub ? slugify(newSub) : subcategory;
+  const subOptions = addingCategory ? [] : subMap[category] ?? [];
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSending(true);
     setError(null);
 
+    if (!effectiveCategory) {
+      setError("Enter a name for the new category.");
+      setSending(false);
+      return;
+    }
+
     const form = new FormData(event.currentTarget);
     const payload = {
       originalSlug: product?.slug,
       name: String(form.get("name") ?? ""),
       brand: String(form.get("brand") ?? ""),
-      category,
-      subcategory: subcategory || null,
+      category: effectiveCategory,
+      subcategory: effectiveSub || null,
       price: Number(form.get("price") ?? 0),
       oldPrice: Number(form.get("oldPrice") ?? 0) || null,
       badge: String(form.get("badge") ?? ""),
@@ -104,29 +133,36 @@ export function ProductForm({ product }: Props) {
               />
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Brand" name="brand" defaultValue={product?.brand} required />
-                <label className="block text-sm font-bold">
+                <div className="block text-sm font-bold">
                   Category
                   <select
-                    name="category"
-                    required
                     value={category}
                     onChange={(event) => {
                       setCategory(event.target.value);
                       setSubcategory("");
+                      setNewSub("");
                     }}
                     className={`mt-1 ${inputClass}`}
                   >
-                    {categories.map((item) => (
+                    {catOptions.map((item) => (
                       <option key={item.slug} value={item.slug}>
                         {item.name}
                       </option>
                     ))}
+                    <option value={NEW}>➕ Add new category…</option>
                   </select>
-                </label>
-                <label className="block text-sm font-bold">
+                  {addingCategory && (
+                    <input
+                      value={newCategory}
+                      onChange={(e) => setNewCategory(e.target.value)}
+                      placeholder="New category name, e.g. Printers & Ink"
+                      className={`mt-2 ${inputClass}`}
+                    />
+                  )}
+                </div>
+                <div className="block text-sm font-bold">
                   Subcategory
                   <select
-                    name="subcategory"
                     value={subcategory}
                     onChange={(event) => setSubcategory(event.target.value)}
                     className={`mt-1 ${inputClass}`}
@@ -137,8 +173,17 @@ export function ProductForm({ product }: Props) {
                         {option.name}
                       </option>
                     ))}
+                    <option value={NEW}>➕ Add new subcategory…</option>
                   </select>
-                </label>
+                  {addingSub && (
+                    <input
+                      value={newSub}
+                      onChange={(e) => setNewSub(e.target.value)}
+                      placeholder="New subcategory name, e.g. Photo Printers"
+                      className={`mt-2 ${inputClass}`}
+                    />
+                  )}
+                </div>
               </div>
               {product && (
                 <div className="grid gap-4 rounded bg-[#f8fafc] p-3 text-xs font-semibold text-[#4b5563] sm:grid-cols-2">
