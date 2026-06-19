@@ -68,7 +68,11 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-[#F5F5F5] text-[#111827] antialiased">
         <SmoothScroll />
         <SiteHeader />
-        <div className="flex-1">{children}</div>
+        {/* overflow-x-clip prevents any page's content from creating a
+            horizontal scroll / empty strip on mobile. `clip` (not `hidden`)
+            is used so it doesn't break the sticky header or sticky elements
+            inside pages. */}
+        <div className="flex-1 overflow-x-clip">{children}</div>
         <SiteFooter />
         <MobileShopMenu />
         <Toaster
