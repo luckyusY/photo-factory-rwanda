@@ -191,9 +191,6 @@ export function SiteFooter() {
             </Link>
             <span className="hidden text-white/30 md:inline">•</span>
             <span>Mobile Money • Airtel Money • Visa • Mastercard</span>
-            <Link href="/admin" className="text-white/40 hover:text-white">
-              Admin
-            </Link>
           </div>
         </div>
       </div>
