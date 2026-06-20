@@ -6,40 +6,32 @@ import { INSTAGRAM_URL, MAPS_URL, TIKTOK_URL, WHATSAPP_URL } from "@/lib/contact
 
 const footerColumns = [
   {
-    title: "How Can We Help?",
+    title: "Customer",
     links: [
-      { label: "Customer Service", href: "/support" },
-      { label: "Track Your Order", href: "/account" },
-      { label: "Shipping & Delivery", href: "/support" },
-      { label: "In-Store Pickup", href: "/stores" },
-      { label: "Returns & Exchanges", href: "/support" },
-      { label: "Warranty Support", href: "/support" },
-      { label: "Contact Us", href: "/support" },
+      { label: "Customer Support", href: "/support" },
+      { label: "Store Locations", href: "/stores" },
+      { label: "My Account", href: "/account" },
+      { label: "Wishlist", href: "/wishlist" },
+      { label: "Shopping Cart", href: "/cart" },
     ],
   },
   {
-    title: "Services & Programs",
+    title: "Explore",
     links: [
-      { label: "Business & Education", href: "/about" },
-      { label: "Product Advice", href: "/support" },
-      { label: "Warranty Assistance", href: "/support" },
-      { label: "Photo Printing", href: "/support" },
-      { label: "Camera Rentals", href: "/support" },
-      { label: "Sell Used Equipment", href: "/used/sell" },
-      { label: "Trade-In Upgrade", href: "/used/sell" },
-      { label: "Product Collections", href: "/deals" },
+      { label: "Brands", href: "/brands" },
+      { label: "Deals", href: "/deals" },
+      { label: "Used Gear", href: "/used" },
+      { label: "Sell Your Gear", href: "/used/sell" },
+      { label: "Search Products", href: "/search" },
     ],
   },
   {
-    title: "Who We Are",
+    title: "Photo Factory",
     links: [
       { label: "About Photo Factory", href: "/about" },
-      { label: "Our Stores", href: "/stores" },
-      { label: "Map & Directions", href: "/stores" },
-      { label: "Learning Center", href: "/support" },
-      { label: "Brands", href: "/brands" },
-      { label: "Reviews", href: "/about" },
-      { label: "Careers", href: "/about" },
+      { label: "Kigali Store", href: "/stores" },
+      { label: "Contact & Support", href: "/support" },
+      { label: "Shop by Brand", href: "/brands" },
     ],
   },
   {
@@ -87,10 +79,10 @@ export function SiteFooter() {
       <div className="border-b border-[#d9a441]/25 bg-[#15110a]">
         <div className="mx-auto grid max-w-7xl gap-5 px-4 py-7 md:grid-cols-[1fr_minmax(0,480px)] md:items-center md:py-8">
           <div>
-            <p className="text-lg font-black sm:text-xl">Unlock Free Delivery</p>
+            <p className="text-lg font-black sm:text-xl">Store Updates</p>
             <p className="mt-1 max-w-xl text-sm leading-6 text-white/70">
-              Sign up for texts and get special offers, product news, exclusive
-              deals, and more. Same-day Kigali delivery on qualifying orders.
+              Sign up to hear about new products, availability, and offers from
+              Photo Factory Rwanda.
             </p>
           </div>
           <NewsletterSignup />
@@ -165,9 +157,9 @@ export function SiteFooter() {
             <div className="flex items-center gap-2 rounded border border-white/20 bg-white/5 px-3 py-2">
               <ShieldCheck size={26} className="text-[#8b641e]" />
               <span className="text-xs font-bold leading-4">
-                Trusted in Kigali
+                Photo Factory Kigali
                 <br />
-                <span className="text-white/60">Genuine stock &amp; warranty</span>
+                <span className="text-white/60">Store and customer support</span>
               </span>
             </div>
           </div>
@@ -177,19 +169,15 @@ export function SiteFooter() {
       {/* Legal bar */}
       <div className="bg-[#15110a]">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-white/60 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Photo Factory Rwanda. All rights reserved.</p>
+          <p>(c) 2026 Photo Factory Rwanda. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <Link href="/support" className="hover:text-white">
-              Privacy
+              Customer Support
             </Link>
-            <Link href="/support" className="hover:text-white">
-              Terms
+            <Link href="/stores" className="hover:text-white">
+              Store Locations
             </Link>
-            <Link href="/support" className="hover:text-white">
-              Accessibility
-            </Link>
-            <span className="hidden text-white/30 md:inline">•</span>
-            <span>Mobile Money • Airtel Money • Visa • Mastercard</span>
+            <span>Mobile Money | Airtel Money | Visa | Mastercard</span>
           </div>
         </div>
       </div>
