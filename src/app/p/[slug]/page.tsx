@@ -2,20 +2,17 @@ import {
   BadgeCheck,
   Building2,
   ChevronRight,
-  CreditCard,
   Heart,
   Mail,
   MessageCircle,
   Phone,
   Repeat,
   ShieldCheck,
-  Sparkles,
   Star,
   Store,
   Truck,
   X,
 } from "lucide-react";
-import Image from "next/image";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -252,13 +249,9 @@ function ProductMediaPanel({ product }: { product: Product }) {
 function ProductInfoPanel({
   product,
   discount,
-  monthlyEstimate,
-  rewardPoints,
 }: {
   product: Product;
   discount: number;
-  monthlyEstimate: number;
-  rewardPoints: number;
 }) {
   return (
     <section>
@@ -304,17 +297,6 @@ function ProductInfoPanel({
             </>
           )}
         </div>
-        <p className="mt-2 text-sm text-[#333]">
-          <strong>{formatRWF(monthlyEstimate)}/mo</strong> suggested payments
-          with 12-month special financing.{" "}
-          <Link href="/support" className="text-[#8b641e] hover:underline">
-            Learn how.
-          </Link>
-        </p>
-        <p className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-[#8b641e]">
-          <Sparkles size={16} /> Earn {rewardPoints.toLocaleString("en-US")} Reward
-          Points
-        </p>
       </div>
 
       <section id="features" className="scroll-mt-44 border-t border-[#e5e5e5] py-5">
@@ -343,13 +325,7 @@ function ProductInfoPanel({
   );
 }
 
-function PurchasePanel({
-  product,
-  protectionBase,
-}: {
-  product: Product;
-  protectionBase: number;
-}) {
+function PurchasePanel({ product }: { product: Product }) {
   return (
     <aside className="no-scrollbar sticky top-[72px] z-20 self-start overflow-y-auto bg-white md:top-32 md:max-h-[calc(100vh-8.5rem)]">
       <div className="border border-[#e5e5e5] bg-white p-3 shadow-sm">
@@ -371,37 +347,14 @@ function PurchasePanel({
         </div>
         <Link
           href="/support"
-          className="mt-4 flex items-center gap-3 border-y border-[#e5e5e5] bg-[#f6f2ea] p-3 text-sm"
+          className="mt-4 flex items-center gap-3 border-y border-[#e5e5e5] bg-[#f6f2ea] p-3 text-sm hover:border-[#8b641e]"
         >
-          <CreditCard size={28} className="text-[#8b641e]" />
+          <ShieldCheck size={24} className="text-[#8b641e]" />
           <span>
-            <strong className="block text-[#8b641e]">Save 5% Every Day</strong>
-            with the Photo Factory Card. Learn More
+            <strong className="block text-black">Warranty support</strong>
+            Contact the store for coverage details
           </span>
         </Link>
-
-        <div className="mt-4">
-          <p className="flex items-center gap-2 text-sm font-bold text-black">
-            <ShieldCheck size={18} className="text-[#d71920]" />
-            Add a Protection Plan:
-          </p>
-          {[
-            ["1-Year Extra Care", protectionBase],
-            ["2-Year Photo Factory Protect", protectionBase * 2],
-            ["3-Year Photo Factory Protect", protectionBase * 3],
-          ].map(([label, price]) => (
-            <label
-              key={String(label)}
-              className="mt-2 flex items-center justify-between gap-3 text-sm"
-            >
-              <span className="flex items-center gap-2">
-                <input type="checkbox" className="h-4 w-4 accent-[#8b641e]" />
-                <span className="text-[#8b641e]">{label}</span>
-              </span>
-              <span className="font-semibold">{formatRWF(Number(price))}</span>
-            </label>
-          ))}
-        </div>
       </div>
 
       <Link
@@ -453,10 +406,7 @@ export default async function ProductPage({ params }: Props) {
   const discount = product.oldPrice
     ? Math.max(1, Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100))
     : 0;
-  const rewardPoints = Math.max(1, Math.round(product.price / 1000));
-  const monthlyEstimate = Math.max(1000, Math.round(product.price / 12 / 1000) * 1000);
   const histogram = ratingHistogram(product.rating, product.reviews);
-  const protectionBase = Math.max(45000, Math.round(product.price * 0.07 / 1000) * 1000);
 
   return (
     <main className="bg-[#F5F5F5] pb-20 text-black">
@@ -487,33 +437,15 @@ export default async function ProductPage({ params }: Props) {
           <span className="line-clamp-1 text-[#374151]">{product.name}</span>
         </nav>
 
-        <div className="mt-4 hidden min-h-[1320px] items-start gap-5 xl:grid xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px] 2xl:grid-cols-[minmax(0,620px)_minmax(360px,1fr)_330px] 2xl:gap-7">
-          <div className="no-scrollbar sticky top-32 self-start max-h-[calc(100vh-8.5rem)] overflow-y-auto">
+        <div className="mt-4 grid items-start gap-6 md:grid-cols-[minmax(0,1fr)_310px] xl:grid-cols-[minmax(0,560px)_minmax(330px,1fr)_310px] 2xl:grid-cols-[minmax(0,620px)_minmax(360px,1fr)_330px] 2xl:gap-7">
+          <div className="md:col-start-1 md:row-start-1 xl:sticky xl:top-32 xl:max-h-[calc(100vh-8.5rem)] xl:overflow-y-auto">
             <ProductMediaPanel product={product} />
           </div>
-          <ProductInfoPanel
-            product={product}
-            discount={discount}
-            monthlyEstimate={monthlyEstimate}
-            rewardPoints={rewardPoints}
-          />
-          <PurchasePanel product={product} protectionBase={protectionBase} />
-        </div>
-
-        <div className="mt-4 xl:hidden">
-          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_310px] md:items-start">
-            <div>
-              <div className="sticky top-[62px] z-20 border-b border-[#e5e5e5] bg-white pb-2 md:top-32">
-                <ProductMediaPanel product={product} />
-              </div>
-              <ProductInfoPanel
-                product={product}
-                discount={discount}
-                monthlyEstimate={monthlyEstimate}
-                rewardPoints={rewardPoints}
-              />
-            </div>
-            <PurchasePanel product={product} protectionBase={protectionBase} />
+          <div className="md:col-start-1 md:row-start-2 xl:col-start-2 xl:row-start-1">
+            <ProductInfoPanel product={product} discount={discount} />
+          </div>
+          <div className="md:col-start-2 md:row-span-2 md:row-start-1 xl:col-start-3">
+            <PurchasePanel product={product} />
           </div>
         </div>
 

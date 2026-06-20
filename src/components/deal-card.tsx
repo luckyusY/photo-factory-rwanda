@@ -5,11 +5,6 @@ import { formatRWF, type Product } from "@/lib/catalog";
 
 export function DealCard({ product }: { product: Product }) {
   const save = product.oldPrice ? product.oldPrice - product.price : 0;
-  const months = product.price >= 1500000 ? 12 : 6;
-  const monthly = Math.max(
-    1000,
-    Math.round(product.price / months / 1000) * 1000,
-  );
 
   return (
     <article
@@ -61,13 +56,6 @@ export function DealCard({ product }: { product: Product }) {
             </s>
           )}
         </div>
-        <p className="mt-1.5 hidden text-[11px] leading-4 text-black sm:block">
-          <strong className="text-[#8b641e]">{formatRWF(monthly)}</strong>
-          /mo suggested payments with {months}-month special financing.{" "}
-          <Link href="/support" className="text-[#8b641e] hover:underline">
-            Learn how.
-          </Link>
-        </p>
         {product.condition !== "New" && (
           <p className="mt-1.5 text-[11px] font-black uppercase text-[#8b641e]">
             Certified {product.condition}

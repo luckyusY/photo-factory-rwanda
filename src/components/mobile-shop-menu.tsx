@@ -346,7 +346,7 @@ export function MobileShopMenu({ departments = [] }: { departments?: Department[
                   <MenuRow key={item.label} item={item} boxed onNavigate={close} />
                 ))}
               <div className="mt-8 space-y-4 bg-white p-4 text-sm text-[#111827] shadow-sm">
-                <p className="text-lg font-bold text-[#1a1a1a]">Photo Factory Rewards</p>
+                <p className="text-lg font-bold text-[#1a1a1a]">Store assistance</p>
                 <p className="font-medium">Ask about bulk supply, creator bundles, and same-day Kigali delivery.</p>
               </div>
             </div>

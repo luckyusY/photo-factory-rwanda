@@ -41,7 +41,7 @@ function navMenus(departments: Department[]) {
     promo: {
       eyebrow: "Photo Factory Advantage",
       title: "Same-day Kigali delivery and pickup.",
-      body: "Get product advice, payment flexibility, and warranty support from our Kigali shop.",
+      body: "Get product advice, Kigali delivery, store pickup, and warranty support from our team.",
     },
   },
   {
@@ -124,7 +124,7 @@ export function MainNav({ departments = defaultDepartments }: { departments?: De
           className="ml-auto hidden items-center gap-5 text-sm font-semibold lg:flex"
         >
           <Link href="/deals">Top Deals</Link>
-          <Link href="/support">Payment Options</Link>
+          <Link href="/support">Customer Support</Link>
           <Link href="/stores">Store Pickup</Link>
         </div>
       </div>

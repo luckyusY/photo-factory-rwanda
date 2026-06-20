@@ -48,10 +48,10 @@ export function SiteHeader({ departments }: { departments?: Department[] }) {
       }`}
     >
       <div className="bg-[#050505] px-2 py-0.5 text-center text-[11px] font-black leading-[18px] text-white sm:px-4">
-        <span className="text-[#ffcf57]">5% OFF Every Day</span> with Photo
-        Factory Pay.{" "}
-        <Link href="/support" className="text-[#ffcf57] underline-offset-2 hover:underline">
-          LEARN MORE
+        <span className="text-[#ffcf57]">Genuine photography gear</span> with
+        local support in Kigali.{" "}
+        <Link href="/stores" className="text-[#ffcf57] underline-offset-2 hover:underline">
+          VISIT OUR STORE
         </Link>
       </div>
       <div className="hidden border-y border-[#d9a441]/25 bg-[#15110a] text-white sm:block">

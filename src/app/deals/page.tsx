@@ -169,8 +169,6 @@ function DealProductCard({
   compact?: boolean;
 }) {
   const save = savings(product);
-  const months = product.price >= 1500000 ? 12 : 6;
-  const monthly = Math.max(1000, Math.round(product.price / months / 1000) * 1000);
 
   return (
     <article
@@ -225,15 +223,6 @@ function DealProductCard({
           </s>
         )}
       </div>
-      {!compact && (
-        <p className="mt-1.5 text-[11px] leading-4 text-black">
-          <strong className="text-[#C89B3C]">{formatRWF(monthly)}</strong>
-          /mo suggested payments with {months}-month special financing.{" "}
-          <Link href="/support" className="text-[#C89B3C] hover:underline">
-            Learn how.
-          </Link>
-        </p>
-      )}
     </article>
   );
 }

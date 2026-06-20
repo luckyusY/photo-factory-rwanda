@@ -14,7 +14,6 @@ const footerColumns = [
       { label: "In-Store Pickup", href: "/stores" },
       { label: "Returns & Exchanges", href: "/support" },
       { label: "Warranty Support", href: "/support" },
-      { label: "Price Match Policy", href: "/support" },
       { label: "Contact Us", href: "/support" },
     ],
   },
@@ -22,8 +21,8 @@ const footerColumns = [
     title: "Services & Programs",
     links: [
       { label: "Business & Education", href: "/about" },
-      { label: "VIP Rewards", href: "/account" },
-      { label: "Photo Factory Protect", href: "/support" },
+      { label: "Product Advice", href: "/support" },
+      { label: "Warranty Assistance", href: "/support" },
       { label: "Photo Printing", href: "/support" },
       { label: "Camera Rentals", href: "/support" },
       { label: "Sell Used Equipment", href: "/used/sell" },

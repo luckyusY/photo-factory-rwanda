@@ -6,8 +6,6 @@ import { formatRWF, type Product } from "@/lib/catalog";
 
 export function ProductRow({ product }: { product: Product }) {
   const save = product.oldPrice ? product.oldPrice - product.price : 0;
-  const months = product.price >= 1500000 ? 12 : 6;
-  const monthly = Math.max(1000, Math.round(product.price / months / 1000) * 1000);
 
   return (
     <article
@@ -92,10 +90,6 @@ export function ProductRow({ product }: { product: Product }) {
             Save {formatRWF(save)}
           </p>
         )}
-        <p className="mt-2 text-[11px] leading-4 text-[#374151]">
-          <strong className="text-[#C89B3C]">{formatRWF(monthly)}</strong>/mo with{" "}
-          {months}-mo financing
-        </p>
         <AddToCartButton
           slug={product.slug}
           name={product.name}

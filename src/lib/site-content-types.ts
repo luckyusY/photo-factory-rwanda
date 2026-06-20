@@ -39,9 +39,6 @@ const cldSquare = (name: string, size = 320) =>
 const heroArt = (name: string, width = 2200) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/f_auto,q_auto,w_${width}/v1/photo-factory-rwanda/hero/${name}`;
 
-const mobileHeroArt = (name: string) =>
-  `https://res.cloudinary.com/dvkifxvj6/image/upload/b_black,c_fit,f_auto,h_560,q_auto,w_720/v1/photo-factory-rwanda/hero/${name}`;
-
 const mobileHeroBg = (name: string) =>
   `https://res.cloudinary.com/dvkifxvj6/image/upload/c_fill,f_auto,g_auto,h_560,q_auto,w_720/v1/photo-factory-rwanda/hero/${name}`;
 
@@ -70,7 +67,7 @@ export const defaultHeroSlides: HeroSlide[] = [
     tone: "dark",
   },
   {
-    brand: "Photo Factory Rewards",
+    brand: "Photo Factory Kigali",
     title: "Shop genuine gear with local support.",
     body: "Enjoy trusted products, warranty help, fast delivery, and Kigali pickup.",
     cta: "Visit our store",
